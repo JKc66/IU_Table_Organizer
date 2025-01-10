@@ -28,27 +28,27 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 ### Method 1: Tampermonkey (Recommended)
 
-⚠️ **Important**: You must complete these steps in order:
 1. First install the Tampermonkey extension
 2. Then install the script
 
 <div align="center">
-  <table>
+  <table style="border-collapse: separate; border-spacing: 30px; margin: 20px auto; background: none; border: none;">
     <tr>
-      <td align="center">
-        <h4>Step 1️⃣: Install Tampermonkey First</h4>
-        <a href="https://www.tampermonkey.net/">
-          <img src="assests/tampermonkeysvg.svg" width="48" height="48" alt="Tampermonkey">
+      <td align="center" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 250px; transition: transform 0.2s;">
+        <h4 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 1.2em;">Step 1️⃣: Install Tampermonkey First</h4>
+        <a href="https://www.tampermonkey.net/" style="text-decoration: none; color: inherit;">
+          <img src="assests/tampermonkeysvg.svg" width="64" height="64" alt="Tampermonkey" style="margin-bottom: 12px;">
           <br>
-          Install Tampermonkey
+          <span style="display: inline-block; background: #4CAF50; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 500;">Install Tampermonkey</span>
         </a>
       </td>
-      <td align="center">
-        <h4>Step 2️⃣: Install Script</h4>
-        <a href="https://greasyfork.org/en/scripts/432219-%D9%85%D9%86%D8%B8%D9%85-%D8%AC%D8%AF%D9%88%D9%84-%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9-%D8%A7%D9%84%D8%A7%D8%B3%D9%84%D8%A7%D9%85%D9%8A%D8%A9">
-          <img src="assests/greasyfork.png" width="48" height="48" alt="Install Script">
+      <td style="font-size: 24px; padding: 0 10px; color: #666;">➔</td>
+      <td align="center" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 250px; transition: transform 0.2s;">
+        <h4 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 1.2em;">Step 2️⃣: Install Script</h4>
+        <a href="https://greasyfork.org/en/scripts/432219-%D9%85%D9%86%D8%B8%D9%85-%D8%AC%D8%AF%D9%88%D9%84-%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9-%D8%A7%D9%84%D8%A7%D8%B3%D9%84%D8%A7%D9%85%D9%8A%D8%A9" style="text-decoration: none; color: inherit;">
+          <img src="assests/greasyfork.png" width="64" height="64" alt="Install Script" style="margin-bottom: 12px;">
           <br>
-          Install Script
+          <span style="display: inline-block; background: #2196F3; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 500;">Install Script</span>
         </a>
       </td>
     </tr>
@@ -61,7 +61,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 1. Download and extract using the button below:
    <div align="center">
-     <a href="https://github.com/yourusername/IU-table-organizer/archive/refs/heads/main.zip">
+     <a href="https://github.com/JK-c66/IU_Table_Organizer/tree/main/IU_tabel_org.zip">
        <img src="https://img.shields.io/badge/Download-Extension-green?style=for-the-badge&logo=github" alt="Download Extension" />
      </a>
    </div>
