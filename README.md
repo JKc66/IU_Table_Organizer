@@ -11,8 +11,17 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
   <h3>Before Organization</h3>
   <img src="assests/before.png" alt="Before Organization" width="80%" />
   <br><br>
-  <h3>After Organization</h3>
-  <img src="assests/after.png" alt="After Organization" width="80%" />
+  <h3>After Organization (Light & Dark)</h3>
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <div>
+      <p>Light Mode</p>
+      <img src="assests/after_light.png" alt="After Organization Light" width="100%" />
+    </div>
+    <div>
+      <p>Dark Mode</p>
+      <img src="assests/after_dark.png" alt="After Organization Dark" width="100%" />
+    </div>
+  </div>
 </div>
 
 ## ✨ Features
@@ -42,7 +51,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 1. Download and extract using the button below:
    <div align="center">
-     <a href="https://github.com/JK-c66/IU_Table_Organizer/tree/main/IU_tabel_org">
+     <a href="https://github.com/JK-c66/IU_Table_Organizer/raw/main/IU_tabel_org.zip">
        <img src="https://img.shields.io/badge/Download-Extension-green?style=for-the-badge&logo=github" alt="Download Extension" />
      </a>
    </div>
