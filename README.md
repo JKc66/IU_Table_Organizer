@@ -74,4 +74,4 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 - Using [html2canvas](https://html2canvas.hertzen.com/)
 
 ## 📄 License 
-MIT License - feel free to use, modify, and distribute as you wish! 
+Mozilla Public License 2.0 - This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
