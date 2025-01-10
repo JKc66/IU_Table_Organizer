@@ -61,8 +61,8 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 3. Use "تحميل كصورة" to save as PNG
 
 ## 📜 Credits
-- Original script by [mah-sam <img src="https://github.com/favicon.ico" width="24" style="filter: invert(1);"/>](https://github.com/mah-sam)
+- Original script by [mah-sam <img src="assests\github_icon.png" width="24"/>](https://github.com/mah-sam)
 - Using [html2canvas](https://html2canvas.hertzen.com/)
 
-## 📄 License
+## 📄 License 
 MIT License - feel free to use, modify, and distribute as you wish! 
