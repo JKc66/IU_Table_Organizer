@@ -55,7 +55,7 @@ function initializeTableOrganizer() {
     if (on) {
         button.style.backgroundColor = "firebrick";
         button.innerHTML = "الجدول&nbspالاصلي";
-        originalTableNode.style.display = 'none';
+        originalTableNode.style.display = 'none';   
 
         if (newTableNode) {
             newTableNode.style.display = null;
@@ -92,6 +92,9 @@ function initializeTableOrganizer() {
             originalTableNode.style.display = 'none';
             if (newTableNode) {
                 newTableNode.style.display = null;
+                document.querySelectorAll('.schedule-summary').forEach(el => el.remove());
+                let summary = createSummary();
+                originalTableNode.insertAdjacentElement('afterend', summary);
             } else {
                 if (rows.length == 0) {
                     getTableInfo();
@@ -392,21 +395,12 @@ function downloadAsPNG(event) {
     
     preserveStyles(wrapper);
     
-    // Calculate optimal scale based on content size
-    const targetWidth = wrapper.offsetWidth;
-    const targetHeight = wrapper.offsetHeight;
-    const maxDimension = Math.max(targetWidth, targetHeight);
-    
-    let scale = 6;
-    const maxSize = 16384;
-    
-    if (maxDimension * scale > maxSize) {
-        scale = Math.floor(maxSize / maxDimension);
-    }
+    // Use fixed scale of 7
+    const scale = 7;
     
     html2canvas(wrapper, {
         backgroundColor: '#ffffff',
-        scale: 2,
+        scale: scale,
         logging: false,
         useCORS: true,
         allowTaint: true,
@@ -442,7 +436,7 @@ function downloadAsPNG(event) {
             setTimeout(() => {
                 html2canvas(wrapper, {
                     backgroundColor: '#ffffff',
-                    scale: 4,
+                    scale: 6,  
                     logging: false,
                     useCORS: true,
                     allowTaint: true,
