@@ -1,7 +1,7 @@
 # IU Table Organizer
 
 [![Version](https://img.shields.io/badge/version-2.0-blue.svg)](https://github.com/yourusername/IU-table-organizer)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 A Chrome extension/userscript to enhance and organize the Islamic University schedule table view. Transform your class schedule into a more readable format with one click.
 
