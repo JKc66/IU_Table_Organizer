@@ -42,7 +42,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 1. Download and extract using the button below:
    <div align="center">
-     <a href="https://github.com/JK-c66/IU_Table_Organizer/tree/main/IU_tabel_org.zip">
+     <a href="https://github.com/JK-c66/IU_Table_Organizer/tree/main/IU_tabel_org">
        <img src="https://img.shields.io/badge/Download-Extension-green?style=for-the-badge&logo=github" alt="Download Extension" />
      </a>
    </div>
@@ -61,7 +61,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 3. Use "تحميل كصورة" to save as PNG
 
 ## 📜 Credits
-- Original script by [<img src="https://github.com/favicon.ico" width="32"/> mah-sam](https://github.com/mah-sam)
+- Original script by [mah-sam <img src="https://github.com/favicon.ico" width="24" style="filter: invert(1);"/>](https://github.com/mah-sam)
 - Using [html2canvas](https://html2canvas.hertzen.com/)
 
 ## 📄 License
