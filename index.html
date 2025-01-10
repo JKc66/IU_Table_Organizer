@@ -32,11 +32,25 @@
                     <div class="after-grid">
                         <div class="after-item">
                             <h4>Dark Mode</h4>
-                            <img src="assests/after_dark.png" alt="After Organization - Dark Mode" loading="lazy">
+                            <div class="image-wrapper">
+                                <div class="image-placeholder" style="background-image: url('assests/after_dark_placeholder.jpg');"></div>
+                                <picture>
+                                    <source srcset="assests/after_dark.webp" type="image/webp">
+                                    <source srcset="assests/after_dark.png" type="image/png">
+                                    <img src="assests/after_dark.png" alt="After Organization - Dark Mode" loading="lazy" class="blur-up">
+                                </picture>
+                            </div>
                         </div>
                         <div class="after-item">
                             <h4>Light Mode</h4>
-                            <img src="assests/after_light.png" alt="After Organization - Light Mode" loading="lazy">
+                            <div class="image-wrapper">
+                                <div class="image-placeholder" style="background-image: url('assests/after_light_placeholder.jpg');"></div>
+                                <picture>
+                                    <source srcset="assests/after_light.webp" type="image/webp">
+                                    <source srcset="assests/after_light.png" type="image/png">
+                                    <img src="assests/after_light.png" alt="After Organization - Light Mode" loading="lazy" class="blur-up">
+                                </picture>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -155,5 +169,19 @@
             <p>Mozilla Public License 2.0 - see LICENSE file for details</p>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const blurUpImages = document.querySelectorAll('.blur-up');
+            blurUpImages.forEach(img => {
+                img.onload = function() {
+                    img.classList.add('loaded');
+                    const placeholder = img.closest('.image-wrapper').querySelector('.image-placeholder');
+                    if (placeholder) {
+                        placeholder.style.opacity = '0';
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html> 
