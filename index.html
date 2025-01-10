@@ -1,63 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IU Table Organizer - Schedule Enhancement Tool</title>
     <link rel="stylesheet" href="page_styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script>
-        function initTheme() {
-            const themeToggle = document.getElementById('theme-toggle');
-            const root = document.documentElement;
-            const icon = themeToggle.querySelector('i');
-            
-            // Function to update theme
-            function setTheme(theme) {
-                root.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-                icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-
-            // Check saved theme or system preference
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                setTheme(savedTheme);
-            } else {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                setTheme(prefersDark ? 'dark' : 'light');
-            }
-
-            // Theme toggle click handler
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = root.getAttribute('data-theme');
-                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-            });
-
-            // Listen for system theme changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (!localStorage.getItem('theme')) {
-                    setTheme(e.matches ? 'dark' : 'light');
-                }
-            });
-        }
-
-        // Initialize theme when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initTheme);
-        } else {
-            initTheme();
-        }
-    </script>
 </head>
 <body>
     <header>
         <div class="container">
-            <div class="header-top">
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-moon"></i>
-                </button>
-            </div>
             <h1>IU Table Organizer</h1>
             <p class="subtitle">Transform your Islamic University schedule into a more readable format with one click.</p>
             <div class="badges">
@@ -71,20 +23,20 @@
         <section id="demo" class="section">
             <h2>Before & After</h2>
             <div class="demo-images">
-                <div class="before">
+                <div class="before-section">
                     <h3>Before Organization</h3>
                     <img src="assests/before.png" alt="Before Organization">
                 </div>
-                <div class="after">
+                <div class="after-section">
                     <h3>After Organization</h3>
                     <div class="after-grid">
-                        <div>
-                            <p>Light Mode</p>
-                            <img src="assests/after_light.png" alt="After Organization Light" loading="lazy" width="600" height="400">
+                        <div class="after-item">
+                            <h4>Dark Mode</h4>
+                            <img src="assests/after_dark.png" alt="After Organization - Dark Mode" loading="lazy">
                         </div>
-                        <div>
-                            <p>Dark Mode</p>
-                            <img src="assests/after_dark.png" alt="After Organization Dark" loading="lazy" width="600" height="400">
+                        <div class="after-item">
+                            <h4>Light Mode</h4>
+                            <img src="assests/after_light.png" alt="After Organization - Light Mode" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -96,8 +48,8 @@
             <div class="installation-methods">
                 <div class="method">
                     <div class="method-header">
-                        <img src="assests/tampermonkeysvg.svg" alt="Tampermonkey Icon" class="method-icon">
-                        <h3>Tampermonkey (Recommended)</h3>
+                        <i class="fas fa-puzzle-piece"></i>
+                        <h3>Tampermonkey</h3>
                     </div>
                     <div class="steps">
                         <div class="step-container">
@@ -113,8 +65,8 @@
                                             <p>Works on mobile and tablet devices using Microsoft Edge browser</p>
                                         </div>
                                     </div>
-                                    <a href="https://www.tampermonkey.net/" class="button primary-button" target="_blank" rel="noopener noreferrer">
-                                        <i class="fas fa-download"></i>
+                                    <a href="https://www.tampermonkey.net/" class="button secondary-button" target="_blank" rel="noopener noreferrer">
+                                        <img src="assests/tampermonkeysvg.svg" alt="Tampermonkey Icon" class="button-icon">
                                         Get Tampermonkey
                                     </a>
                                 </div>
@@ -148,7 +100,7 @@
                             <div class="step-content">
                                 <h4>Download Extension</h4>
                                 <p>Get the Chrome extension package</p>
-                                <a href="https://github.com/JK-c66/IU_Table_Organizer/raw/main/IU_tabel_org.zip" class="button download-btn" target="_blank" rel="noopener noreferrer">
+                                <a href="https://github.com/JK-c66/IU_Table_Organizer/raw/main/IU_tabel_org.zip" class="button secondary-button" target="_blank" rel="noopener noreferrer">
                                     <i class="fas fa-download"></i>
                                     Download Extension
                                 </a>
