@@ -10,6 +10,11 @@
 <body>
     <header>
         <div class="container">
+            <div class="header-top">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
             <h1>IU Table Organizer</h1>
             <p class="subtitle">Transform your Islamic University schedule into a more readable format with one click.</p>
             <div class="badges">
@@ -155,5 +160,48 @@
             <p>Mozilla Public License 2.0 - see LICENSE file for details</p>
         </div>
     </footer>
+
+    <script>
+        // Theme switching functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const root = document.documentElement;
+        const icon = themeToggle.querySelector('i');
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            root.setAttribute('data-theme', savedTheme);
+            updateIcon(savedTheme === 'dark');
+        } else {
+            // Check system preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+                root.setAttribute('data-theme', 'dark');
+                updateIcon(true);
+            }
+        }
+
+        // Theme toggle click handler
+        themeToggle.addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcon(!isDark);
+        });
+
+        // Update icon based on theme
+        function updateIcon(isDark) {
+            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+                updateIcon(e.matches);
+            }
+        });
+    </script>
 </body>
 </html> 

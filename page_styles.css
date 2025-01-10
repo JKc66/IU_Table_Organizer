@@ -1,4 +1,5 @@
 :root {
+    /* Light theme variables */
     --primary-color: #4a90e2;
     --secondary-color: #2c3e50;
     --accent-color: #357abd;
@@ -8,6 +9,39 @@
     --border-radius: 8px;
     --spacing: 1.5rem;
     --transition: all 0.3s ease;
+    --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #60a5fa;
+        --secondary-color: #1a1f2e;
+        --accent-color: #3b82f6;
+        --background-color: #0f172a;
+        --text-color: #e2e8f0;
+        --card-background: #1e293b;
+        --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Dark theme class for manual toggle */
+:root[data-theme="dark"] {
+    --primary-color: #60a5fa;
+    --secondary-color: #1a1f2e;
+    --accent-color: #3b82f6;
+    --background-color: #0f172a;
+    --text-color: #e2e8f0;
+    --card-background: #1e293b;
+    --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Add smooth transitions for theme switching */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 * {
@@ -633,4 +667,47 @@ footer {
     .step-connector {
         margin-left: 16px;
     }
+}
+
+/* Theme Toggle Styles */
+.header-top {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 0;
+}
+
+.theme-toggle {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.theme-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.theme-toggle i {
+    transition: transform 0.5s ease;
+}
+
+.theme-toggle:hover i {
+    transform: rotate(360deg);
 } 
