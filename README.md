@@ -15,11 +15,11 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
   <div style="display: flex; justify-content: center; gap: 20px;">
     <div>
       <p>Light Mode</p>
-      <img src="assests/after_light.png" alt="After Organization Light" width="100%" />
+      <img src="assests/after_light.jpg" alt="After Organization Light" width="100%" />
     </div>
     <div>
       <p>Dark Mode</p>
-      <img src="assests/after_dark.png" alt="After Organization Dark" width="100%" />
+      <img src="assests/after_dark.jpg" alt="After Organization Dark" width="100%" />
     </div>
   </div>
 </div>
