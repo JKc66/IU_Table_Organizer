@@ -321,8 +321,8 @@ function downloadAsPNG(event) {
     
     const wrapper = document.createElement('div');
     wrapper.style.cssText = `
-        background: #ffffff;
-        padding: 20px 30px;
+        background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
+        padding: 10px;
         direction: rtl;
         width: ${maxWidth}px;
         margin: 0 auto;
@@ -330,16 +330,25 @@ function downloadAsPNG(event) {
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 10px;
     `;
     
     const summaryClone = summary.cloneNode(true);
     const tableClone = element.cloneNode(true);
     
+    // Remove control buttons from summary clone
+    const controlButtons = summaryClone.querySelector('.control-buttons');
+    if (controlButtons) controlButtons.remove();
+    
+    // Remove theme buttons and download button
+    summaryClone.querySelectorAll('.control-button, .theme-btn').forEach(btn => btn.remove());
+    
     // Ensure summary maintains consistent width
     summaryClone.style.cssText = `
         width: ${maxWidth}px;
-        margin: 0 0 20px 0;
+        margin: 0;
         box-sizing: border-box;
+        background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
     `;
     
     // Ensure table maintains consistent width
@@ -347,10 +356,8 @@ function downloadAsPNG(event) {
         width: ${maxWidth}px;
         margin: 0;
         box-sizing: border-box;
+        background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
     `;
-    
-    const downloadBtn = summaryClone.querySelector('.control-button');
-    if (downloadBtn) downloadBtn.remove();
     
     wrapper.appendChild(summaryClone);
     wrapper.appendChild(tableClone);

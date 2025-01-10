@@ -19,6 +19,10 @@
     height: 60px;
     position: relative;
     box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    font-feature-settings: "kern", "liga", "clig", "calt", "arab";
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "arab";
+    font-family: "Segoe UI", "Traditional Arabic", Tahoma, Geneva, Verdana, sans-serif;
+    direction: rtl;
 }
 
 #newTable th {
@@ -55,6 +59,10 @@
     font-weight: 600;
     margin-bottom: 2px;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    text-align: center;
+    direction: rtl;
+    font-feature-settings: "kern", "liga", "clig", "calt", "arab";
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "arab";
 }
 
 #newTable th .day-name-en {
@@ -295,8 +303,55 @@
 }
 
 #newTable.theme-dark thead tr {
-    background: linear-gradient(135deg, #1a1f3c 0%, #2c3e50 100%);
-    color: #e4e4e7;
+    background: linear-gradient(135deg, #1a2b3f 0%, #2d4258 100%);
+    color: #ffffff;
+    box-shadow: none;
+    height: 65px;
+    font-family: "Traditional Arabic", "Segoe UI", "Arial", sans-serif;
+    direction: rtl;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#newTable.theme-dark th {
+    border-left: 1px solid rgba(255,255,255,0.08);
+    color: #ffffff;
+    position: relative;
+    border-bottom: none;
+}
+
+#newTable.theme-dark th::after {
+    background: rgba(255,255,255,0.08);
+    height: 2px;
+}
+
+#newTable.theme-dark th .day-name {
+    color: #ffffff !important;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    font-size: 1.8em;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-align: center;
+    direction: rtl;
+    font-family: "Traditional Arabic", "Segoe UI", "Arial", sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1, "clig" 1, "calt" 1, "arab" 1, "rlig" 1;
+    -webkit-font-feature-settings: "kern" 1, "liga" 1, "clig" 1, "calt" 1, "arab" 1, "rlig" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    word-spacing: normal;
+}
+
+#newTable.theme-dark th .day-name-en {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+    opacity: 0.9;
+}
+
+#newTable.theme-dark th:hover::after {
+    transform: scaleX(1);
+    background: rgba(255,255,255,0.15);
 }
 
 #newTable.theme-dark tbody tr {
@@ -360,4 +415,9 @@
 
 .theme-dark .control-button:hover {
     background: #3b4252;
+}
+
+#newTable.theme-dark th.HEADING {
+    background: linear-gradient(135deg, #1a2b3f 0%, #2d4258 100%) !important;
+    color: #ffffff;
 } 
