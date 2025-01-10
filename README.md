@@ -33,7 +33,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 | Step 1️⃣: Install Tampermonkey First | Step 2️⃣: Install Script |
 |:---:|:---:|
-| <img src="path/to/tampermonkey-icon.png" width="100"> | <img src="path/to/script-icon.png" width="100"> |
+| <img src="assests\tampermonkeysvg.svg" width="100"> | <img src="assests\greasyfork.png" width="100"> |
 | [Install Tampermonkey](link) | [Install Script](link) |
 
 💡 Also works on mobile/tablet devices using Microsoft Edge 🌐
