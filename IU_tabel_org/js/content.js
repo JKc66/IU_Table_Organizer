@@ -7,6 +7,7 @@ let on = false;
 let colors = ["Blue", "Black", "Crimson", "Green", "Grey", "OrangeRed", "Purple", "Red", "SpringGreen", "MediumTurquoise", "Navy", "GoldenRod"];
 let subject_colors = {};
 let color_index = 0;
+let currentTheme = 'light';
 
 // Main initialization function
 function waitForElement(selector, callback, maxTries = 100) {
@@ -457,9 +458,34 @@ function downloadAsPNG(event) {
     });
 }
 
+function toggleTheme(theme) {
+    currentTheme = theme;
+    const table = document.getElementById('newTable');
+    if (!table) return;
+    
+    table.classList.remove('theme-light', 'theme-dark');
+    table.classList.add(`theme-${theme}`);
+    
+    // Update summary section theme
+    const summary = document.querySelector('.schedule-summary');
+    if (summary) {
+        summary.classList.remove('theme-light', 'theme-dark');
+        summary.classList.add(`theme-${theme}`);
+    }
+    
+    // Apply theme-specific styles
+    if (theme === 'dark') {
+        table.style.backgroundColor = '#1a1a1a';
+        table.style.color = '#ffffff';
+    } else {
+        table.style.backgroundColor = '';
+        table.style.color = '';
+    }
+}
+
 function createSummary() {
     let summary = document.createElement('div');
-    summary.classList.add('schedule-summary');
+    summary.classList.add('schedule-summary', `theme-${currentTheme}`);
     
     let totalHours = 0;
     let subjectCount = new Set();
@@ -487,32 +513,57 @@ function createSummary() {
     
     summary.innerHTML = `
         <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 4px; background: #e3f2fd; padding: 8px 16px; border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#1a2f4d' : '#e3f2fd'}; padding: 8px 16px; border-radius: 8px;">
                 <span style="font-weight: 500;">📚 المواد:</span>
                 <span>${subjectCount.size}</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 4px; background: #f3e5f5; padding: 8px 16px; border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#2d1f3d' : '#f3e5f5'}; padding: 8px 16px; border-radius: 8px;">
                 <span style="font-weight: 500;">⏰ الساعات:</span>
                 <span>${totalHours}</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 4px; background: #e8f5e9; padding: 8px 16px; border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#1f3d2d' : '#e8f5e9'}; padding: 8px 16px; border-radius: 8px;">
                 <span style="font-weight: 500;">📅 أيام الدراسة:</span>
                 <span>${daysWithClasses.size}</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 4px; background: #fff3e0; padding: 8px 16px; border-radius: 8px;">
+            <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#3d2d1f' : '#fff3e0'}; padding: 8px 16px; border-radius: 8px;">
                 <span style="font-weight: 500;">📊 اليوم الأكثر:</span>
                 <span>${busyDays.join(', ')} (${maxLectures})</span>
             </div>
-            <button class="control-button" id="downloadButton">
-                💾 تحميل كصورة
-            </button>
+            <div style="display: flex; gap: 8px;">
+                <button class="control-button theme-btn" id="lightThemeBtn" style="background: ${currentTheme === 'light' ? '#4CAF50' : '#666'};">
+                    ☀️ فاتح
+                </button>
+                <button class="control-button theme-btn" id="darkThemeBtn" style="background: ${currentTheme === 'dark' ? '#4CAF50' : '#666'};">
+                    🌙 داكن
+                </button>
+                <button class="control-button" id="downloadButton">
+                    💾 تحميل كصورة
+                </button>
+            </div>
         </div>
     `;
     
     setTimeout(() => {
         const downloadButton = summary.querySelector('#downloadButton');
+        const lightThemeBtn = summary.querySelector('#lightThemeBtn');
+        const darkThemeBtn = summary.querySelector('#darkThemeBtn');
+        
         if (downloadButton) {
             downloadButton.addEventListener('click', downloadAsPNG);
+        }
+        
+        if (lightThemeBtn) {
+            lightThemeBtn.addEventListener('click', () => {
+                toggleTheme('light');
+                appendTable();
+            });
+        }
+        
+        if (darkThemeBtn) {
+            darkThemeBtn.addEventListener('click', () => {
+                toggleTheme('dark');
+                appendTable();
+            });
         }
     }, 0);
     
@@ -520,16 +571,21 @@ function createSummary() {
 }
 
 function appendTable() {
+    // Remove any existing organized tables and summaries
+    if (newTableNode) {
+        newTableNode.remove();
+    }
     document.querySelectorAll('.schedule-summary').forEach(el => el.remove());
 
     const originalTableNode = document.getElementById('scheduleFrm:studScheduleTable');
     let table = document.createElement('table');
     table.id = "newTable";
-    table.classList.add('rowFlow');
+    table.classList.add('rowFlow', `theme-${currentTheme}`);
     table.width = "100%";
     table.cellPadding = '0';
     table.cellSpacing = '0';
     table.border = '1';
+    
     originalTableNode.insertAdjacentElement('afterend', table);
 
     let thead = document.createElement('thead');
@@ -573,25 +629,38 @@ function appendTable() {
                 trs[j].children[i].innerHTML = `<div class="break-cell">${getBreakText(hrs)}</div>`;
             } else {
                 let subjectColor = subject_colors[lecture.subject];
+                // Adjust color for dark mode if needed
+                if (currentTheme === 'dark') {
+                    // Make the color more visible in dark mode
+                    subjectColor = adjustColorForDarkMode(subjectColor);
+                }
+                
+                let activityStyle = getActivityStyle(lecture.activity);
+                if (currentTheme === 'dark') {
+                    activityStyle = activityStyle.replace('background: #9c27b0', 'background: #4a1259')
+                        .replace('background: #1976d2', 'background: #1a3f6b')
+                        .replace('background: #757575', 'background: #3d3d3d');
+                }
+                
                 let content = `<div style="margin-bottom: 3px;">
-                    <strong style="font-size: 1.1em;">${lecture.subject}</strong>
+                    <strong style="font-size: 1.1em; color: ${currentTheme === 'dark' ? '#e4e4e7' : 'inherit'}">${lecture.subject}</strong>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
                         <div style="text-align: right;">
-                            <div style="${getActivityStyle(lecture.activity)}">
+                            <div style="${activityStyle}">
                                 ${getActivityIcon(lecture.activity)} ${lecture.activity}
                             </div>
-                            <div style="background: #e8eaf6; border-radius: 6px; padding: 4px 8px; color: #283593; display: inline-block; margin-top: 5px;">
+                            <div style="background: ${currentTheme === 'dark' ? '#1a2f3a' : '#e8eaf6'}; border-radius: 6px; padding: 4px 8px; color: ${currentTheme === 'dark' ? '#8ebbff' : '#283593'}; display: inline-block; margin-top: 5px;">
                                 🔢 الشعبة: ${lecture.section}
                             </div>
                         </div>
                         <div style="text-align: left;">
-                            <div style="font-weight: bold; color: #1a237e;">${lecture.time}</div>
+                            <div style="font-weight: bold; color: ${currentTheme === 'dark' ? '#8ebbff' : '#1a237e'}">${lecture.time}</div>
                             <div class="lecture-hall">🏛️ ${lecture.place}</div>
                         </div>
                     </div>
                  </div>`;
                      
-                trs[j].children[i].innerHTML = `<div class="lecture-cell" style="border-left-color: ${subjectColor}">${content}</div>`;
+                trs[j].children[i].innerHTML = `<div class="lecture-cell" style="border-left-color: ${subjectColor};">${content}</div>`;
             }
         });
     });
@@ -599,4 +668,26 @@ function appendTable() {
     newTableNode = table;
     let summary = createSummary();
     originalTableNode.insertAdjacentElement('afterend', summary);
+}
+
+// Helper function to adjust colors for dark mode
+function adjustColorForDarkMode(color) {
+    // Convert color to RGB if it's a named color
+    let tempDiv = document.createElement('div');
+    tempDiv.style.color = color;
+    document.body.appendChild(tempDiv);
+    let rgbColor = window.getComputedStyle(tempDiv).color;
+    document.body.removeChild(tempDiv);
+    
+    // Parse RGB values
+    let rgb = rgbColor.match(/\d+/g).map(Number);
+    
+    // Increase brightness for dark mode
+    let adjustedRgb = rgb.map(value => {
+        // Increase brightness but maintain color character
+        let adjusted = Math.min(255, value + 40);
+        return adjusted;
+    });
+    
+    return `rgb(${adjustedRgb.join(',')})`;
 } 

@@ -8,6 +8,7 @@
     background: white;
     width: 98%;
     min-width: 1400px;
+    table-layout: fixed;
 }
 
 #newTable thead tr {
@@ -21,7 +22,7 @@
 }
 
 #newTable th {
-    width: 22%;
+    width: 20%;
     padding: 12px;
     position: relative;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -285,4 +286,78 @@
 .schedule-summary div {
     font-size: 1.1em;
     padding: 10px 20px;
+}
+
+/* Dark Theme Styles */
+#newTable.theme-dark {
+    background: #121212;
+    border-color: #2e2e2e;
+}
+
+#newTable.theme-dark thead tr {
+    background: linear-gradient(135deg, #1a1f3c 0%, #2c3e50 100%);
+    color: #e4e4e7;
+}
+
+#newTable.theme-dark tbody tr {
+    border-bottom: 1px solid #2e2e2e;
+}
+
+#newTable.theme-dark tbody tr:hover {
+    background-color: #1e1e2e;
+}
+
+#newTable.theme-dark td {
+    color: #e4e4e7;
+}
+
+#newTable.theme-dark .break-cell {
+    background: #1e1e2e;
+    color: #a0a0a7;
+    border-color: #2e2e2e;
+}
+
+#newTable.theme-dark .lecture-cell {
+    background: #1e1e2e;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+#newTable.theme-dark .lecture-hall {
+    background: #1a2f3a;
+    color: #8ebbff;
+    border-color: #2e3f4a;
+}
+
+.schedule-summary.theme-dark {
+    background: linear-gradient(45deg, #121212, #1e1e2e);
+    border-color: #2e2e2e;
+    color: #e4e4e7;
+}
+
+/* Dark theme loading overlay */
+.theme-dark .loading-overlay {
+    background: linear-gradient(135deg, rgba(18, 18, 18, 0.98), rgba(30, 30, 46, 0.98));
+}
+
+.theme-dark .loading-content {
+    background: #1e1e2e;
+    color: #e4e4e7;
+}
+
+.theme-dark .loading-text {
+    color: #e4e4e7;
+}
+
+.theme-dark .loading-subtext {
+    color: #a0a0a7;
+}
+
+/* Dark theme control buttons */
+.theme-dark .control-button {
+    background: #2e3440;
+    color: #e4e4e7;
+}
+
+.theme-dark .control-button:hover {
+    background: #3b4252;
 } 
