@@ -31,31 +31,12 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 1. First install the Tampermonkey extension
 2. Then install the script
 
-<div align="center">
-  <table style="border-collapse: separate; border-spacing: 30px; margin: 20px auto; background: none; border: none;">
-    <tr>
-      <td align="center" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 250px; transition: transform 0.2s;">
-        <h4 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 1.2em;">Step 1️⃣: Install Tampermonkey First</h4>
-        <a href="https://www.tampermonkey.net/" style="text-decoration: none; color: inherit;">
-          <img src="assests/tampermonkeysvg.svg" width="64" height="64" alt="Tampermonkey" style="margin-bottom: 12px;">
-          <br>
-          <span style="display: inline-block; background: #4CAF50; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 500;">Install Tampermonkey</span>
-        </a>
-      </td>
-      <td style="font-size: 24px; padding: 0 10px; color: #666;">➔</td>
-      <td align="center" style="background: #ffffff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-width: 250px; transition: transform 0.2s;">
-        <h4 style="margin: 0 0 15px 0; color: #2c3e50; font-size: 1.2em;">Step 2️⃣: Install Script</h4>
-        <a href="https://greasyfork.org/en/scripts/432219-%D9%85%D9%86%D8%B8%D9%85-%D8%AC%D8%AF%D9%88%D9%84-%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9-%D8%A7%D9%84%D8%A7%D8%B3%D9%84%D8%A7%D9%85%D9%8A%D8%A9" style="text-decoration: none; color: inherit;">
-          <img src="assests/greasyfork.png" width="64" height="64" alt="Install Script" style="margin-bottom: 12px;">
-          <br>
-          <span style="display: inline-block; background: #2196F3; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 500;">Install Script</span>
-        </a>
-      </td>
-    </tr>
-  </table>
-</div>
+| Step 1️⃣: Install Tampermonkey First | Step 2️⃣: Install Script |
+|:---:|:---:|
+| <img src="path/to/tampermonkey-icon.png" width="100"> | <img src="path/to/script-icon.png" width="100"> |
+| [Install Tampermonkey](link) | [Install Script](link) |
 
-> 💡 Also works on mobile/tablet devices using Microsoft Edge <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge.svg" width="16" height="16" alt="Edge Browser">
+💡 Also works on mobile/tablet devices using Microsoft Edge 🌐
 
 ### Method 2: Chrome Extension
 
