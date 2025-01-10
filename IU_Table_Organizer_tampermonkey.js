@@ -1036,12 +1036,10 @@ function appendTable() {
     table.appendChild(thead);
     table.appendChild(tbody);
 
-    const dayNamesEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
     days.forEach((day, i) => {
         let th = document.createElement('th');
         th.innerHTML = `
             <div class="day-name">${day}</div>
-            <div class="day-name-en">${dayNamesEn[i]}</div>
         `;
         th.classList.add('HEADING');
         th.scope = "col";
@@ -1111,11 +1109,6 @@ function appendTable() {
     newTableNode = table;
     let summary = createSummary();
     originalTableNode.insertAdjacentElement('afterend', summary);
-}
-
-function getEnglishDay(index) {
-    const englishDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
-    return englishDays[index] || '';
 }
 
 function insert_after(element, array, index) {
