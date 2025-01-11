@@ -183,6 +183,10 @@
     <div id="imageModal" class="modal">
         <span class="modal-close">&times;</span>
         <img class="modal-content" id="modalImage">
+        <div class="zoom-instructions">
+            <span class="desktop-instruction">Double-click to zoom</span>
+            <span class="mobile-instruction">Pinch to zoom</span>
+        </div>
     </div>
 
     <button id="languageToggle" class="language-toggle" onclick="toggleLanguage()">
@@ -193,33 +197,90 @@
     <style>
         /* Modal styles */
         .modal {
-            display: none;
+            display: none;  /* Initial state */
             position: fixed;
             z-index: 1000;
-            padding-top: 50px;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.9);
-            overflow: auto;
+            overflow: hidden;
+            touch-action: none;  /* Prevent default touch behaviors */
+        }
+
+        .modal.active {
+            display: flex;  /* When modal is active */
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-content {
-            margin: auto;
             display: block;
             max-width: 90%;
-            max-height: 90vh;
+            max-height: 85vh;
+            object-fit: contain;
+            margin: 0;
+            padding: 0;
+            transform-origin: center;
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
+            touch-action: none;  /* Handle touch events in JavaScript */
+        }
+
+        .modal-content.zoomed {
+            cursor: move;
+        }
+
+        /* Add zoom instructions */
+        .zoom-instructions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+            z-index: 1001;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .zoom-instructions.hide {
+            opacity: 0;
+        }
+
+        @media (hover: none) {
+            .zoom-instructions {
+                content: attr(data-mobile-text);
+            }
         }
 
         .modal-close {
-            position: absolute;
-            right: 35px;
-            top: 15px;
+            position: fixed;
+            right: 20px;
+            top: 20px;
             color: #f1f1f1;
             font-size: 40px;
             font-weight: bold;
             cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+            background: rgba(0, 0, 0, 0.8);
         }
 
         .demo-images img, .installation-guide img {
@@ -229,6 +290,44 @@
 
         .demo-images img:hover, .installation-guide img:hover {
             opacity: 0.8;
+        }
+
+        /* Language Switcher */
+        .header-controls {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+        }
+
+        [dir="rtl"] .header-controls {
+            right: auto;
+            left: 1rem;
+        }
+
+        .language-toggle {
+            position: fixed;
+            bottom: 50px;  /* Moved up from 20px to 50px */
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-family: var(--font-family-arabic);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* RTL Support for language toggle */
+        [dir="rtl"] .language-toggle {
+            left: auto;
+            right: 20px;
         }
     </style>
 
@@ -240,13 +339,134 @@
         const modalImg = document.getElementById('modalImage');
         const closeBtn = document.querySelector('.modal-close');
 
-        // Add click handlers to all images in the demo and installation guide sections
+        // Zoom functionality
+        let scale = 1;
+        let panning = false;
+        let pointX = 0;
+        let pointY = 0;
+        let start = { x: 0, y: 0 };
+
+        function setTransform(element) {
+            element.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+        }
+
+        function resetZoom(element) {
+            scale = 1;
+            pointX = 0;
+            pointY = 0;
+            element.style.transform = `translate(0px, 0px) scale(1)`;
+            element.classList.remove('zoomed');
+        }
+
+        // Double-click to zoom
+        modalImg.addEventListener('dblclick', function(e) {
+            e.preventDefault();
+            if (scale === 1) {
+                scale = 2;
+                pointX = (window.innerWidth / 2 - e.clientX) * 2;
+                pointY = (window.innerHeight / 2 - e.clientY) * 2;
+                this.classList.add('zoomed');
+            } else {
+                resetZoom(this);
+            }
+            setTransform(this);
+        });
+
+        // Mouse drag to pan when zoomed
+        modalImg.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            if (scale > 1) {
+                panning = true;
+                start = { x: e.clientX - pointX, y: e.clientY - pointY };
+                this.style.cursor = 'grabbing';
+            }
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            e.preventDefault();
+            if (panning && scale > 1) {
+                pointX = e.clientX - start.x;
+                pointY = e.clientY - start.y;
+                setTransform(modalImg);
+            }
+        });
+
+        document.addEventListener('mouseup', function(e) {
+            panning = false;
+            modalImg.style.cursor = scale > 1 ? 'move' : 'zoom-in';
+        });
+
+        // Touch events for mobile
+        let lastTouchDistance = 0;
+        let initialScale = 1;
+
+        modalImg.addEventListener('touchstart', function(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                lastTouchDistance = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+                initialScale = scale;
+            } else if (scale > 1) {
+                const touch = e.touches[0];
+                start = { x: touch.clientX - pointX, y: touch.clientY - pointY };
+            }
+        });
+
+        modalImg.addEventListener('touchmove', function(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const distance = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+                scale = Math.min(Math.max(initialScale * (distance / lastTouchDistance), 1), 4);
+                this.classList.toggle('zoomed', scale > 1);
+                setTransform(this);
+            } else if (scale > 1) {
+                const touch = e.touches[0];
+                pointX = touch.clientX - start.x;
+                pointY = touch.clientY - start.y;
+                setTransform(this);
+            }
+        });
+
+        // Reset zoom when closing modal
+        function closeModal() {
+            modal.classList.remove('active');
+            resetZoom(modalImg);
+        }
+
+        closeBtn.onclick = closeModal;
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Hide zoom instructions after a delay
+        let instructionsTimeout;
+        function showZoomInstructions() {
+            const instructions = document.querySelector('.zoom-instructions');
+            instructions.classList.remove('hide');
+            clearTimeout(instructionsTimeout);
+            instructionsTimeout = setTimeout(() => {
+                instructions.classList.add('hide');
+            }, 2000);
+        }
+
+        // Show instructions when opening modal
         document.querySelectorAll('.demo-images img, .installation-guide img').forEach(img => {
             img.onclick = function() {
-                modal.style.display = "block";
-                // For images inside picture elements, get the current source
+                modal.classList.add('active');
+                modalImg.src = '';  // Clear the source first
                 if (this.parentElement.tagName.toLowerCase() === 'picture') {
-                    // Get the first available source that can be displayed
                     const sources = this.parentElement.getElementsByTagName('source');
                     for (const source of sources) {
                         if (source.srcset) {
@@ -254,32 +474,13 @@
                             break;
                         }
                     }
-                    // Fallback to img src if no source is available
                     if (!modalImg.src) {
                         modalImg.src = this.src;
                     }
                 } else {
                     modalImg.src = this.src;
                 }
-            }
-        });
-
-        // Close modal when clicking the × button
-        closeBtn.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // Close modal when clicking outside the image
-        modal.onclick = function(event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        // Close modal with ESC key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && modal.style.display === "block") {
-                modal.style.display = "none";
+                showZoomInstructions();
             }
         });
 
