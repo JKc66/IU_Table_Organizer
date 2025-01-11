@@ -17,7 +17,7 @@ const translations = {
                     title: "Install Tampermonkey",
                     description: "Add the Tampermonkey extension to your browser for userscript management",
                     mobileNote: "Mobile Compatible!",
-                    mobileDesc: "Works on mobile and tablet devices using Microsoft Edge, Firefox, and Kiwi browsers",
+                    mobileDesc: "Works on mobile and tablet devices using Firefox and Kiwi browsers",
                     button: "Get Tampermonkey"
                 },
                 step2: {
@@ -84,7 +84,7 @@ const translations = {
                     title: "تثبيت Tampermonkey",
                     description: "أضف إضافة Tampermonkey إلى متصفحك لإدارة السكربتات",
                     mobileNote: "متوافق مع الجوال!",
-                    mobileDesc: "يعمل على الأجهزة المحمولة والأجهزة اللوحية باستخدام متصفحات مايكروسوفت إيدج وفايرفوكس وكيوي",
+                    mobileDesc: "يعمل على الأجهزة المحمولة والأجهزة اللوحية باستخدام متصفحات Firefox و Kiwi",
                     button: "تثبيت Tampermonkey"
                 },
                 step2: {
