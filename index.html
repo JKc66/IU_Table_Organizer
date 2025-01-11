@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assests/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="assests/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assests/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="assests/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assests/favicon/favicon.ico">
+    <meta name="theme-color" content="#ffffff">
+    
     <title data-translate="title">IU Table Organizer</title>
     <link rel="stylesheet" href="page_styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -38,16 +47,16 @@
                             <h4 data-translate="demo.darkMode">Dark Mode</h4>
                             <picture>
                                 <source srcset="assests/after_dark.webp" type="image/webp">
-                                <source srcset="assests/after_dark.png" type="image/png">
-                                <img src="assests/after_dark.png" alt="After Organization - Dark Mode">
+                                <source srcset="assests/after_dark.jpg" type="image/jpeg">
+                                <img src="assests/after_dark.jpg" alt="After Organization - Dark Mode">
                             </picture>
                         </div>
                         <div class="after-item">
                             <h4 data-translate="demo.lightMode">Light Mode</h4>
                             <picture>
                                 <source srcset="assests/after_light.webp" type="image/webp">
-                                <source srcset="assests/after_light.png" type="image/png">
-                                <img src="assests/after_light.png" alt="After Organization - Light Mode">
+                                <source srcset="assests/after_light.jpg" type="image/jpeg">
+                                <img src="assests/after_light.jpg" alt="After Organization - Light Mode">
                             </picture>
                         </div>
                     </div>
@@ -74,7 +83,12 @@
                                         <i class="fas fa-mobile-alt"></i>
                                         <div class="note-content">
                                             <strong data-translate="installation.tampermonkey.step1.mobileNote">Mobile Compatible!</strong>
-                                            <p data-translate="installation.tampermonkey.step1.mobileDesc">Works on mobile and tablet devices using Microsoft Edge browser</p>
+                                            <p data-translate="installation.tampermonkey.step1.mobileDesc">Works on mobile and tablet devices using Microsoft Edge, Firefox, and Kiwi browsers</p>
+                                            <div class="browser-icons">
+                                                <i class="fab fa-edge" title="Microsoft Edge"></i>
+                                                <i class="fab fa-firefox-browser" title="Firefox"></i>
+                                                <img src="assests/kiwi-browser.svg" alt="Kiwi Browser" title="Kiwi Browser" class="browser-icon">
+                                            </div>
                                         </div>
                                     </div>
                                     <a href="https://www.tampermonkey.net/" class="button secondary-button" target="_blank" rel="noopener noreferrer">
@@ -166,13 +180,109 @@
         </div>
     </footer>
     
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
     <button id="languageToggle" class="language-toggle" onclick="toggleLanguage()">
         <span class="lang-label-en">عربي</span>
         <span class="lang-label-ar">English</span>
     </button>
     
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90vh;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 35px;
+            top: 15px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .demo-images img, .installation-guide img {
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .demo-images img:hover, .installation-guide img:hover {
+            opacity: 0.8;
+        }
+    </style>
+
     <script>
         let currentLanguage = 'en';
+
+        // Image modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeBtn = document.querySelector('.modal-close');
+
+        // Add click handlers to all images in the demo and installation guide sections
+        document.querySelectorAll('.demo-images img, .installation-guide img').forEach(img => {
+            img.onclick = function() {
+                modal.style.display = "block";
+                // For images inside picture elements, get the current source
+                if (this.parentElement.tagName.toLowerCase() === 'picture') {
+                    // Get the first available source that can be displayed
+                    const sources = this.parentElement.getElementsByTagName('source');
+                    for (const source of sources) {
+                        if (source.srcset) {
+                            modalImg.src = source.srcset;
+                            break;
+                        }
+                    }
+                    // Fallback to img src if no source is available
+                    if (!modalImg.src) {
+                        modalImg.src = this.src;
+                    }
+                } else {
+                    modalImg.src = this.src;
+                }
+            }
+        });
+
+        // Close modal when clicking the × button
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Close modal when clicking outside the image
+        modal.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === "block") {
+                modal.style.display = "none";
+            }
+        });
 
         function updateTranslations() {
             document.querySelectorAll('[data-translate]').forEach(element => {

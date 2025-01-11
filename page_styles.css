@@ -1359,4 +1359,46 @@ footer {
 .author-link i,
 .credits-content {
     transition: all 0.3s ease;
+}
+
+/* Browser Icons */
+.browser-icons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.browser-icons i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.browser-icons i:hover {
+    transform: scale(1.1);
+}
+
+.browser-icons .browser-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.browser-icons .browser-icon:hover {
+    transform: scale(1.1);
+}
+
+/* RTL Support for browser icons */
+[dir="rtl"] .browser-icons {
+    flex-direction: row-reverse;
+}
+
+/* Responsive adjustments for browser icons */
+@media (max-width: 768px) {
+    .browser-icons {
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
 } 
