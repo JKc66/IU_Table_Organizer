@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IU Table Organizer - Schedule Enhancement Tool</title>
+    <title data-translate="title">IU Table Organizer</title>
     <link rel="stylesheet" href="page_styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Tajawal:wght@400;500;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="translations.js"></script>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>IU Table Organizer</h1>
-            <p class="subtitle">Transform your Islamic University schedule into a more readable format with one click.</p>
+            <div class="header-controls">
+                <button id="languageToggle" class="language-toggle" onclick="toggleLanguage()">
+                    <span class="lang-label-en">عربي</span>
+                    <span class="lang-label-ar">English</span>
+                </button>
+            </div>
+            <h1 data-translate="title">IU Table Organizer</h1>
+            <p class="subtitle" data-translate="subtitle">Transform your Islamic University schedule into a more readable format with one click.</p>
             <div class="badges">
                 <img src="https://img.shields.io/badge/version-2.0-blue.svg" alt="Version">
                 <img src="https://img.shields.io/badge/License-MPL%202.0-orange.svg" alt="License">
@@ -21,17 +29,17 @@
 
     <main class="container">
         <section id="demo" class="section">
-            <h2>Before & After</h2>
+            <h2 data-translate="demo.title">Before & After</h2>
             <div class="demo-images">
                 <div class="before-section">
-                    <h3>Before Organization</h3>
+                    <h3 data-translate="demo.beforeTitle">Before Organization</h3>
                     <img src="assests/before.png" alt="Before Organization">
                 </div>
                 <div class="after-section">
-                    <h3>After Organization</h3>
+                    <h3 data-translate="demo.afterTitle">After Organization</h3>
                     <div class="after-grid">
                         <div class="after-item">
-                            <h4>Dark Mode</h4>
+                            <h4 data-translate="demo.darkMode">Dark Mode</h4>
                             <div class="image-wrapper">
                                 <div class="image-placeholder" style="background-image: url('assests/after_dark.jpg');"></div>
                                 <picture>
@@ -42,7 +50,7 @@
                             </div>
                         </div>
                         <div class="after-item">
-                            <h4>Light Mode</h4>
+                            <h4 data-translate="demo.lightMode">Light Mode</h4>
                             <div class="image-wrapper">
                                 <div class="image-placeholder" style="background-image: url('assests/after_light.jpg');"></div>
                                 <picture>
@@ -58,46 +66,46 @@
         </section>
 
         <section id="installation" class="section">
-            <h2>Installation</h2>
+            <h2 data-translate="installation.title">Installation</h2>
             <div class="installation-methods">
                 <div class="method">
                     <div class="method-header">
                         <i class="fas fa-puzzle-piece"></i>
-                        <h3>Tampermonkey</h3>
+                        <h3 data-translate="installation.tampermonkey.title">Tampermonkey</h3>
                     </div>
                     <div class="steps">
                         <div class="step-container">
                             <div class="step">
                                 <div class="step-number">1</div>
                                 <div class="step-content">
-                                    <h4>Install Tampermonkey</h4>
-                                    <p>Add the Tampermonkey extension to your browser for userscript management</p>
+                                    <h4 data-translate="installation.tampermonkey.step1.title">Install Tampermonkey</h4>
+                                    <p data-translate="installation.tampermonkey.step1.description">Add the Tampermonkey extension to your browser for userscript management</p>
                                     <div class="compatibility-note">
                                         <i class="fas fa-mobile-alt"></i>
                                         <div class="note-content">
-                                            <strong>Mobile Compatible!</strong>
-                                            <p>Works on mobile and tablet devices using Microsoft Edge browser</p>
+                                            <strong data-translate="installation.tampermonkey.step1.mobileNote">Mobile Compatible!</strong>
+                                            <p data-translate="installation.tampermonkey.step1.mobileDesc">Works on mobile and tablet devices using Microsoft Edge browser</p>
                                         </div>
                                     </div>
                                     <a href="https://www.tampermonkey.net/" class="button secondary-button" target="_blank" rel="noopener noreferrer">
                                         <img src="assests/tampermonkeysvg.svg" alt="Tampermonkey Icon" class="button-icon">
-                                        Get Tampermonkey
+                                        <span data-translate="installation.tampermonkey.step1.button">Get Tampermonkey</span>
                                     </a>
                                 </div>
                             </div>
                             <div class="step">
                                 <div class="step-number">2</div>
                                 <div class="step-content">
-                                    <h4>Install Script</h4>
-                                    <p>Add the IU Table Organizer script from Greasyfork to enhance your schedule</p>
+                                    <h4 data-translate="installation.tampermonkey.step2.title">Install Script</h4>
+                                    <p data-translate="installation.tampermonkey.step2.description">Add the IU Table Organizer script from Greasyfork to enhance your schedule</p>
                                     <div class="features-list">
-                                        <div class="feature"><i class="fas fa-check"></i> Automatic table formatting</div>
-                                        <div class="feature"><i class="fas fa-check"></i> Dark mode support</div>
-                                        <div class="feature"><i class="fas fa-check"></i> Easy installation</div>
+                                        <div class="feature"><i class="fas fa-check"></i> <span data-translate="installation.tampermonkey.step2.features.formatting">Automatic table formatting</span></div>
+                                        <div class="feature"><i class="fas fa-check"></i> <span data-translate="installation.tampermonkey.step2.features.darkMode">Dark mode support</span></div>
+                                        <div class="feature"><i class="fas fa-check"></i> <span data-translate="installation.tampermonkey.step2.features.installation">Easy installation</span></div>
                                     </div>
                                     <a href="https://greasyfork.org/en/scripts/432219-%D9%85%D9%86%D8%B8%D9%85-%D8%AC%D8%AF%D9%88%D9%84-%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9-%D8%A7%D9%84%D8%A7%D8%B3%D9%84%D8%A7%D9%85%D9%8A%D8%A9" class="button secondary-button" target="_blank" rel="noopener noreferrer">
                                         <img src="assests/greasyfork.png" alt="Greasyfork Icon" class="button-icon">
-                                        Install Script
+                                        <span data-translate="installation.tampermonkey.step2.button">Install Script</span>
                                     </a>
                                 </div>
                             </div>
@@ -107,24 +115,23 @@
                 <div class="method">
                     <div class="method-header">
                         <i class="fab fa-chrome"></i>
-                        <h3>Chrome Extension</h3>
+                        <h3 data-translate="installation.chromeExtension.title">Chrome Extension</h3>
                     </div>
                     <div class="steps">
                         <div class="step">
                             <div class="step-content">
-                                <h4>Download Extension</h4>
-                                <p>Get the Chrome extension package</p>
+                                <h4 data-translate="installation.chromeExtension.download">Download Extension</h4>
                                 <a href="https://github.com/JK-c66/IU_Table_Organizer/raw/main/IU_tabel_org.zip" class="button secondary-button" target="_blank" rel="noopener noreferrer">
                                     <i class="fas fa-download"></i>
-                                    Download Extension
+                                    <span data-translate="installation.chromeExtension.download">Download Extension</span>
                                 </a>
                                 <div class="installation-guide">
-                                    <p>After downloading:</p>
+                                    <p data-translate="installation.chromeExtension.instructions">After downloading:</p>
                                     <ol>
-                                        <li>Extract the downloaded ZIP file to a folder</li>
-                                        <li>Open Chrome and go to chrome://extensions/</li>
-                                        <li>Enable "Developer mode" in the top right</li>
-                                        <li>Click "Load unpacked" and select the extracted folder</li>
+                                        <li data-translate="installation.chromeExtension.steps.0">Extract the downloaded ZIP file to a folder</li>
+                                        <li data-translate="installation.chromeExtension.steps.1">Open Chrome and go to chrome://extensions/</li>
+                                        <li data-translate="installation.chromeExtension.steps.2">Enable "Developer mode" in the top right</li>
+                                        <li data-translate="installation.chromeExtension.steps.3">Click "Load unpacked" and select the extracted folder</li>
                                     </ol>
                                     <img src="assests/extension_guide.PNG" alt="Chrome Extension Installation Guide" loading="lazy">
                                 </div>
@@ -139,7 +146,7 @@
             <div class="container">
                 <div class="made-by">
                     <span class="heart-icon">❤️</span>
-                    <p>Made with love by</p>
+                    <p data-translate="credits.madeWith">Made with love by</p>
                     <div class="authors">
                         <a href="https://github.com/mah-sam" class="author-link" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-github"></i>
@@ -156,10 +163,9 @@
         </div>
 
         <section id="credits" class="section">
-            <h2>Credits</h2>
+            <h2 data-translate="credits.title">Credits</h2>
             <div class="credits-content">
-                <p>Original script by <a href="https://github.com/mah-sam" target="_blank" rel="noopener noreferrer">mah-sam <i class="fab fa-github"></i></a></p>
-                <p>Using <a href="https://html2canvas.hertzen.com/" target="_blank" rel="noopener noreferrer">html2canvas <i class="fas fa-external-link-alt"></i></a></p>
+                <p><span data-translate="credits.using">Using</span> <a href="https://html2canvas.hertzen.com/" target="_blank" rel="noopener noreferrer">html2canvas <i class="fas fa-external-link-alt"></i></a></p>
             </div>
         </section>
     </main>
@@ -170,7 +176,60 @@
         </div>
     </footer>
     <script>
+        let currentLanguage = 'en';
+
+        function updateTranslations() {
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                const keys = key.split('.');
+                let value = translations[currentLanguage];
+                for (const k of keys) {
+                    value = value[k];
+                }
+                if (value) {
+                    if (element.tagName === 'INPUT' && element.type === 'placeholder') {
+                        element.placeholder = value;
+                    } else {
+                        element.textContent = value;
+                    }
+                }
+            });
+        }
+
+        // Language toggle functionality
+        function toggleLanguage() {
+            const htmlElement = document.documentElement;
+            const currentLang = htmlElement.getAttribute('lang');
+            const newLang = currentLang === 'en' ? 'ar' : 'en';
+            const newDir = currentLang === 'en' ? 'rtl' : 'ltr';
+            
+            htmlElement.setAttribute('lang', newLang);
+            htmlElement.setAttribute('dir', newDir);
+            
+            // Store the preference
+            localStorage.setItem('preferredLanguage', newLang);
+            localStorage.setItem('preferredDirection', newDir);
+
+            // Update translations
+            currentLanguage = newLang;
+            updateTranslations();
+        }
+
+        // Initialize language preference and translations
         document.addEventListener('DOMContentLoaded', function() {
+            const storedLang = localStorage.getItem('preferredLanguage');
+            const storedDir = localStorage.getItem('preferredDirection');
+            
+            if (storedLang && storedDir) {
+                document.documentElement.setAttribute('lang', storedLang);
+                document.documentElement.setAttribute('dir', storedDir);
+                currentLanguage = storedLang;
+            }
+
+            // Initialize translations
+            updateTranslations();
+
+            // Existing blur-up images code
             const blurUpImages = document.querySelectorAll('.blur-up');
             blurUpImages.forEach(img => {
                 img.onload = function() {

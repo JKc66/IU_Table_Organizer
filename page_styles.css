@@ -20,6 +20,84 @@
     --code-background: #2d3748;
     --overlay-background: rgba(0, 0, 0, 0.2);
     --overlay-hover: rgba(0, 0, 0, 0.3);
+    /* Arabic Support Variables */
+    --font-family-arabic: 'Noto Sans Arabic', 'Tajawal', 'Cairo', system-ui, -apple-system, sans-serif;
+    --direction: ltr;
+    --start: left;
+    --end: right;
+    --text-align: left;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+    --direction: rtl;
+    --start: right;
+    --end: left;
+    --text-align: right;
+}
+
+/* Base Styles with Arabic Support */
+body {
+    font-family: var(--font-family-arabic), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    direction: var(--direction);
+}
+
+/* Text Alignment for RTL */
+.section h2,
+.subtitle,
+.demo-images h3,
+.demo-images h4,
+.method h3,
+.credits-content p,
+.installation-guide p,
+.installation-guide li,
+.note-content p,
+.feature {
+    text-align: var(--text-align);
+}
+
+/* RTL Specific Adjustments */
+[dir="rtl"] .section h2::after {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .method-header i,
+[dir="rtl"] .button i,
+[dir="rtl"] .compatibility-note i {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+[dir="rtl"] .installation-guide ol {
+    padding-left: 0;
+    padding-right: 1.5rem;
+}
+
+[dir="rtl"] .feature i {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+/* Maintain Gradient Directions in RTL */
+[dir="rtl"] .section h2::after {
+    background: linear-gradient(to left, var(--primary-color), var(--accent-color));
+}
+
+[dir="rtl"] .button {
+    background: linear-gradient(-135deg, var(--primary-color), var(--accent-color));
+}
+
+/* Animation Adjustments for RTL */
+[dir="rtl"] .author-link::after {
+    transform: translateX(100%);
+}
+
+[dir="rtl"] .author-link:hover::after {
+    transform: translateX(0);
 }
 
 /* Add smooth transitions for theme switching */
@@ -31,13 +109,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--background-color);
 }
 
 .container {
@@ -148,6 +219,8 @@ header h1 {
     max-width: 600px;
     margin: 0 auto;
     color: var(--text-color);
+    text-align: center;
+    padding: 0 1rem;
 }
 
 .badges {
@@ -322,6 +395,7 @@ header h1 {
 .button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
@@ -332,6 +406,9 @@ header h1 {
     font-weight: 500;
     border: none;
     cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+    margin: 0.5rem auto;
 }
 
 .button:hover {
@@ -996,11 +1073,45 @@ footer {
     background: var(--card-background);
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.secondary-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--primary-color);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
 }
 
 .secondary-button:hover {
-    background: var(--primary-color);
     color: var(--button-text);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.3);
+}
+
+.secondary-button:hover::before {
+    opacity: 1;
+}
+
+/* Ensure RTL buttons maintain the same appearance */
+[dir="rtl"] .secondary-button {
+    background: var(--card-background);
+    color: var(--primary-color);
+}
+
+[dir="rtl"] .secondary-button:hover {
+    color: var(--button-text);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.3);
 }
 
 .button-icon {
@@ -1159,4 +1270,114 @@ footer {
     100% {
         filter: drop-shadow(0 0 25px rgba(255, 107, 107, 0.8));
     }
+}
+
+/* Language Switcher */
+.header-controls {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+}
+
+[dir="rtl"] .header-controls {
+    right: auto;
+    left: 1rem;
+}
+
+.language-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-family: var(--font-family-arabic);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.language-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Show/hide language labels based on current language */
+[lang="en"] .lang-label-ar,
+[lang="ar"] .lang-label-en {
+    display: none;
+}
+
+/* RTL-specific header adjustments */
+[dir="rtl"] header h1,
+[dir="rtl"] .subtitle {
+    font-family: var(--font-family-arabic);
+}
+
+/* Add RTL-specific adjustments */
+[dir="rtl"] .button-icon {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+[dir="rtl"] .step-number {
+    margin-right: 0;
+    margin-left: 16px;
+}
+
+[dir="rtl"] .badges {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .header-controls {
+    left: var(--spacing);
+    right: auto;
+}
+
+[dir="rtl"] .demo-images {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .installation-methods {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .method-header i {
+    margin-right: 0;
+    margin-left: 12px;
+}
+
+[dir="rtl"] .feature i {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+[dir="rtl"] .authors {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .author-link i {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+[dir="rtl"] .credits-content {
+    text-align: right;
+}
+
+/* Add smooth transitions for RTL changes */
+.button-icon,
+.step-number,
+.badges,
+.header-controls,
+.demo-images,
+.installation-methods,
+.method-header i,
+.feature i,
+.authors,
+.author-link i,
+.credits-content {
+    transition: all 0.3s ease;
 } 
