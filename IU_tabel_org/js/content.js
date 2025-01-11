@@ -197,15 +197,25 @@ function getNewTable() {
                     return total;
                 }
 
+                function calculateDuration(timeStr) {
+                    // Split time range (e.g., "09:30-10:50")
+                    let [start, end] = timeStr.split('-');
+                    let startValue = value(start);
+                    let endValue = value(end);
+                    return endValue - startValue;
+                }
+
                 for (k in lecture["اليوم"]) {
                     let day = days[parseInt(lecture["اليوم"][k])-1];
+                    let duration = calculateDuration(time);
                     newTable[day].push({
                         subject: rows[i]['اسم المقرر'],
                         activity: rows[i]['النشاط'],
                         time: time,
                         place: lecture['القاعة'],
                         section: rows[i]['الشعبة'],
-                        value: value(time)
+                        value: value(time),
+                        duration: duration
                     });
                     if (!(rows[i]['اسم المقرر'] in subject_colors)){
                         subject_colors[rows[i]['اسم المقرر']] = colors[color_index];
@@ -238,14 +248,18 @@ function getNewTable() {
             let uni_day = newTable[days[d]];
             let skip = 0;
             for (l = 0; l < uni_day.length - 1; l++) {
-                let difference = uni_day[l+1].value - uni_day[l].value;
-                if (difference > 60) {
+                let currentLecture = uni_day[l];
+                let nextLecture = uni_day[l+1];
+                let currentEndTime = currentLecture.value + (currentLecture.duration || 60); // Default to 60 if no duration
+                let breakTime = nextLecture.value - currentEndTime;
+                
+                if (breakTime > 0) {
                     let break_obj = {
                         subject: null,
                         activity: "break",
                         time: null,
                         place: null,
-                        value: difference - 60
+                        value: breakTime
                     };
                     edited_day = insert_after(break_obj, edited_day, l+skip);
                     skip++;
@@ -507,10 +521,13 @@ function createSummary() {
         }
         
         dayLectures.forEach(slot => {
-            totalHours += (slot.time ? 1 : 0);
+            totalHours += (slot.time ? (slot.duration / 60) : 0);
             subjectCount.add(slot.subject);
         });
     }
+    
+    // Round total hours to nearest 0.5
+    totalHours = Math.round(totalHours * 2) / 2;
     
     summary.innerHTML = `
         <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">

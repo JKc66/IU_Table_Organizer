@@ -79,7 +79,7 @@ const translations = {
         installation: {
             title: "التثبيت",
             tampermonkey: {
-                title: "تامبرمنكي",
+                title: "Tampermonkey",
                 step1: {
                     title: "تثبيت Tampermonkey",
                     description: "أضف إضافة Tampermonkey إلى متصفحك لإدارة السكربتات",
