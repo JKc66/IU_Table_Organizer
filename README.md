@@ -9,17 +9,17 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 <div align="center">
   <h3>Before Organization</h3>
-  <img src="assests/before.png" alt="Before Organization" width="80%" />
+  <img src="docs\assets/before.png" alt="Before Organization" width="80%" />
   <br><br>
   <h3>After Organization (Light & Dark)</h3>
   <div style="display: flex; justify-content: center; gap: 20px;">
     <div>
       <p>Light Mode</p>
-      <img src="assests/after_light.jpg" alt="After Organization Light" width="100%" />
+      <img src="docs\assets/after_light.jpg" alt="After Organization Light" width="100%" />
     </div>
     <div>
       <p>Dark Mode</p>
-      <img src="assests/after_dark.jpg" alt="After Organization Dark" width="100%" />
+      <img src="docs\assets/after_dark.jpg" alt="After Organization Dark" width="100%" />
     </div>
   </div>
 </div>
@@ -42,7 +42,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 | Step 1️⃣: Install Tampermonkey First | Step 2️⃣: Install Script |
 |:---:|:---:|
-| <img src="assests\tampermonkeysvg.svg" width="100"> | <img src="assests\greasyfork.png" width="100"> |
+| <img src="docs\assets\tampermonkeysvg.svg" width="100"> | <img src="docs\assets\greasyfork.png" width="100"> |
 | [Install Tampermonkey](https://www.tampermonkey.net/) | [Install Script](https://greasyfork.org/en/scripts/432219-%D9%85%D9%86%D8%B8%D9%85-%D8%AC%D8%AF%D9%88%D9%84-%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9-%D8%A7%D9%84%D8%A7%D8%B3%D9%84%D8%A7%D9%85%D9%8A%D8%A9) |
 
 💡 Also works on mobile/tablet devices using Microsoft Edge 🌐
@@ -61,7 +61,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 4. Click "Load unpacked" and select the extracted folder
 
 <div align="center">
-  <img src="assests/extension_guide.PNG" alt="Extension Installation Guide" width="80%" />
+  <img src="docs\assets/extension_guide.PNG" alt="Extension Installation Guide" width="80%" />
 </div>
 
 ## 📝 Usage
@@ -70,7 +70,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 3. Use "تحميل كصورة" to save as PNG
 
 ## 📜 Credits
-- Original script by [mah-sam <img src="assests\github_icon.png" width="24"/>](https://github.com/mah-sam)
+- Original script by [mah-sam <img src="docs\assets\github_icon.png" width="24"/>](https://github.com/mah-sam)
 - Using [html2canvas](https://html2canvas.hertzen.com/)
 
 ## 📄 License 
