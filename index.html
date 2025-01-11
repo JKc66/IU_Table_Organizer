@@ -13,10 +13,6 @@
     <header>
         <div class="container">
             <div class="header-controls">
-                <button id="languageToggle" class="language-toggle" onclick="toggleLanguage()">
-                    <span class="lang-label-en">عربي</span>
-                    <span class="lang-label-ar">English</span>
-                </button>
             </div>
             <h1 data-translate="title">IU Table Organizer</h1>
             <p class="subtitle" data-translate="subtitle">Transform your Islamic University schedule into a more readable format with one click.</p>
@@ -175,6 +171,12 @@
             <p>Mozilla Public License 2.0 - see LICENSE file for details</p>
         </div>
     </footer>
+    
+    <button id="languageToggle" class="language-toggle" onclick="toggleLanguage()">
+        <span class="lang-label-en">عربي</span>
+        <span class="lang-label-ar">English</span>
+    </button>
+    
     <script>
         let currentLanguage = 'en';
 
