@@ -36,25 +36,19 @@
                     <div class="after-grid">
                         <div class="after-item">
                             <h4 data-translate="demo.darkMode">Dark Mode</h4>
-                            <div class="image-wrapper">
-                                <div class="image-placeholder" style="background-image: url('assests/after_dark.jpg');"></div>
-                                <picture>
-                                    <source srcset="assests/after_dark.webp" type="image/webp">
-                                    <source srcset="assests/after_dark.png" type="image/png">
-                                    <img src="assests/after_dark.png" alt="After Organization - Dark Mode" loading="lazy" class="blur-up">
-                                </picture>
-                            </div>
+                            <picture>
+                                <source srcset="assests/after_dark.webp" type="image/webp">
+                                <source srcset="assests/after_dark.png" type="image/png">
+                                <img src="assests/after_dark.png" alt="After Organization - Dark Mode">
+                            </picture>
                         </div>
                         <div class="after-item">
                             <h4 data-translate="demo.lightMode">Light Mode</h4>
-                            <div class="image-wrapper">
-                                <div class="image-placeholder" style="background-image: url('assests/after_light.jpg');"></div>
-                                <picture>
-                                    <source srcset="assests/after_light.webp" type="image/webp">
-                                    <source srcset="assests/after_light.png" type="image/png">
-                                    <img src="assests/after_light.png" alt="After Organization - Light Mode" loading="lazy" class="blur-up">
-                                </picture>
-                            </div>
+                            <picture>
+                                <source srcset="assests/after_light.webp" type="image/webp">
+                                <source srcset="assests/after_light.png" type="image/png">
+                                <img src="assests/after_light.png" alt="After Organization - Light Mode">
+                            </picture>
                         </div>
                     </div>
                 </div>
@@ -129,7 +123,7 @@
                                         <li data-translate="installation.chromeExtension.steps.2">Enable "Developer mode" in the top right</li>
                                         <li data-translate="installation.chromeExtension.steps.3">Click "Load unpacked" and select the extracted folder</li>
                                     </ol>
-                                    <img src="assests/extension_guide.PNG" alt="Chrome Extension Installation Guide" loading="lazy">
+                                    <img src="assests/extension_guide.PNG" alt="Chrome Extension Installation Guide">
                                 </div>
                             </div>
                         </div>
@@ -230,18 +224,6 @@
 
             // Initialize translations
             updateTranslations();
-
-            // Existing blur-up images code
-            const blurUpImages = document.querySelectorAll('.blur-up');
-            blurUpImages.forEach(img => {
-                img.onload = function() {
-                    img.classList.add('loaded');
-                    const placeholder = img.closest('.image-wrapper').querySelector('.image-placeholder');
-                    if (placeholder) {
-                        placeholder.style.opacity = '0';
-                    }
-                }
-            });
         });
     </script>
 </body>

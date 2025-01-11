@@ -32,7 +32,7 @@ const translations = {
                 }
             },
             chromeExtension: {
-                title: "Chrome Extension",
+                title: "Browser Extension",
                 download: "Download Extension",
                 instructions: "After downloading:",
                 steps: [
@@ -99,7 +99,7 @@ const translations = {
                 }
             },
             chromeExtension: {
-                title: "إضافة كروم",
+                title: "إضافة المتصفح",
                 download: "تحميل الإضافة",
                 instructions: "بعد التحميل:",
                 steps: [
