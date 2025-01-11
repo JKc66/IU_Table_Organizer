@@ -197,6 +197,16 @@ function getNewTable() {
                     return total;
                 }
 
+                function getLectureEndTime(timeStr) {
+                    let parts = timeStr.split(' - ');
+                    return value(parts[1]);
+                }
+
+                function getLectureStartTime(timeStr) {
+                    let parts = timeStr.split(' - ');
+                    return value(parts[0]);
+                }
+
                 for (k in lecture["اليوم"]) {
                     let day = days[parseInt(lecture["اليوم"][k])-1];
                     newTable[day].push({
@@ -205,7 +215,9 @@ function getNewTable() {
                         time: time,
                         place: lecture['القاعة'],
                         section: rows[i]['الشعبة'],
-                        value: value(time)
+                        value: value(time),
+                        endTime: getLectureEndTime(time),
+                        startTime: getLectureStartTime(time)
                     });
                     if (!(rows[i]['اسم المقرر'] in subject_colors)){
                         subject_colors[rows[i]['اسم المقرر']] = colors[color_index];
@@ -217,7 +229,7 @@ function getNewTable() {
 
         // Sort lectures by time
         for (i in newTable) {
-            newTable[i].sort((a, b) => a.value - b.value);
+            newTable[i].sort((a, b) => a.startTime - b.startTime);
         }
 
         // Helper function to insert after index
@@ -238,14 +250,17 @@ function getNewTable() {
             let uni_day = newTable[days[d]];
             let skip = 0;
             for (l = 0; l < uni_day.length - 1; l++) {
-                let difference = uni_day[l+1].value - uni_day[l].value;
-                if (difference > 60) {
+                let currentLectureEnd = uni_day[l].endTime;
+                let nextLectureStart = uni_day[l+1].startTime;
+                let breakTime = nextLectureStart - currentLectureEnd;
+                
+                if (breakTime > 10) {  // Only show breaks longer than 10 minutes
                     let break_obj = {
                         subject: null,
                         activity: "break",
                         time: null,
                         place: null,
-                        value: difference - 60
+                        value: breakTime
                     };
                     edited_day = insert_after(break_obj, edited_day, l+skip);
                     skip++;
@@ -265,19 +280,29 @@ function getBreakText(hrs) {
         return '⌛';
     };
     
-    const icon = getBreakIcon(hrs);
+    // Round down if extra minutes are 10 or less
+    const wholeHours = Math.floor(hrs);
+    const extraMinutes = Math.round((hrs - wholeHours) * 60);
+    const roundedHours = extraMinutes <= 10 ? wholeHours : hrs;
+    
+    const icon = getBreakIcon(roundedHours);
     let duration;
     
-    if (hrs >= 10) {
-        duration = `${Math.floor(hrs)} ساعة`;
-    } else if (hrs > 2) {
-        duration = `${Math.floor(hrs)} ساعات`;
-    } else if (hrs == 2) {
+    if (roundedHours === 2) {
         duration = 'ساعتين';
-    } else if (hrs == 1) {
+    } else if (roundedHours > 2) {
+        duration = `${Math.floor(roundedHours)} ساعات`;
+    } else if (roundedHours >= 1) {
         duration = 'ساعة';
+        if (roundedHours > 1) {
+            const minutes = Math.round((roundedHours - 1) * 60);
+            if (minutes > 10) {  // Only show minutes if more than 10
+                duration += ` و ${minutes} دقيقة`;
+            }
+        }
     } else {
-        duration = `${Math.round(hrs * 60)} دقيقة`;
+        const minutes = Math.round(roundedHours * 60);
+        duration = `${minutes} دقيقة`;
     }
     
     return `<div class="break-content">${icon} ${duration} استراحة</div>`;
