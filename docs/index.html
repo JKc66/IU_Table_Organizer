@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assests/favicon/favicon.svg">
-    <link rel="icon" type="image/png" sizes="96x96" href="assests/favicon/favicon-96x96.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assests/favicon/apple-touch-icon.png">
-    <link rel="manifest" href="assests/favicon/site.webmanifest">
-    <link rel="shortcut icon" href="assests/favicon/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="../assets/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="../assets/favicon/favicon.ico">
     <meta name="theme-color" content="#ffffff">
     
     <title data-translate="title">IU Table Organizer</title>
@@ -38,7 +38,7 @@
             <div class="demo-images">
                 <div class="before-section">
                     <h3 data-translate="demo.beforeTitle">Before Organization</h3>
-                    <img src="assests/before.png" alt="Before Organization">
+                    <img src="../assets/before.png" alt="Before Organization">
                 </div>
                 <div class="after-section">
                     <h3 data-translate="demo.afterTitle">After Organization</h3>
@@ -46,17 +46,17 @@
                         <div class="after-item">
                             <h4 data-translate="demo.darkMode">Dark Mode</h4>
                             <picture>
-                                <source srcset="assests/after_dark.webp" type="image/webp">
-                                <source srcset="assests/after_dark.jpg" type="image/jpeg">
-                                <img src="assests/after_dark.jpg" alt="After Organization - Dark Mode">
+                                <source srcset="../assets/after_dark.webp" type="image/webp">
+                                <source srcset="../assets/after_dark.jpg" type="image/jpeg">
+                                <img src="../assets/after_dark.jpg" alt="After Organization - Dark Mode">
                             </picture>
                         </div>
                         <div class="after-item">
                             <h4 data-translate="demo.lightMode">Light Mode</h4>
                             <picture>
-                                <source srcset="assests/after_light.webp" type="image/webp">
-                                <source srcset="assests/after_light.jpg" type="image/jpeg">
-                                <img src="assests/after_light.jpg" alt="After Organization - Light Mode">
+                                <source srcset="../assets/after_light.webp" type="image/webp">
+                                <source srcset="../assets/after_light.jpg" type="image/jpeg">
+                                <img src="../assets/after_light.jpg" alt="After Organization - Light Mode">
                             </picture>
                         </div>
                     </div>
@@ -86,12 +86,12 @@
                                             <p data-translate="installation.tampermonkey.step1.mobileDesc">Works on mobile and tablet devices using Firefox, and Kiwi browsers</p>
                                             <div class="browser-icons">
                                                 <i class="fab fa-firefox-browser" title="Firefox"></i>
-                                                <img src="assests/kiwi-browser.svg" alt="Kiwi Browser" title="Kiwi Browser" class="browser-icon">
+                                                <img src="assets/kiwi-browser.svg" alt="Kiwi Browser" title="Kiwi Browser" class="browser-icon">
                                             </div>
                                         </div>
                                     </div>
                                     <a href="https://www.tampermonkey.net/" class="button secondary-button" target="_blank" rel="noopener noreferrer">
-                                        <img src="assests/tampermonkeysvg.svg" alt="Tampermonkey Icon" class="button-icon">
+                                        <img src="../assets/tampermonkeysvg.svg" alt="Tampermonkey Icon" class="button-icon">
                                         <span data-translate="installation.tampermonkey.step1.button">Get Tampermonkey</span>
                                     </a>
                                 </div>
@@ -107,7 +107,7 @@
                                         <div class="feature"><i class="fas fa-check"></i> <span data-translate="installation.tampermonkey.step2.features.installation">Easy installation</span></div>
                                     </div>
                                     <a href="https://greasyfork.org/en/scripts/432219-%D9%85%D9%86%D8%B8%D9%85-%D8%AC%D8%AF%D9%88%D9%84-%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9-%D8%A7%D9%84%D8%A7%D8%B3%D9%84%D8%A7%D9%85%D9%8A%D8%A9" class="button secondary-button" target="_blank" rel="noopener noreferrer">
-                                        <img src="assests/greasyfork.png" alt="Greasyfork Icon" class="button-icon">
+                                        <img src="../assets/greasyfork.png" alt="Greasyfork Icon" class="button-icon">
                                         <span data-translate="installation.tampermonkey.step2.button">Install Script</span>
                                     </a>
                                 </div>
@@ -136,7 +136,7 @@
                                         <li data-translate="installation.chromeExtension.steps.2">Enable "Developer mode" in the top right</li>
                                         <li data-translate="installation.chromeExtension.steps.3">Click "Load unpacked" and select the extracted folder</li>
                                     </ol>
-                                    <img src="assests/extension_guide.PNG" alt="Chrome Extension Installation Guide">
+                                    <img src="../assets/extension_guide.png" alt="Chrome Extension Installation Guide">
                                 </div>
                             </div>
                         </div>
@@ -331,210 +331,7 @@
         }
     </style>
 
-    <script>
-        let currentLanguage = 'en';
-
-        // Image modal functionality
-        const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImage');
-        const closeBtn = document.querySelector('.modal-close');
-
-        // Zoom functionality
-        let scale = 1;
-        let panning = false;
-        let pointX = 0;
-        let pointY = 0;
-        let start = { x: 0, y: 0 };
-
-        function setTransform(element) {
-            element.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
-        }
-
-        function resetZoom(element) {
-            scale = 1;
-            pointX = 0;
-            pointY = 0;
-            element.style.transform = `translate(0px, 0px) scale(1)`;
-            element.classList.remove('zoomed');
-        }
-
-        // Double-click to zoom
-        modalImg.addEventListener('dblclick', function(e) {
-            e.preventDefault();
-            if (scale === 1) {
-                scale = 2;
-                pointX = (window.innerWidth / 2 - e.clientX) * 2;
-                pointY = (window.innerHeight / 2 - e.clientY) * 2;
-                this.classList.add('zoomed');
-            } else {
-                resetZoom(this);
-            }
-            setTransform(this);
-        });
-
-        // Mouse drag to pan when zoomed
-        modalImg.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-            if (scale > 1) {
-                panning = true;
-                start = { x: e.clientX - pointX, y: e.clientY - pointY };
-                this.style.cursor = 'grabbing';
-            }
-        });
-
-        document.addEventListener('mousemove', function(e) {
-            e.preventDefault();
-            if (panning && scale > 1) {
-                pointX = e.clientX - start.x;
-                pointY = e.clientY - start.y;
-                setTransform(modalImg);
-            }
-        });
-
-        document.addEventListener('mouseup', function(e) {
-            panning = false;
-            modalImg.style.cursor = scale > 1 ? 'move' : 'zoom-in';
-        });
-
-        // Touch events for mobile
-        let lastTouchDistance = 0;
-        let initialScale = 1;
-
-        modalImg.addEventListener('touchstart', function(e) {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                lastTouchDistance = Math.hypot(
-                    e.touches[0].pageX - e.touches[1].pageX,
-                    e.touches[0].pageY - e.touches[1].pageY
-                );
-                initialScale = scale;
-            } else if (scale > 1) {
-                const touch = e.touches[0];
-                start = { x: touch.clientX - pointX, y: touch.clientY - pointY };
-            }
-        });
-
-        modalImg.addEventListener('touchmove', function(e) {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                const distance = Math.hypot(
-                    e.touches[0].pageX - e.touches[1].pageX,
-                    e.touches[0].pageY - e.touches[1].pageY
-                );
-                scale = Math.min(Math.max(initialScale * (distance / lastTouchDistance), 1), 4);
-                this.classList.toggle('zoomed', scale > 1);
-                setTransform(this);
-            } else if (scale > 1) {
-                const touch = e.touches[0];
-                pointX = touch.clientX - start.x;
-                pointY = touch.clientY - start.y;
-                setTransform(this);
-            }
-        });
-
-        // Reset zoom when closing modal
-        function closeModal() {
-            modal.classList.remove('active');
-            resetZoom(modalImg);
-        }
-
-        closeBtn.onclick = closeModal;
-        modal.onclick = function(event) {
-            if (event.target === modal) {
-                closeModal();
-            }
-        };
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-            }
-        });
-
-        // Hide zoom instructions after a delay
-        let instructionsTimeout;
-        function showZoomInstructions() {
-            const instructions = document.querySelector('.zoom-instructions');
-            instructions.classList.remove('hide');
-            clearTimeout(instructionsTimeout);
-            instructionsTimeout = setTimeout(() => {
-                instructions.classList.add('hide');
-            }, 2000);
-        }
-
-        // Show instructions when opening modal
-        document.querySelectorAll('.demo-images img, .installation-guide img').forEach(img => {
-            img.onclick = function() {
-                modal.classList.add('active');
-                modalImg.src = '';  // Clear the source first
-                if (this.parentElement.tagName.toLowerCase() === 'picture') {
-                    const sources = this.parentElement.getElementsByTagName('source');
-                    for (const source of sources) {
-                        if (source.srcset) {
-                            modalImg.src = source.srcset;
-                            break;
-                        }
-                    }
-                    if (!modalImg.src) {
-                        modalImg.src = this.src;
-                    }
-                } else {
-                    modalImg.src = this.src;
-                }
-                showZoomInstructions();
-            }
-        });
-
-        function updateTranslations() {
-            document.querySelectorAll('[data-translate]').forEach(element => {
-                const key = element.getAttribute('data-translate');
-                const keys = key.split('.');
-                let value = translations[currentLanguage];
-                for (const k of keys) {
-                    value = value[k];
-                }
-                if (value) {
-                    if (element.tagName === 'INPUT' && element.type === 'placeholder') {
-                        element.placeholder = value;
-                    } else {
-                        element.textContent = value;
-                    }
-                }
-            });
-        }
-
-        // Language toggle functionality
-        function toggleLanguage() {
-            const htmlElement = document.documentElement;
-            const currentLang = htmlElement.getAttribute('lang');
-            const newLang = currentLang === 'en' ? 'ar' : 'en';
-            const newDir = currentLang === 'en' ? 'rtl' : 'ltr';
-            
-            htmlElement.setAttribute('lang', newLang);
-            htmlElement.setAttribute('dir', newDir);
-            
-            // Store the preference
-            localStorage.setItem('preferredLanguage', newLang);
-            localStorage.setItem('preferredDirection', newDir);
-
-            // Update translations
-            currentLanguage = newLang;
-            updateTranslations();
-        }
-
-        // Initialize language preference and translations
-        document.addEventListener('DOMContentLoaded', function() {
-            const storedLang = localStorage.getItem('preferredLanguage');
-            const storedDir = localStorage.getItem('preferredDirection');
-            
-            if (storedLang && storedDir) {
-                document.documentElement.setAttribute('lang', storedLang);
-                document.documentElement.setAttribute('dir', storedDir);
-                currentLanguage = storedLang;
-            }
-
-            // Initialize translations
-            updateTranslations();
-        });
-    </script>
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
 </body>
 </html> 
