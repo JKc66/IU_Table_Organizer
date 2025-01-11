@@ -350,19 +350,92 @@ header h1 {
 }
 
 /* Installation Methods */
+.installation-intro {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
 .installation-methods {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    display: flex;
+    align-items: stretch;
+    gap: 2rem;
+    position: relative;
 }
 
 .method {
+    flex: 1;
     background: var(--card-background);
     border: 1px solid var(--border-color);
     box-shadow: var(--card-shadow);
     padding: 1.5rem;
     border-radius: var(--border-radius);
     transition: var(--transition);
+}
+
+.method-separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 1rem;
+}
+
+.method-separator::before,
+.method-separator::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 1px;
+    height: 30%;
+    background: var(--border-color);
+}
+
+.method-separator::before {
+    top: 0;
+}
+
+.method-separator::after {
+    bottom: 0;
+}
+
+.method-separator span {
+    background: var(--background-color);
+    color: var(--text-color-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+}
+
+/* Responsive adjustments for installation methods */
+@media (max-width: 768px) {
+    .installation-methods {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .method-separator {
+        padding: 0.5rem;
+    }
+
+    .method-separator::before,
+    .method-separator::after {
+        width: 30%;
+        height: 1px;
+        top: 50%;
+        left: auto;
+    }
+
+    .method-separator::before {
+        left: 0;
+    }
+
+    .method-separator::after {
+        right: 0;
+    }
 }
 
 .method:hover {

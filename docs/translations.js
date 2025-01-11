@@ -11,6 +11,8 @@ const translations = {
         },
         installation: {
             title: "Installation",
+            intro: "Choose one of the following installation methods:",
+            or: "OR",
             tampermonkey: {
                 title: "Tampermonkey",
                 step1: {
@@ -78,6 +80,8 @@ const translations = {
         },
         installation: {
             title: "التثبيت",
+            intro: "اختر إحدى طرق التثبيت التالية:",
+            or: "أو",
             tampermonkey: {
                 title: "Tampermonkey",
                 step1: {
