@@ -15,6 +15,32 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalImg = document.getElementById('modalImage');
     const closeBtn = document.querySelector('.modal-close');
 
+    // Ensure installation methods are visible in RTL
+    function ensureRTLVisibility() {
+        if (document.dir === 'rtl') {
+            const methods = document.querySelector('.installation-methods');
+            if (methods) {
+                methods.style.display = 'flex';
+                methods.style.visibility = 'visible';
+                methods.style.overflow = 'visible';
+                
+                const allMethods = methods.querySelectorAll('.method');
+                allMethods.forEach(method => {
+                    method.style.display = 'block';
+                    method.style.visibility = 'visible';
+                    method.style.overflow = 'visible';
+                });
+                
+                const separator = methods.querySelector('.method-separator');
+                if (separator) {
+                    separator.style.display = 'flex';
+                    separator.style.visibility = 'visible';
+                    separator.style.overflow = 'visible';
+                }
+            }
+        }
+    }
+
     // Functions
     function setTransform(element) {
         element.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
@@ -182,6 +208,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update translations
         currentLanguage = newLang;
         updateTranslations();
+        
+        // Ensure RTL visibility after language toggle
+        setTimeout(ensureRTLVisibility, 0);
     }
 
     // Initialize language preference and translations
@@ -192,8 +221,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.documentElement.setAttribute('lang', storedLang);
         document.documentElement.setAttribute('dir', storedDir);
         currentLanguage = storedLang;
+        // Ensure RTL visibility after initialization
+        setTimeout(ensureRTLVisibility, 0);
     }
 
     // Initialize translations
     updateTranslations();
+    
+    // Ensure RTL visibility on load
+    ensureRTLVisibility();
 }); 
