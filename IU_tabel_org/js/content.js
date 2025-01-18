@@ -4,10 +4,106 @@ const days = ['الأحد','الإثنين','الثلاثاء','الأربعاء
 let newTable = {};
 let newTableNode;
 let on = false;
+let ramadanMode = false;
 let colors = ["Blue", "Black", "Crimson", "Green", "Grey", "OrangeRed", "Purple", "Red", "SpringGreen", "MediumTurquoise", "Navy", "GoldenRod"];
 let subject_colors = {};
 let color_index = 0;
 let currentTheme = 'light';
+
+// Time conversion functions
+function convertToRamadanTime(timeStr) {
+    // Split the time range
+    const [startTime, endTime] = timeStr.split(' - ');
+    
+    // Helper function to parse time
+    function parseTime(time) {
+        const [timeComponent, period] = time.trim().split(' ');
+        const [hourStr, minuteStr] = timeComponent.split(':');
+        let hour = parseInt(hourStr);
+        const minute = parseInt(minuteStr);
+        const isPM = period === 'م';
+        if (isPM && hour !== 12) hour += 12;
+        if (!isPM && hour === 12) hour = 0;
+        return { hour, minute, period };
+    }
+
+    // Helper function to format time
+    function formatTime(hour, minute) {
+        let period = 'ص';
+        if (hour >= 12) {
+            period = 'م';
+            if (hour > 12) hour -= 12;
+        }
+        if (hour === 0) hour = 12;
+        return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${period}`;
+    }
+
+    // Parse start and end times
+    const start = parseTime(startTime);
+    const end = parseTime(endTime);
+    
+    // Calculate duration in minutes
+    const duration = ((end.hour - start.hour) * 60 + (end.minute - start.minute));
+    
+    // Determine if it's a practical session based on duration (80 minutes)
+    const isPractical = Math.abs(duration - 80) <= 5;  // Allow 5-minute flexibility
+
+    // Theoretical lecture time mappings (exact start times)
+    const theoreticalMap = {
+        '08:00 ص': { hour: 10, minute: 0 },   // 10:00 - 10:35
+        '09:00 ص': { hour: 10, minute: 35 },  // 10:35 - 11:10
+        '10:00 ص': { hour: 11, minute: 15 },  // 11:15 - 11:50
+        '11:00 ص': { hour: 11, minute: 50 },  // 11:50 - 12:25
+        '12:00 م': { hour: 12, minute: 30 },  // 12:30 - 13:05
+        '01:00 م': { hour: 13, minute: 30 },  // 13:30 - 14:05
+        '02:00 م': { hour: 14, minute: 5 },   // 14:05 - 14:40
+        '03:00 م': { hour: 14, minute: 45 },  // 14:45 - 15:20
+        '04:00 م': { hour: 15, minute: 20 },  // 15:20 - 15:55
+        '05:00 م': { hour: 15, minute: 55 },  // 15:55 - 16:30
+        '06:00 م': { hour: 16, minute: 50 },  // 16:50 - 17:25
+        '07:00 م': { hour: 17, minute: 25 },  // 17:25 - 18:00
+        '08:00 م': null                       // Not in use
+    };
+
+    // Practical session time mappings (exact start times)
+    const practicalMap = {
+        '08:00 ص': { hour: 10, minute: 0 },   // 10:00 - 10:50
+        '09:30 ص': { hour: 11, minute: 0 },   // 11:00 - 11:50
+        '11:00 ص': { hour: 12, minute: 0 },   // 12:00 - 12:50
+        '12:30 م': { hour: 13, minute: 10 },  // 13:10 - 14:00
+        '02:00 م': { hour: 14, minute: 10 },  // 14:10 - 15:00
+        '03:30 م': { hour: 15, minute: 10 },  // 15:10 - 16:00
+        '05:00 م': { hour: 16, minute: 20 }   // 16:20 - 17:10
+    };
+
+    // Get the mapped time based on session type
+    const timeMap = isPractical ? practicalMap : theoreticalMap;
+    const mappedTime = timeMap[startTime];
+
+    // Handle "not in use" case for evening theoretical lectures
+    if (!mappedTime) {
+        return 'غير مستخدم';
+    }
+
+    // Get exact session duration
+    const durationInRamadan = isPractical ? 50 : 35;
+
+    // Calculate end time with exact duration
+    let endHour = mappedTime.hour;
+    let endMinute = mappedTime.minute + durationInRamadan;
+
+    // Adjust for hour overflow
+    if (endMinute >= 60) {
+        endHour += Math.floor(endMinute / 60);
+        endMinute = endMinute % 60;
+    }
+
+    // Format times
+    const convertedStart = formatTime(mappedTime.hour, mappedTime.minute);
+    const convertedEnd = formatTime(endHour, endMinute);
+
+    return `${convertedStart} - ${convertedEnd}`;
+}
 
 // Main initialization function
 function waitForElement(selector, callback, maxTries = 100) {
@@ -184,6 +280,11 @@ function getNewTable() {
             for (j in subjectLectures) {
                 let lecture = subjectLectures[j];
                 let time = lecture['الوقت'];
+                
+                // Convert time to Ramadan schedule if ramadanMode is enabled
+                if (ramadanMode) {
+                    time = convertToRamadanTime(time);
+                }
 
                 function value(t) {
                     let hour = parseInt(t.slice(0, 2), 10);
@@ -562,6 +663,9 @@ function createSummary() {
                 <button class="control-button theme-btn" id="darkThemeBtn" style="background: ${currentTheme === 'dark' ? '#4CAF50' : '#666'};">
                     🌙 داكن
                 </button>
+                <button class="control-button" id="ramadanBtn" style="background: ${ramadanMode ? '#4CAF50' : '#666'};">
+                    🌙 توقيت رمضان
+                </button>
                 <button class="control-button" id="downloadButton">
                     💾 تحميل كصورة
                 </button>
@@ -573,6 +677,7 @@ function createSummary() {
         const downloadButton = summary.querySelector('#downloadButton');
         const lightThemeBtn = summary.querySelector('#lightThemeBtn');
         const darkThemeBtn = summary.querySelector('#darkThemeBtn');
+        const ramadanBtn = summary.querySelector('#ramadanBtn');
         
         if (downloadButton) {
             downloadButton.addEventListener('click', downloadAsPNG);
@@ -588,6 +693,15 @@ function createSummary() {
         if (darkThemeBtn) {
             darkThemeBtn.addEventListener('click', () => {
                 toggleTheme('dark');
+                appendTable();
+            });
+        }
+        
+        if (ramadanBtn) {
+            ramadanBtn.addEventListener('click', () => {
+                ramadanMode = !ramadanMode;
+                ramadanBtn.style.background = ramadanMode ? '#4CAF50' : '#666';
+                getNewTable();
                 appendTable();
             });
         }
