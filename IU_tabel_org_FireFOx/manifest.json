@@ -5,7 +5,7 @@
   "description": "A tool to organize the Islamic University schedule table",
   "browser_specific_settings": {
     "gecko": {
-      "id": "iu-table-organizer-extension@edutools.org",
+      "id": "iu-table-organizer@edutools.org",
       "strict_min_version": "109.0"
     }
   },
