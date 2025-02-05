@@ -179,7 +179,14 @@
 
     <footer>
         <div class="container">
-            <p>Mozilla Public License 2.0 - see LICENSE file for details</p>
+            <div class="footer-links">
+                <p class="footer-text">Mozilla Public License 2.0 - see LICENSE file for details</p>
+                <span class="footer-separator">|</span>
+                <a href="privacy-policy.html" class="footer-link">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Privacy Policy</span>
+                </a>
+            </div>
         </div>
     </footer>
     
@@ -332,6 +339,47 @@
         [dir="rtl"] .language-toggle {
             left: auto;
             right: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+
+        .footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-color, #4a9eff);
+        }
+
+        .footer-separator {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-text {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .footer-links {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-separator {
+                display: none;
+            }
         }
     </style>
 
