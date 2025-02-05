@@ -145,12 +145,11 @@ function initializeTableOrganizer() {
     // Create control button
     let button = document.createElement('span');
     let cell = document.createElement('td');
-    button.classList.add("BUTTON_LINK");
-    button.style.cursor = "pointer";
+    button.classList.add("schedule-organizer-btn");
 
     if (on) {
-        button.style.backgroundColor = "firebrick";
-        button.innerHTML = "الجدول&nbspالاصلي";
+        button.classList.add("active");
+        button.innerHTML = "الجدول الاصلي";
         originalTableNode.style.display = 'none';   
 
         if (newTableNode) {
@@ -161,7 +160,7 @@ function initializeTableOrganizer() {
             appendTable();
         }
     } else {
-        button.innerHTML = "نظم&nbspالجدول";
+        button.innerHTML = "نظم الجدول";
         if (newTableNode) {
             newTableNode.style.display = 'none';
         }
@@ -176,15 +175,15 @@ function initializeTableOrganizer() {
     button.onclick = function() {
         if (on) {
             on = false;
-            button.style.backgroundColor = null;
-            button.innerHTML = "نظم&nbspالجدول";
+            button.classList.remove("active");
+            button.innerHTML = "نظم الجدول";
             originalTableNode.style.display = null;
             newTableNode.style.display = 'none';
             document.querySelectorAll('.schedule-summary').forEach(el => el.remove());
         } else {
             on = true;
-            button.style.backgroundColor = "firebrick";
-            button.innerHTML = "الجدول&nbspالاصلي";
+            button.classList.add("active");
+            button.innerHTML = "الجدول الاصلي";
             originalTableNode.style.display = 'none';
             if (newTableNode) {
                 newTableNode.style.display = null;
@@ -664,7 +663,7 @@ function createSummary() {
                     🌙 داكن
                 </button>
                 <button class="control-button" id="ramadanBtn" style="background: ${ramadanMode ? '#4CAF50' : '#666'};">
-                    🌙 توقيت رمضان
+                    🕌 توقيت رمضان
                 </button>
                 <button class="control-button" id="downloadButton">
                     💾 تحميل كصورة

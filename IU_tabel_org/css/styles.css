@@ -61,8 +61,9 @@
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     text-align: center;
     direction: rtl;
-    font-feature-settings: "kern", "liga", "clig", "calt", "arab";
-    -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "arab";
+    font-family: "Noto Kufi Arabic", "Segoe UI", sans-serif;
+    font-feature-settings: "kern", "liga", "clig", "calt";
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
 }
 
 #newTable th .day-name-en {
@@ -169,19 +170,137 @@
 }
 
 .control-button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-family: "Segoe UI", "Traditional Arabic", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.95em;
+    font-weight: 500;
+    text-align: center;
     transition: all 0.3s ease;
-    background: #1a237e;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    margin: 4px;
+    min-width: 100px;
+    white-space: nowrap;
+    line-height: 1.5;
+    cursor: pointer;
     color: white;
-    font-size: 14px;
+    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
 }
 
 .control-button:hover {
-    background: #0d47a1;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+}
+
+.control-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.control-button.active {
+    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+}
+
+/* Theme buttons specific styles */
+.theme-btn {
+    min-width: 90px;
+}
+
+#lightThemeBtn {
+    background: linear-gradient(135deg, #ff8f00 0%, #ffa000 100%);
+}
+
+#lightThemeBtn:hover {
+    background: linear-gradient(135deg, #ffa000 0%, #ffb300 100%);
+}
+
+#lightThemeBtn.active {
+    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+}
+
+#darkThemeBtn {
+    background: linear-gradient(135deg, #303f9f 0%, #3949ab 100%);
+}
+
+#darkThemeBtn:hover {
+    background: linear-gradient(135deg, #3949ab 0%, #3f51b5 100%);
+}
+
+#darkThemeBtn.active {
+    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+}
+
+#downloadButton {
+    background: linear-gradient(135deg, #00796b 0%, #009688 100%);
+}
+
+#downloadButton:hover {
+    background: linear-gradient(135deg, #009688 0%, #26a69a 100%);
+}
+
+#ramadanBtn {
+    background: linear-gradient(135deg, #5d4037 0%, #795548 100%);
+}
+
+#ramadanBtn:hover {
+    background: linear-gradient(135deg, #795548 0%, #8d6e63 100%);
+}
+
+#ramadanBtn.active {
+    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+}
+
+/* Dark theme support for control buttons */
+.theme-dark .control-button {
+    background: linear-gradient(135deg, #1a2b3f 0%, #2d4258 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .control-button:hover {
+    background: linear-gradient(135deg, #2d4258 0%, #3b5773 100%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-dark #lightThemeBtn {
+    background: linear-gradient(135deg, #b36800 0%, #cc7700 100%);
+}
+
+.theme-dark #lightThemeBtn:hover {
+    background: linear-gradient(135deg, #cc7700 0%, #e68a00 100%);
+}
+
+.theme-dark #darkThemeBtn {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+}
+
+.theme-dark #darkThemeBtn:hover {
+    background: linear-gradient(135deg, #283593 0%, #303f9f 100%);
+}
+
+.theme-dark #downloadButton {
+    background: linear-gradient(135deg, #004d40 0%, #00695c 100%);
+}
+
+.theme-dark #downloadButton:hover {
+    background: linear-gradient(135deg, #00695c 0%, #00796b 100%);
+}
+
+.theme-dark #ramadanBtn {
+    background: linear-gradient(135deg, #3e2723 0%, #4e342e 100%);
+}
+
+.theme-dark #ramadanBtn:hover {
+    background: linear-gradient(135deg, #4e342e 0%, #5d4037 100%);
+}
+
+.theme-dark .control-button.active {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
 }
 
 .lecture-hall {
@@ -329,14 +448,14 @@
 #newTable.theme-dark th .day-name {
     color: #ffffff !important;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    font-size: 2.1em;
-    font-weight: 500;
+    font-size: 1.3em;
+    font-weight: 600;
     letter-spacing: 0;
     text-align: center;
     direction: rtl;
-    font-family: "Traditional Arabic", "Segoe UI", "Arial", sans-serif;
-    font-feature-settings: "kern" 1, "liga" 1, "clig" 1, "calt" 1, "arab" 1, "rlig" 1;
-    -webkit-font-feature-settings: "kern" 1, "liga" 1, "clig" 1, "calt" 1, "arab" 1, "rlig" 1;
+    font-family: "Noto Kufi Arabic", "Segoe UI", sans-serif;
+    font-feature-settings: "kern", "liga", "clig", "calt";
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -407,17 +526,58 @@
     color: #a0a0a7;
 }
 
-/* Dark theme control buttons */
-.theme-dark .control-button {
-    background: #2e3440;
-    color: #e4e4e7;
-}
-
-.theme-dark .control-button:hover {
-    background: #3b4252;
-}
-
 #newTable.theme-dark th.HEADING {
     background: linear-gradient(135deg, #1a2b3f 0%, #2d4258 100%) !important;
     color: #ffffff;
+}
+
+.schedule-organizer-btn {
+    display: inline-block;
+    padding: 8px 24px;
+    background: linear-gradient(135deg, #14329c 0%, #1a237e 100%);
+    color: white;
+    border-radius: 50px;  /* More rounded for pill shape */
+    font-family: "Segoe UI", "Traditional Arabic", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.1em;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    margin: 5px;
+    min-width: 140px;  /* Fixed width to prevent text wrapping */
+    white-space: nowrap;  /* Prevent text wrapping */
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.schedule-organizer-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #1a237e 0%, #1565c0 100%);
+}
+
+.schedule-organizer-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-organizer-btn.active {
+    background: linear-gradient(135deg, #c62828 0%, #d32f2f 100%);
+}
+
+/* Dark theme support */
+.theme-dark .schedule-organizer-btn {
+    background: linear-gradient(135deg, #1a2b3f 0%, #2d4258 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .schedule-organizer-btn:hover {
+    background: linear-gradient(135deg, #2d4258 0%, #3b5773 100%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-dark .schedule-organizer-btn.active {
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
 } 
