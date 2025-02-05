@@ -43,7 +43,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 | Step 1️⃣: Install Tampermonkey First | Step 2️⃣: Install Script |
 |:---:|:---:|
 | <img src="docs\assets\tampermonkeysvg.svg" width="100"> | <img src="docs\assets\greasyfork.png" width="100"> |
-| [Install Tampermonkey](https://www.tampermonkey.net/) | [Install Script](https://greasyfork.org/en/scripts/432219-%D9%85%D9%86%D8%B8%D9%85-%D8%AC%D8%AF%D9%88%D9%84-%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9-%D8%A7%D9%84%D8%A7%D8%B3%D9%84%D8%A7%D9%85%D9%8A%D8%A9) |
+| [Install Tampermonkey](https://www.tampermonkey.net/) | [Install Script](https://greasyfork.org/en/scripts/432219-iu-table-organizer) |
 
 💡 Also works on mobile/tablet devices using Microsoft Edge 🌐
 
@@ -51,7 +51,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 1. Download and extract using the button below:
    <div align="center">
-     <a href="https://github.com/JKc66/IU_Table_Organizer/raw/main/IU_tabel_org.zip">
+     <a href="https://github.com/JKc66/IU_Table_Organizer/raw/main/IU_tabel_org/IU_tabel_org.zip">
        <img src="https://img.shields.io/badge/Download-Extension-green?style=for-the-badge&logo=github" alt="Download Extension" />
      </a>
    </div>
