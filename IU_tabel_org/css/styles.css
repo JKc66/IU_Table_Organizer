@@ -292,36 +292,50 @@
 
 /* Dark theme support for control buttons */
 .theme-dark .control-button {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-    box-shadow: 0 2px 4px rgba(30, 64, 175, 0.3),
-                0 4px 8px rgba(30, 64, 175, 0.2),
-                inset 0 2px 4px rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, #2d3a6a 0%, #3d4a8a 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.2),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #e0e0ff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .theme-dark .control-button:hover {
-    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4),
-                0 8px 16px rgba(30, 64, 175, 0.3),
-                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px) scale(1.02);
+    background: linear-gradient(135deg, #3d4a8a 0%, #4d5aaa 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4),
+                0 8px 16px rgba(0, 0, 0, 0.3),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark #lightThemeBtn {
-    background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
-}
-
-.theme-dark #darkThemeBtn {
-    background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
-}
-
-.theme-dark #downloadButton {
-    background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
-}
-
-.theme-dark #ramadanBtn {
-    background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
+.theme-dark .control-button:active {
+    transform: translateY(1px) scale(0.98);
+    background: linear-gradient(135deg, #2d3a6a 0%, #3d4a8a 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
+                inset 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .theme-dark .control-button.active {
-    background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    background: linear-gradient(135deg, #2d6a3a 0%, #3d8a4a 100%);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark #lightThemeBtn {
+    background: linear-gradient(135deg, #6a4a2d 0%, #8a5a3d 100%);
+}
+
+.theme-dark #darkThemeBtn {
+    background: linear-gradient(135deg, #2d3a6a 0%, #3d4a8a 100%);
+}
+
+.theme-dark #downloadButton {
+    background: linear-gradient(135deg, #2d6a6a 0%, #3d8a8a 100%);
+}
+
+.theme-dark #ramadanBtn {
+    background: linear-gradient(135deg, #4a2d6a 0%, #5a3d8a 100%);
 }
 
 .schedule-organizer-btn {
@@ -519,68 +533,28 @@
 
 /* Dark Theme Styles */
 #newTable.theme-dark {
-    background: #121212;
-    border-color: #2e2e2e;
+    background: #1a1a2e;
+    border-color: #2e2e4a;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 #newTable.theme-dark thead tr {
-    background: linear-gradient(135deg, #1a2b3f 0%, #2d4258 100%);
+    background: linear-gradient(135deg, #1e2a4a 0%, #2d3a6a 100%);
     color: #ffffff;
-    box-shadow: none;
-    height: 65px;
-    font-family: "Traditional Arabic", "Segoe UI", "Arial", sans-serif;
-    direction: rtl;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 #newTable.theme-dark th {
-    border-left: 1px solid rgba(255,255,255,0.08);
-    color: #ffffff;
-    position: relative;
-    border-bottom: none;
-}
-
-#newTable.theme-dark th::after {
-    background: rgba(255,255,255,0.08);
-    height: 2px;
-}
-
-#newTable.theme-dark th .day-name {
-    color: #ffffff !important;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    font-size: 1.3em;
-    font-weight: 600;
-    letter-spacing: 0;
-    text-align: center;
-    direction: rtl;
-    font-family: "Noto Kufi Arabic", "Segoe UI", sans-serif;
-    font-feature-settings: "kern", "liga", "clig", "calt";
-    -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    word-spacing: normal;
-}
-
-#newTable.theme-dark th .day-name-en {
-    color: rgba(255, 255, 255, 0.9);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
-    opacity: 0.9;
-}
-
-#newTable.theme-dark th:hover::after {
-    transform: scaleX(1);
-    background: rgba(255,255,255,0.15);
+    border-left: 1px solid rgba(255,255,255,0.1);
 }
 
 #newTable.theme-dark tbody tr {
-    border-bottom: 1px solid #2e2e2e;
+    border-bottom: 1px solid #2e2e4a;
+    transition: background-color 0.3s ease;
 }
 
 #newTable.theme-dark tbody tr:hover {
-    background-color: #1e1e2e;
+    background-color: #232338;
 }
 
 #newTable.theme-dark td {
@@ -588,26 +562,29 @@
 }
 
 #newTable.theme-dark .break-cell {
-    background: #1e1e2e;
-    color: #a0a0a7;
-    border-color: #2e2e2e;
+    background: #232338;
+    color: #b0b0c0;
+    border-color: #2e2e4a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #newTable.theme-dark .lecture-cell {
-    background: #1e1e2e;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    background: #232338;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-width: 0 0 0 4px;
 }
 
 #newTable.theme-dark .lecture-hall {
-    background: #1a2f3a;
-    color: #8ebbff;
-    border-color: #2e3f4a;
+    background: #1e2a4a;
+    color: #a0b8ff;
+    border-color: #2e3f6a;
 }
 
 .schedule-summary.theme-dark {
-    background: linear-gradient(45deg, #121212, #1e1e2e);
-    border-color: #2e2e2e;
-    color: #e4e4e7;
+    background: linear-gradient(45deg, #1a1a2e, #232338);
+    border-color: #2e2e4a;
+    color: #e0e0ff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Dark theme loading overlay */

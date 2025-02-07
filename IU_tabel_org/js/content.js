@@ -821,11 +821,27 @@ function adjustColorForDarkMode(color) {
     // Parse RGB values
     let rgb = rgbColor.match(/\d+/g).map(Number);
     
-    // Increase brightness for dark mode
+    // Calculate luminance
+    let luminance = (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
+    
+    // For very dark colors (especially black or near-black)
+    if (luminance < 0.2) {
+        // Convert to a light gray-blue tint
+        return `rgb(176, 196, 222)`; // Light steel blue
+    }
+    
+    // For dark colors
+    if (luminance < 0.5) {
+        // Increase brightness more significantly
+        let adjustedRgb = rgb.map(value => {
+            return Math.min(255, value + 80);
+        });
+        return `rgb(${adjustedRgb.join(',')})`;
+    }
+    
+    // For already light colors, just slight adjustment
     let adjustedRgb = rgb.map(value => {
-        // Increase brightness but maintain color character
-        let adjusted = Math.min(255, value + 40);
-        return adjusted;
+        return Math.min(255, value + 40);
     });
     
     return `rgb(${adjustedRgb.join(',')})`;
