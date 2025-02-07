@@ -173,134 +173,236 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 16px;
-    border-radius: 50px;
+    padding: 10px 20px;
+    border-radius: 12px;
     font-family: "Segoe UI", "Traditional Arabic", Tahoma, Geneva, Verdana, sans-serif;
     font-size: 0.95em;
-    font-weight: 500;
+    font-weight: 600;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2),
+                0 4px 8px rgba(37, 99, 235, 0.1),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
     text-decoration: none;
-    margin: 4px;
-    min-width: 100px;
+    margin: 4px 8px;
+    min-width: 120px;
     white-space: nowrap;
     line-height: 1.5;
     cursor: pointer;
     color: white;
-    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.control-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .control-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3),
+                0 8px 16px rgba(37, 99, 235, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+.control-button:hover::before {
+    opacity: 1;
 }
 
 .control-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2),
+                inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .control-button.active {
-    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2),
+                0 4px 8px rgba(5, 150, 105, 0.1),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
 /* Theme buttons specific styles */
 .theme-btn {
-    min-width: 90px;
+    min-width: 100px;
+    backdrop-filter: blur(8px);
 }
 
 #lightThemeBtn {
-    background: linear-gradient(135deg, #ff8f00 0%, #ffa000 100%);
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+    box-shadow: 0 2px 4px rgba(217, 119, 6, 0.2),
+                0 4px 8px rgba(217, 119, 6, 0.1),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
 #lightThemeBtn:hover {
-    background: linear-gradient(135deg, #ffa000 0%, #ffb300 100%);
-}
-
-#lightThemeBtn.active {
-    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3),
+                0 8px 16px rgba(217, 119, 6, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
 }
 
 #darkThemeBtn {
-    background: linear-gradient(135deg, #303f9f 0%, #3949ab 100%);
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2),
+                0 4px 8px rgba(79, 70, 229, 0.1),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
 #darkThemeBtn:hover {
-    background: linear-gradient(135deg, #3949ab 0%, #3f51b5 100%);
-}
-
-#darkThemeBtn.active {
-    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3),
+                0 8px 16px rgba(79, 70, 229, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
 }
 
 #downloadButton {
-    background: linear-gradient(135deg, #00796b 0%, #009688 100%);
+    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    box-shadow: 0 2px 4px rgba(13, 148, 136, 0.2),
+                0 4px 8px rgba(13, 148, 136, 0.1),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
 #downloadButton:hover {
-    background: linear-gradient(135deg, #009688 0%, #26a69a 100%);
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3),
+                0 8px 16px rgba(13, 148, 136, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
 }
 
 #ramadanBtn {
-    background: linear-gradient(135deg, #5d4037 0%, #795548 100%);
+    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+    box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2),
+                0 4px 8px rgba(124, 58, 237, 0.1),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
 #ramadanBtn:hover {
-    background: linear-gradient(135deg, #795548 0%, #8d6e63 100%);
-}
-
-#ramadanBtn.active {
-    background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3),
+                0 8px 16px rgba(124, 58, 237, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
 }
 
 /* Dark theme support for control buttons */
 .theme-dark .control-button {
-    background: linear-gradient(135deg, #1a2b3f 0%, #2d4258 100%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    box-shadow: 0 2px 4px rgba(30, 64, 175, 0.3),
+                0 4px 8px rgba(30, 64, 175, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.05);
 }
 
 .theme-dark .control-button:hover {
-    background: linear-gradient(135deg, #2d4258 0%, #3b5773 100%);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4),
+                0 8px 16px rgba(30, 64, 175, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
 }
 
 .theme-dark #lightThemeBtn {
-    background: linear-gradient(135deg, #b36800 0%, #cc7700 100%);
-}
-
-.theme-dark #lightThemeBtn:hover {
-    background: linear-gradient(135deg, #cc7700 0%, #e68a00 100%);
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
 }
 
 .theme-dark #darkThemeBtn {
-    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-}
-
-.theme-dark #darkThemeBtn:hover {
-    background: linear-gradient(135deg, #283593 0%, #303f9f 100%);
+    background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%);
 }
 
 .theme-dark #downloadButton {
-    background: linear-gradient(135deg, #004d40 0%, #00695c 100%);
-}
-
-.theme-dark #downloadButton:hover {
-    background: linear-gradient(135deg, #00695c 0%, #00796b 100%);
+    background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
 }
 
 .theme-dark #ramadanBtn {
-    background: linear-gradient(135deg, #3e2723 0%, #4e342e 100%);
-}
-
-.theme-dark #ramadanBtn:hover {
-    background: linear-gradient(135deg, #4e342e 0%, #5d4037 100%);
+    background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
 }
 
 .theme-dark .control-button.active {
-    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
+}
+
+.schedule-organizer-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 28px;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    color: white;
+    border-radius: 12px;
+    font-family: "Segoe UI", "Traditional Arabic", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2),
+                0 4px 8px rgba(37, 99, 235, 0.1),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    margin: 6px;
+    min-width: 160px;
+    white-space: nowrap;
+    line-height: 1.5;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.schedule-organizer-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.schedule-organizer-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3),
+                0 8px 16px rgba(37, 99, 235, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+.schedule-organizer-btn:hover::before {
+    opacity: 1;
+}
+
+.schedule-organizer-btn:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2),
+                inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-organizer-btn.active {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2),
+                0 4px 8px rgba(220, 38, 38, 0.1),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+/* Dark theme support */
+.theme-dark .schedule-organizer-btn {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    box-shadow: 0 2px 4px rgba(30, 64, 175, 0.3),
+                0 4px 8px rgba(30, 64, 175, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.05);
+}
+
+.theme-dark .schedule-organizer-btn:hover {
+    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4),
+                0 8px 16px rgba(30, 64, 175, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.theme-dark .schedule-organizer-btn.active {
+    background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
 }
 
 .lecture-hall {
@@ -529,55 +631,4 @@
 #newTable.theme-dark th.HEADING {
     background: linear-gradient(135deg, #1a2b3f 0%, #2d4258 100%) !important;
     color: #ffffff;
-}
-
-.schedule-organizer-btn {
-    display: inline-block;
-    padding: 8px 24px;
-    background: linear-gradient(135deg, #14329c 0%, #1a237e 100%);
-    color: white;
-    border-radius: 50px;  /* More rounded for pill shape */
-    font-family: "Segoe UI", "Traditional Arabic", Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.1em;
-    font-weight: 500;
-    text-align: center;
-    transition: all 0.3s ease;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-decoration: none;
-    margin: 5px;
-    min-width: 140px;  /* Fixed width to prevent text wrapping */
-    white-space: nowrap;  /* Prevent text wrapping */
-    line-height: 1.5;
-    cursor: pointer;
-}
-
-.schedule-organizer-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(135deg, #1a237e 0%, #1565c0 100%);
-}
-
-.schedule-organizer-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.schedule-organizer-btn.active {
-    background: linear-gradient(135deg, #c62828 0%, #d32f2f 100%);
-}
-
-/* Dark theme support */
-.theme-dark .schedule-organizer-btn {
-    background: linear-gradient(135deg, #1a2b3f 0%, #2d4258 100%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.theme-dark .schedule-organizer-btn:hover {
-    background: linear-gradient(135deg, #2d4258 0%, #3b5773 100%);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.theme-dark .schedule-organizer-btn.active {
-    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
 } 
