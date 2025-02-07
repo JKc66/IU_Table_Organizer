@@ -22,8 +22,5 @@
       ],
       "css": ["css/styles.css"]
     }
-  ],
-  "permissions": [
-    "downloads"
   ]
 } 
