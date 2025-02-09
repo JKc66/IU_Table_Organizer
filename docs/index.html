@@ -27,7 +27,7 @@
             <h1 data-translate="title">IU Table Organizer</h1>
             <p class="subtitle" data-translate="subtitle">Transform your Islamic University schedule into a more readable format with one click.</p>
             <div class="badges">
-                <img src="https://img.shields.io/badge/version-3.0.1-blue.svg" alt="Version">
+                <img id="version-badge" alt="Version">
                 <img src="https://img.shields.io/badge/License-MPL%202.0-orange.svg" alt="License">
             </div>
         </div>
@@ -380,7 +380,15 @@
         }
     </style>
 
-    <script src="translations.js"></script>
+    <script src="docs/translations.js"></script>
+    <script src="version.js"></script>
+    <script>
+        // Update version badge
+        document.addEventListener('DOMContentLoaded', function() {
+            const versionBadge = document.getElementById('version-badge');
+            versionBadge.src = `https://img.shields.io/badge/version-${window.IU_VERSION}-blue.svg`;
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html> 

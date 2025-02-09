@@ -13,6 +13,19 @@ const translations = {
             title: "Installation",
             intro: "Choose one of the following installation methods:",
             or: "OR",
+            chromeExtension: {
+                title: "Chrome Extension",
+                download: "Install from Chrome Web Store",
+                description: "Get the extension directly from the Chrome Web Store for the easiest installation experience",
+                features: {
+                    official: "Official Chrome Web Store release",
+                    automatic: "Automatic updates",
+                    secure: "Secure installation"
+                },
+                mobileNote: "Mobile Compatible!",
+                mobileDesc: "Works on mobile and tablet devices using Edge and Kiwi browsers",
+                button: "Add to Browser"
+            },
             tampermonkey: {
                 title: "Tampermonkey",
                 step1: {
@@ -32,19 +45,6 @@ const translations = {
                     },
                     button: "Install Script"
                 }
-            },
-            chromeExtension: {
-                title: "Browser Extension",
-                download: "Download Extension",
-                instructions: "After downloading:",
-                steps: [
-                    "Extract the downloaded ZIP file to a folder",
-                    "Open Chrome and go to chrome://extensions/",
-                    "Enable \"Developer mode\" in the top right",
-                    "Click \"Load unpacked\" and select the extracted folder"
-                ],
-                mobileNote: "Mobile Compatible!",
-                mobileDesc: "Works on mobile and tablet devices using Edge and Kiwi browsers"
             }
         },
         controls: {
