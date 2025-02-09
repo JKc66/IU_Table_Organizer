@@ -9,22 +9,15 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 ## 📸 Before & After
 
-<div align="center">
-  <h3>Before Organization</h3>
-  <img src="docs\assets/before.png" alt="Before Organization" width="80%" />
-  <br><br>
-  <h3>After Organization (Light & Dark)</h3>
-  <div style="display: flex; justify-content: center; gap: 20px;">
-    <div>
-      <p>Light Mode</p>
-      <img src="docs\assets/after_light.jpg" alt="After Organization Light" width="100%" />
-    </div>
-    <div>
-      <p>Dark Mode</p>
-      <img src="docs\assets/after_dark.jpg" alt="After Organization Dark" width="100%" />
-    </div>
-  </div>
-</div>
+### Before Organization
+
+![Schedule before organization](docs/assets/before.png)
+
+### After Organization (Light & Dark)
+
+| Light Mode | Dark Mode |
+|:----------:|:---------:|
+| ![Schedule after organization in light mode](docs/assets/after_light.jpg) | ![Schedule after organization in dark mode](docs/assets/after_dark.jpg) |
 
 ## ✨ Features
 
@@ -40,27 +33,26 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 ### Method 1: Chrome Web Store (Recommended)
 
-<div align="center">
-  <a href="https://bit.ly/42MW9NZ">
-    <img src="https://img.shields.io/badge/Download-Chrome%20Web%20Store-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Download from Chrome Web Store" width="250px" />
-  </a>
-</div>
+[![Download from Chrome Web Store](https://img.shields.io/badge/Download-Chrome%20Web%20Store-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://bit.ly/42MW9NZ)
 
 ### Method 2: Tampermonkey
 
-| Step 1️⃣: Install Tampermonkey First | Step 2️⃣: Install Script |
-|:---:|:---:|
-| <img src="docs\assets\tampermonkeysvg.svg" width="100"> | <img src="docs\assets\greasyfork.png" width="100"> |
-| [Install Tampermonkey](https://www.tampermonkey.net/) | [Install Script](https://greasyfork.org/en/scripts/432219-iu-table-organizer) |
+| Step | Action |
+|:----:|:------:|
+| Step 1: [Install Tampermonkey]((https://www.tampermonkey.net/)) | [![Tampermonkey](docs/assets/tampermonkeysvg.svg)](https://www.tampermonkey.net/) |
+| Step 2: [Install Script](https://greasyfork.org/en/scripts/432219-iu-table-organizer) | [![Greasyfork](docs/assets/greasyfork.png)](https://greasyfork.org/en/scripts/432219-iu-table-organizer) |
 
 ## 📝 Usage
+
 1. Go to your IU schedule page
 2. Click "نظم الجدول" to organize
 3. Use "تحميل كصورة" to save as PNG
 
 ## 📜 Credits
-- Original script by [mah-sam <img src="docs\assets\github_icon.png" width="24"/>](https://github.com/mah-sam)
+
+- Original script by [mah-sam ![GitHub icon](docs/assets/github_icon.png)](https://github.com/mah-sam)
 - Using [html2canvas](https://html2canvas.hertzen.com/)
 
-## 📄 License 
-Mozilla Public License 2.0 - This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+## 📄 License
+
+Mozilla Public License 2.0 - This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
