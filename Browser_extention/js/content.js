@@ -434,7 +434,7 @@ function downloadAsPNG(event) {
         <div class="notification-content">
             <div class="modern-spinner"></div>
             <div class="notification-text">
-                <div class="notification-title">جارٍ تحميل الصورة...</div>
+                <div class="notification-title">جار تحميل الصورة...</div>
                 <div class="notification-subtitle">يرجى الانتظار بينما نقوم بمعالجة الجدول</div>
             </div>
         </div>
