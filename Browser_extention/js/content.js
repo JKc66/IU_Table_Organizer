@@ -9,6 +9,7 @@ let colors = ["Blue", "Black", "Crimson", "Green", "Grey", "OrangeRed", "Purple"
 let subject_colors = {};
 let color_index = 0;
 let currentTheme = 'light';
+let includeSummaryInDownload = true;
 
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
@@ -523,7 +524,7 @@ function downloadAsPNG(event) {
     
     // Calculate the maximum width needed
     const tableWidth = element.offsetWidth;
-    const summaryWidth = summary.offsetWidth;
+    const summaryWidth = summary ? summary.offsetWidth : 0;
     const maxWidth = Math.max(tableWidth, summaryWidth);
     
     const wrapper = document.createElement('div');
@@ -565,34 +566,36 @@ function downloadAsPNG(event) {
         wrapper.appendChild(ramadanIndicator);
     }
     
-    const summaryClone = summary.cloneNode(true);
-    const tableClone = element.cloneNode(true);
-    
-    // Remove control buttons from summary clone
-    const controlButtons = summaryClone.querySelector('.control-buttons');
-    if (controlButtons) controlButtons.remove();
-    
-    // Remove theme buttons and download button
-    summaryClone.querySelectorAll('.control-button, .theme-btn').forEach(btn => btn.remove());
-    
-    // Ensure summary maintains consistent width
-    summaryClone.style.cssText = `
-        width: ${maxWidth}px;
-        margin: 0;
-        box-sizing: border-box;
-        background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
-    `;
+    // Only include summary if checkbox is checked
+    if (includeSummaryInDownload && summary) {
+        const summaryClone = summary.cloneNode(true);
+        // Remove control buttons from summary clone
+        const controlButtons = summaryClone.querySelector('.control-buttons');
+        if (controlButtons) controlButtons.remove();
+        
+        // Remove theme buttons and download button
+        summaryClone.querySelectorAll('.control-button, .theme-btn, label').forEach(btn => btn.remove());
+        
+        // Ensure summary maintains consistent width
+        summaryClone.style.cssText = `
+            width: ${maxWidth}px;
+            margin: 0;
+            box-sizing: border-box;
+            background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
+        `;
+        
+        wrapper.appendChild(summaryClone);
+    }
     
     // Ensure table maintains consistent width
-    tableClone.style.cssText = `
+    element.style.cssText = `
         width: ${maxWidth}px;
         margin: 0;
         box-sizing: border-box;
         background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
     `;
     
-    wrapper.appendChild(summaryClone);
-    wrapper.appendChild(tableClone);
+    wrapper.appendChild(element.cloneNode(true));
     document.body.appendChild(wrapper);
     
     // Enhanced style preservation
@@ -769,7 +772,7 @@ function createSummary() {
                 <span style="font-weight: 500;">📊 اليوم الأكثر:</span>
                 <span>${busyDays.join(', ')} (${maxLectures})</span>
             </div>
-            <div style="display: flex; gap: 8px;">
+            <div style="display: flex; gap: 8px; align-items: center;">
                 <button class="control-button theme-btn" id="lightThemeBtn" style="background: ${currentTheme === 'light' ? '#4CAF50' : '#666'};">
                     ☀️ فاتح
                 </button>
@@ -782,6 +785,10 @@ function createSummary() {
                 <button class="control-button" id="downloadButton">
                     💾 تحميل كصورة
                 </button>
+                <label style="display: flex; align-items: center; gap: 8px; background: ${currentTheme === 'dark' ? '#2d2d2d' : '#f5f5f5'}; padding: 8px 16px; border-radius: 8px; cursor: pointer;">
+                    <input type="checkbox" id="includeSummaryCheckbox" ${includeSummaryInDownload ? 'checked' : ''} style="cursor: pointer;">
+                    <span style="color: ${currentTheme === 'dark' ? '#fff' : '#000'}">تضمين الملخص</span>
+                </label>
             </div>
         </div>
     `;
@@ -791,6 +798,7 @@ function createSummary() {
         const lightThemeBtn = summary.querySelector('#lightThemeBtn');
         const darkThemeBtn = summary.querySelector('#darkThemeBtn');
         const ramadanBtn = summary.querySelector('#ramadanBtn');
+        const includeSummaryCheckbox = summary.querySelector('#includeSummaryCheckbox');
         
         if (downloadButton) {
             downloadButton.addEventListener('click', downloadAsPNG);
@@ -816,6 +824,12 @@ function createSummary() {
                 ramadanBtn.style.background = ramadanMode ? '#4CAF50' : '#666';
                 getNewTable();
                 appendTable();
+            });
+        }
+
+        if (includeSummaryCheckbox) {
+            includeSummaryCheckbox.addEventListener('change', (e) => {
+                includeSummaryInDownload = e.target.checked;
             });
         }
     }, 0);
