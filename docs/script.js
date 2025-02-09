@@ -230,4 +230,28 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Ensure RTL visibility on load
     ensureRTLVisibility();
+
+    // Update version badge
+    const versionBadge = document.getElementById('version-badge');
+    versionBadge.src = `https://img.shields.io/badge/version-${window.IU_VERSION}-blue.svg`;
+
+    // Back to Top functionality
+    const backToTopButton = document.getElementById('backToTop');
+    
+    // Show button after scrolling down 300px
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+
+    // Smooth scroll to top
+    backToTopButton.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
 }); 
