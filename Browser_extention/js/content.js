@@ -427,16 +427,95 @@ function downloadAsPNG(event) {
     
     // Create and show loading overlay
     const loadingOverlay = document.createElement('div');
-    loadingOverlay.className = 'loading-overlay';
+    loadingOverlay.className = 'loading-notification';
     
     loadingOverlay.innerHTML = `
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">جارٍ تحميل الصورة...</div>
-            <div class="loading-subtext">يرجى الانتظار بينما نقوم بمعالجة الجدول</div>
+        <div class="notification-content">
+            <div class="modern-spinner"></div>
+            <div class="notification-text">
+                <div class="notification-title">جارٍ تحميل الصورة...</div>
+                <div class="notification-subtitle">يرجى الانتظار بينما نقوم بمعالجة الجدول</div>
+            </div>
         </div>
     `;
     
+    // Add styles for the notification
+    const style = document.createElement('style');
+    style.textContent = `
+        .loading-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
+            border: 1px solid ${currentTheme === 'dark' ? '#333' : '#e0e0e0'};
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            max-width: 300px;
+            animation: slideIn 0.3s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notification-text {
+            flex: 1;
+        }
+
+        .notification-title {
+            color: ${currentTheme === 'dark' ? '#ffffff' : '#000000'};
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-subtitle {
+            color: ${currentTheme === 'dark' ? '#888' : '#666'};
+            font-size: 0.9em;
+        }
+
+        .modern-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid ${currentTheme === 'dark' ? '#333' : '#f0f0f0'};
+            border-top: 3px solid ${currentTheme === 'dark' ? '#4CAF50' : '#2196F3'};
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
+    `;
+    
+    document.head.appendChild(style);
     document.body.appendChild(loadingOverlay);
     
     const element = document.getElementById('newTable');
@@ -459,7 +538,32 @@ function downloadAsPNG(event) {
         flex-direction: column;
         align-items: center;
         gap: 10px;
+        position: relative;
     `;
+    
+    // Add Ramadan indicator if ramadanMode is true
+    if (ramadanMode) {
+        const ramadanIndicator = document.createElement('div');
+        ramadanIndicator.style.cssText = `
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: ${currentTheme === 'dark' ? '#2d1f3d' : '#f3e5f5'};
+            padding: 8px 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1;
+        `;
+        ramadanIndicator.innerHTML = `
+            <span style="font-size: 1.2em;">🌙</span>
+            <span style="color: ${currentTheme === 'dark' ? '#fff' : '#000'}">توقيت رمضان</span>
+        `;
+        wrapper.appendChild(ramadanIndicator);
+    }
     
     const summaryClone = summary.cloneNode(true);
     const tableClone = element.cloneNode(true);
@@ -537,7 +641,12 @@ function downloadAsPNG(event) {
         }
     }).then(canvas => {
         wrapper.remove();
-        loadingOverlay.remove();
+        // Add slide out animation before removing
+        loadingOverlay.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => {
+            loadingOverlay.remove();
+            style.remove();
+        }, 300);
         
         try {
             const image = canvas.toDataURL('image/png', 1.0);
@@ -554,7 +663,12 @@ function downloadAsPNG(event) {
         }
     }).catch(error => {
         console.error('Error generating PNG:', error);
-        loadingOverlay.remove();
+        // Add slide out animation before removing
+        loadingOverlay.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => {
+            loadingOverlay.remove();
+            style.remove();
+        }, 300);
         
         if (error.message.includes('memory')) {
             alert('خطأ: الصورة كبيرة جداً. جاري المحاولة بجودة أقل...');
