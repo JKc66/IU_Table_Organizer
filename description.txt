@@ -1,4 +1,5 @@
 🎓 IU Table Organizer
+🌐 Website: jawadk.me/IU_Table_Organizer/
 
 Transform your Islamic University schedule table into a beautiful, organized format with just one click! This extension enhances your class schedule viewing experience with smart organization and modern features.
 
