@@ -542,30 +542,6 @@ function downloadAsPNG(event) {
         position: relative;
     `;
     
-    // Add Ramadan indicator if ramadanMode is true
-    if (ramadanMode) {
-        const ramadanIndicator = document.createElement('div');
-        ramadanIndicator.style.cssText = `
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: ${currentTheme === 'dark' ? '#2d1f3d' : '#f3e5f5'};
-            padding: 8px 16px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9em;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 1;
-        `;
-        ramadanIndicator.innerHTML = `
-            <span style="font-size: 1.2em;">🌙</span>
-            <span style="color: ${currentTheme === 'dark' ? '#fff' : '#000'}">توقيت رمضان</span>
-        `;
-        wrapper.appendChild(ramadanIndicator);
-    }
-    
     // Only include summary if checkbox is checked
     if (includeSummaryInDownload && summary) {
         const summaryClone = summary.cloneNode(true);
@@ -587,15 +563,146 @@ function downloadAsPNG(event) {
         wrapper.appendChild(summaryClone);
     }
     
-    // Ensure table maintains consistent width
-    element.style.cssText = `
-        width: ${maxWidth}px;
-        margin: 0;
-        box-sizing: border-box;
-        background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
-    `;
+    const tableClone = element.cloneNode(true);
     
-    wrapper.appendChild(element.cloneNode(true));
+    // If in Ramadan mode, find a suitable cell for the indicator
+    if (ramadanMode) {
+        // Try to find an empty or break cell in the middle of the table
+        const rows = tableClone.querySelectorAll('tbody tr');
+        let indicatorPlaced = false;
+        
+        // Calculate middle row
+        const middleRowIndex = Math.floor(rows.length / 2);
+        
+        // First try: Look in the middle row
+        if (rows[middleRowIndex]) {
+            const cells = rows[middleRowIndex].children;
+            for (let cell of cells) {
+                if (!cell.innerHTML.trim() || cell.innerHTML.includes('استراحة')) {
+                    const ramadanIndicator = `
+                        <div style="
+                            background: ${currentTheme === 'dark' ? 
+                                'linear-gradient(135deg, #2d1f3d 0%, #1a1a2e 100%)' : 
+                                'linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%)'
+                            };
+                            padding: 12px 24px;
+                            border-radius: 12px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 12px;
+                            font-size: 1.2em;
+                            box-shadow: ${currentTheme === 'dark' ? 
+                                '0 4px 15px rgba(123, 97, 255, 0.2), 0 0 20px rgba(123, 97, 255, 0.1)' : 
+                                '0 4px 15px rgba(156, 39, 176, 0.1), 0 0 20px rgba(156, 39, 176, 0.05)'
+                            };
+                            margin: 10px auto;
+                            width: fit-content;
+                            border: 2px solid ${currentTheme === 'dark' ? '#4a3f6b' : '#e1bee7'};
+                            animation: ramadanGlow 2s ease-in-out infinite;
+                        ">
+                            <span style="font-size: 1.4em;">🌙</span>
+                            <span style="
+                                color: ${currentTheme === 'dark' ? '#fff' : '#000'};
+                                font-weight: 500;
+                            ">توقيت رمضان</span>
+                        </div>
+                        <style>
+                            @keyframes ramadanGlow {
+                                0%, 100% {
+                                    box-shadow: ${currentTheme === 'dark' ? 
+                                        '0 4px 15px rgba(123, 97, 255, 0.2), 0 0 20px rgba(123, 97, 255, 0.1)' : 
+                                        '0 4px 15px rgba(156, 39, 176, 0.1), 0 0 20px rgba(156, 39, 176, 0.05)'
+                                    };
+                                }
+                                50% {
+                                    box-shadow: ${currentTheme === 'dark' ? 
+                                        '0 4px 20px rgba(123, 97, 255, 0.3), 0 0 30px rgba(123, 97, 255, 0.2)' : 
+                                        '0 4px 20px rgba(156, 39, 176, 0.2), 0 0 30px rgba(156, 39, 176, 0.1)'
+                                    };
+                                }
+                            }
+                        </style>
+                    `;
+                    cell.innerHTML = ramadanIndicator;
+                    indicatorPlaced = true;
+                    break;
+                }
+            }
+        }
+        
+        // Second try: Look in adjacent rows if middle row didn't work
+        if (!indicatorPlaced) {
+            for (let offset = 1; offset <= 2; offset++) {
+                const rowsToTry = [
+                    rows[middleRowIndex - offset],
+                    rows[middleRowIndex + offset]
+                ];
+                
+                for (const row of rowsToTry) {
+                    if (!row) continue;
+                    
+                    const cells = row.children;
+                    for (let cell of cells) {
+                        if (!cell.innerHTML.trim() || cell.innerHTML.includes('استراحة')) {
+                            const ramadanIndicator = `
+                                <div style="
+                                    background: ${currentTheme === 'dark' ? 
+                                        'linear-gradient(135deg, #2d1f3d 0%, #1a1a2e 100%)' : 
+                                        'linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%)'
+                                    };
+                                    padding: 12px 24px;
+                                    border-radius: 12px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 12px;
+                                    font-size: 1.2em;
+                                    box-shadow: ${currentTheme === 'dark' ? 
+                                        '0 4px 15px rgba(123, 97, 255, 0.2), 0 0 20px rgba(123, 97, 255, 0.1)' : 
+                                        '0 4px 15px rgba(156, 39, 176, 0.1), 0 0 20px rgba(156, 39, 176, 0.05)'
+                                    };
+                                    margin: 10px auto;
+                                    width: fit-content;
+                                    border: 2px solid ${currentTheme === 'dark' ? '#4a3f6b' : '#e1bee7'};
+                                    animation: ramadanGlow 2s ease-in-out infinite;
+                                ">
+                                    <span style="font-size: 1.4em;">🌙</span>
+                                    <span style="
+                                        color: ${currentTheme === 'dark' ? '#fff' : '#000'};
+                                        font-weight: 500;
+                                    ">توقيت رمضان</span>
+                                </div>
+                                <style>
+                                    @keyframes ramadanGlow {
+                                        0%, 100% {
+                                            box-shadow: ${currentTheme === 'dark' ? 
+                                                '0 4px 15px rgba(123, 97, 255, 0.2), 0 0 20px rgba(123, 97, 255, 0.1)' : 
+                                                '0 4px 15px rgba(156, 39, 176, 0.1), 0 0 20px rgba(156, 39, 176, 0.05)'
+                                            };
+                                        }
+                                        50% {
+                                            box-shadow: ${currentTheme === 'dark' ? 
+                                                '0 4px 20px rgba(123, 97, 255, 0.3), 0 0 30px rgba(123, 97, 255, 0.2)' : 
+                                                '0 4px 20px rgba(156, 39, 176, 0.2), 0 0 30px rgba(156, 39, 176, 0.1)'
+                                            };
+                                        }
+                                    }
+                                </style>
+                            `;
+                            cell.innerHTML = ramadanIndicator;
+                            indicatorPlaced = true;
+                            break;
+                        }
+                    }
+                    if (indicatorPlaced) break;
+                }
+                if (indicatorPlaced) break;
+            }
+        }
+    }
+    
+    wrapper.appendChild(tableClone);
     document.body.appendChild(wrapper);
     
     // Enhanced style preservation
