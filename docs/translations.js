@@ -42,7 +42,9 @@ const translations = {
                     "Open Chrome and go to chrome://extensions/",
                     "Enable \"Developer mode\" in the top right",
                     "Click \"Load unpacked\" and select the extracted folder"
-                ]
+                ],
+                mobileNote: "Mobile Compatible!",
+                mobileDesc: "Works on mobile and tablet devices using Edge and Kiwi browsers"
             }
         },
         controls: {
@@ -82,6 +84,19 @@ const translations = {
             title: "التثبيت",
             intro: "اختر إحدى طرق التثبيت التالية:",
             or: "أو",
+            chromeExtension: {
+                title: "إضافة المتصفح",
+                download: "تثبيت من متجر كروم",
+                description: "احصل على الإضافة مباشرة من متجر كروم للحصول على تجربة تثبيت سهلة",
+                features: {
+                    official: "إصدار رسمي من متجر كروم",
+                    automatic: "تحديثات تلقائية",
+                    secure: "تثبيت آمن"
+                },
+                mobileNote: "متوافق مع الجوال!",
+                mobileDesc: "يعمل على الأجهزة المحمولة والأجهزة اللوحية باستخدام متصفحات Edge و Kiwi",
+                button: "إضافة للمتصفح"
+            },
             tampermonkey: {
                 title: "Tampermonkey",
                 step1: {
@@ -93,7 +108,7 @@ const translations = {
                 },
                 step2: {
                     title: "تثبيت السكربت",
-                    description: "أضف سكربت منظم جدول الجامعة الإسلامية من جريسي فورك لتحسين جدولك",
+                    description: "أضف سكربت منظم جدول الجامعة الإسلامية من Greasyfork  لتحسين جدولك",
                     features: {
                         formatting: "تنسيق تلقائي للجدول",
                         darkMode: "دعم الوضع الداكن",
@@ -101,17 +116,6 @@ const translations = {
                     },
                     button: "تثبيت السكربت"
                 }
-            },
-            chromeExtension: {
-                title: "إضافة المتصفح",
-                download: "تحميل الإضافة",
-                instructions: "بعد التحميل:",
-                steps: [
-                    "استخرج الملف المضغوط إلى مجلد",
-                    "افتح كروم واذهب إلى chrome://extensions/",
-                    "فعّل \"وضع المطور\" في الأعلى",
-                    "انقر على \"تحميل غير مضغوط\" واختر المجلد المستخرج"
-                ]
             }
         },
         controls: {
