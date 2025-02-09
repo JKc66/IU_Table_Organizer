@@ -232,8 +232,18 @@ document.addEventListener('DOMContentLoaded', function() {
     ensureRTLVisibility();
 
     // Update version badge
-    const versionBadge = document.getElementById('version-badge');
-    versionBadge.src = `https://img.shields.io/badge/version-${window.IU_VERSION}-blue.svg`;
+    if (typeof window.setVersionBadge === 'function') {
+        window.setVersionBadge();
+    } else {
+        // Fallback if version.js hasn't loaded properly
+        const versionBadge = document.getElementById('version-badge');
+        if (versionBadge) {
+            const span = document.createElement('span');
+            span.className = 'version-text';
+            span.textContent = `Version ${window.IU_VERSION || 'Unknown'}`;
+            versionBadge.parentNode.replaceChild(span, versionBadge);
+        }
+    }
 
     // Back to Top functionality
     const backToTopButton = document.getElementById('backToTop');
