@@ -1,5 +1,5 @@
 // Central version number for IU Table Organizer
-const VERSION = '3.0.1';
+const VERSION = '4.0';
 
 // Set version immediately to ensure it's available
 window.IU_VERSION = VERSION;
