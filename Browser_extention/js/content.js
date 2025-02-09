@@ -530,15 +530,13 @@ function downloadAsPNG(event) {
     const wrapper = document.createElement('div');
     wrapper.style.cssText = `
         background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
-        padding: 10px;
         direction: rtl;
         width: ${maxWidth}px;
-        margin: 0 auto;
-        border-radius: 8px;
+        margin: 0;
+        border-radius: 0;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 10px;
+        align-items: stretch;
         position: relative;
     `;
     
