@@ -9,7 +9,7 @@ let colors = ["Blue", "Black", "Crimson", "Green", "Grey", "OrangeRed", "Purple"
 let subject_colors = {};
 let color_index = 0;
 let currentTheme = 'light';
-let includeSummaryInDownload = true;
+let includeSummaryInDownload = false;
 
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
@@ -889,13 +889,79 @@ function createSummary() {
                 <button class="control-button" id="ramadanBtn" style="background: ${ramadanMode ? '#4CAF50' : '#666'};">
                     🕌 توقيت رمضان
                 </button>
-                <button class="control-button" id="downloadButton">
-                    💾 تحميل كصورة
-                </button>
-                <label style="display: flex; align-items: center; gap: 8px; background: ${currentTheme === 'dark' ? '#2d2d2d' : '#f5f5f5'}; padding: 8px 16px; border-radius: 8px; cursor: pointer;">
-                    <input type="checkbox" id="includeSummaryCheckbox" ${includeSummaryInDownload ? 'checked' : ''} style="cursor: pointer;">
-                    <span style="color: ${currentTheme === 'dark' ? '#fff' : '#000'}">تضمين الملخص</span>
-                </label>
+                <div class="download-group" style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    background: ${currentTheme === 'dark' ? '#1f1f1f' : '#f0f0f0'};
+                    padding: 4px;
+                    border-radius: 12px;
+                    border: 1px solid ${currentTheme === 'dark' ? '#333' : '#e0e0e0'};
+                ">
+                    <button class="control-button" id="downloadButton" style="margin: 0;">
+                        💾 تحميل كصورة
+                    </button>
+                    <label class="custom-checkbox-container" style="
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        background: ${currentTheme === 'dark' ? '#2d2d2d' : '#f5f5f5'};
+                        padding: 8px 16px;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        margin: 0;
+                    ">
+                        <div class="checkbox-wrapper" style="position: relative; width: 18px; height: 18px;">
+                            <input type="checkbox" id="includeSummaryCheckbox" style="
+                                position: absolute;
+                                opacity: 0;
+                                cursor: pointer;
+                                height: 0;
+                                width: 0;
+                            ">
+                            <span class="checkmark" style="
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                height: 18px;
+                                width: 18px;
+                                background-color: ${currentTheme === 'dark' ? '#404040' : '#ffffff'};
+                                border: 2px solid ${currentTheme === 'dark' ? '#666' : '#ccc'};
+                                border-radius: 4px;
+                                transition: all 0.2s ease;
+                            "></span>
+                        </div>
+                        <span style="color: ${currentTheme === 'dark' ? '#fff' : '#000'}; user-select: none;">تضمين الملخص</span>
+                    </label>
+                </div>
+                <style>
+                    .custom-checkbox-container:hover .checkmark {
+                        border-color: ${currentTheme === 'dark' ? '#888' : '#4CAF50'} !important;
+                    }
+                    .custom-checkbox-container input:checked ~ .checkmark {
+                        background-color: #4CAF50 !important;
+                        border-color: #4CAF50 !important;
+                    }
+                    .custom-checkbox-container input:checked ~ .checkmark:after {
+                        content: '';
+                        position: absolute;
+                        left: 5px;
+                        top: 2px;
+                        width: 4px;
+                        height: 8px;
+                        border: solid white;
+                        border-width: 0 2px 2px 0;
+                        transform: rotate(45deg);
+                    }
+                    .custom-checkbox-container:hover {
+                        background: ${currentTheme === 'dark' ? '#363636' : '#e8e8e8'} !important;
+                    }
+                    .download-group:hover {
+                        border-color: ${currentTheme === 'dark' ? '#444' : '#ccc'};
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    }
+                </style>
             </div>
         </div>
     `;
