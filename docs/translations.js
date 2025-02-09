@@ -4,8 +4,8 @@ const translations = {
         subtitle: "Transform your Islamic University schedule into a more readable format with one click.",
         demo: {
             title: "Before & After",
-            beforeTitle: "Before Organization",
-            afterTitle: "After Organization",
+            beforeTitle: "Before Organizing",
+            afterTitle: "After Organizing",
             darkMode: "Dark Mode",
             lightMode: "Light Mode"
         },
