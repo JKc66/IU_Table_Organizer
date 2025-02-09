@@ -911,7 +911,7 @@ function createSummary() {
                         margin: 0;
                     ">
                         <div class="checkbox-wrapper" style="position: relative; width: 18px; height: 18px;">
-                            <input type="checkbox" id="includeSummaryCheckbox" style="
+                            <input type="checkbox" id="includeSummaryCheckbox" ${includeSummaryInDownload ? 'checked' : ''} style="
                                 position: absolute;
                                 opacity: 0;
                                 cursor: pointer;
