@@ -1,0 +1,24 @@
+🎓 IU Table Organizer
+
+Transform your Islamic University schedule table into a beautiful, organized format with just one click! This extension enhances your class schedule viewing experience with smart organization and modern features.
+
+✨ KEY FEATURES ✨
+📅 Smart reorganization by weekdays
+🎨 Intuitive color coding for better readability
+⏰ Clear break time display
+📊 Comprehensive schedule summary (credits, subjects, busy days)
+🌙 Ramadan time support
+📸 Export your schedule as PNG
+🌐 Full Arabic interface support
+
+📝 SIMPLE TO USE 📝
+Just visit your IU schedule page, click "نظم الجدول" to organize, and "تحميل كصورة" to save as PNG. It's that simple!
+
+💡 WHAT MAKES US SPECIAL 💡
+• Clean and modern interface
+• Instant schedule transformation
+• Support for both light and dark modes
+• Optimized for all screen sizes
+• Regular updates and improvements
+
+This extension is licensed under MPL 2.0 and is dedicated to improving the academic experience of Islamic University students. 

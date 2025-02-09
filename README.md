@@ -35,7 +35,15 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 ## 🔧 Installation
 
-### Method 1: Tampermonkey (Recommended)
+### Method 1: Chrome Web Store (Recommended)
+
+<div align="center">
+  <a href="https://bit.ly/42MW9NZ">
+    <img src="https://raw.githubusercontent.com/ChromeWebStore/branding/main/CWS%20badge%20guide/EN/ChromeWebStore_BadgeWBorder_v2_496x150.png" alt="Available in the Chrome Web Store" width="250px" />
+  </a>
+</div>
+
+### Method 2: Tampermonkey
 
 1. First install the Tampermonkey extension
 2. Then install the script
@@ -44,25 +52,6 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 |:---:|:---:|
 | <img src="docs\assets\tampermonkeysvg.svg" width="100"> | <img src="docs\assets\greasyfork.png" width="100"> |
 | [Install Tampermonkey](https://www.tampermonkey.net/) | [Install Script](https://greasyfork.org/en/scripts/432219-iu-table-organizer) |
-
-💡 Also works on mobile/tablet devices using Microsoft Edge 🌐
-
-### Method 2: Chrome Extension
-
-1. Download and extract using the button below:
-   <div align="center">
-     <a href="https://github.com/JKc66/IU_Table_Organizer/raw/main/IU_tabel_org/IU_tabel_org.zip">
-       <img src="https://img.shields.io/badge/Download-Extension-green?style=for-the-badge&logo=github" alt="Download Extension" />
-     </a>
-   </div>
-
-2. Go to `chrome://extensions/`
-3. Enable "Developer mode"
-4. Click "Load unpacked" and select the extracted folder
-
-<div align="center">
-  <img src="docs\assets/extension_guide.PNG" alt="Extension Installation Guide" width="80%" />
-</div>
 
 ## 📝 Usage
 1. Go to your IU schedule page
