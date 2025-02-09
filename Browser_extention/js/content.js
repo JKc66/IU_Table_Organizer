@@ -426,7 +426,7 @@ function downloadAsPNG(event) {
         event.preventDefault();
     }
     
-    // Create and show loading overlay
+    //Create and show loading overlay
     const loadingOverlay = document.createElement('div');
     loadingOverlay.className = 'loading-notification';
     
