@@ -32,6 +32,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 - 📊 Schedule summary (credits, subjects, busy days)
 - 📸 Export as PNG
 - 🌐 Arabic interface support
+- 🌙 Ramadan time support
 
 ## 🔧 Installation
 
@@ -39,14 +40,11 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 <div align="center">
   <a href="https://bit.ly/42MW9NZ">
-    <img src="https://raw.githubusercontent.com/ChromeWebStore/branding/main/CWS%20badge%20guide/EN/ChromeWebStore_BadgeWBorder_v2_496x150.png" alt="Available in the Chrome Web Store" width="250px" />
+    <img src="https://img.shields.io/badge/Download-Chrome%20Web%20Store-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Download from Chrome Web Store" width="250px" />
   </a>
 </div>
 
 ### Method 2: Tampermonkey
-
-1. First install the Tampermonkey extension
-2. Then install the script
 
 | Step 1️⃣: Install Tampermonkey First | Step 2️⃣: Install Script |
 |:---:|:---:|
