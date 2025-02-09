@@ -39,7 +39,7 @@ A Chrome extension/userscript to enhance and organize the Islamic University sch
 
 | Step | Action |
 |:----:|:------:|
-| Step 1: [Install Tampermonkey]((https://www.tampermonkey.net/)) | [![Tampermonkey](docs/assets/tampermonkeysvg.svg)](https://www.tampermonkey.net/) |
+| Step 1: [Install Tampermonkey](https://www.tampermonkey.net/) | [![Tampermonkey](docs/assets/tampermonkeysvg.svg)](https://www.tampermonkey.net/) |
 | Step 2: [Install Script](https://greasyfork.org/en/scripts/432219-iu-table-organizer) | [![Greasyfork](docs/assets/greasyfork.png)](https://greasyfork.org/en/scripts/432219-iu-table-organizer) |
 
 ## 📝 Usage
