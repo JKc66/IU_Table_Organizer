@@ -1,5 +1,6 @@
 # IU Table Organizer
 
+[![Version](https://img.shields.io/chrome-web-store/v/oopkbojbjpdehknlnajbgedjjgafjbec)](https://chromewebstore.google.com/detail/iu-table-organizer/oopkbojbjpdehknlnajbgedjjgafjbec)
 [![Version](https://img.shields.io/greasyfork/v/432219?color=red)](https://greasyfork.org/en/scripts/432219-iu-table-organizer)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
@@ -36,7 +37,8 @@ A userscript to enhance and organize the Islamic University schedule table view.
 ### Option 1: Chrome Store
 
 <div align="center">
-  <a href="https://bit.ly/42MW9NZ">
+  <p>👇 Click here to download from Chrome Store 👇</p>
+  <a href="https://chromewebstore.google.com/detail/iu-table-organizer/oopkbojbjpdehknlnajbgedjjgafjbec">
     <img src="https://img.shields.io/badge/Download-Chrome%20Store-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Download from Chrome Store" width="250px" />
   </a>
 </div>

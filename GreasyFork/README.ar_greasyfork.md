@@ -1,6 +1,7 @@
 # منظم جدول الجامعة الإسلامية
 
-[![الإصدار](https://img.shields.io/greasyfork/v/432219?color=red)](https://greasyfork.org/ar/scripts/432219-iu-table-organizer)
+[![الإصدار](https://img.shields.io/chrome-web-store/v/oopkbojbjpdehknlnajbgedjjgafjbec)](https://chromewebstore.google.com/detail/iu-table-organizer/oopkbojbjpdehknlnajbgedjjgafjbec)
+[![الإصدار](https://img.shields.io/greasyfork/v/432219?color=red)](https://greasyfork.org/en/scripts/432219-iu-table-organizer)
 [![الترخيص: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 سكربت مستخدم لتحسين وتنظيم عرض جدول المحاضرات في الجامعة الإسلامية. قم بتحويل جدولك الدراسي إلى تنسيق أكثر قابلية للقراءة بنقرة واحدة.
@@ -36,7 +37,8 @@
 ### الطريقة الأولى: متجر Chrome 
 
 <div align="center">
-  <a href="https://bit.ly/42MW9NZ">
+  <p>👇 اضغط هنا للتحميل من متجر كروم 👇</p>
+  <a href="https://chromewebstore.google.com/detail/iu-table-organizer/oopkbojbjpdehknlnajbgedjjgafjbec">
     <img src="https://img.shields.io/badge/تحميل-متجر%20Chrome-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white" alt="تحميل من متجر Chrome" width="250px" />
   </a>
 </div>
