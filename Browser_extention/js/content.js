@@ -496,6 +496,9 @@ function downloadAsPNG(event) {
     const element = document.getElementById('newTable');
     const summary = document.querySelector('.schedule-summary');
     
+    // Create filename based on mode
+    const filename = ramadanMode ? 'الجدول_الدراسي_توقيت_رمضان.png' : 'الجدول_الدراسي.png';
+    
     // Calculate the maximum width needed
     const tableWidth = element.offsetWidth;
     const summaryWidth = summary ? summary.offsetWidth : 0;
@@ -733,7 +736,7 @@ function downloadAsPNG(event) {
         try {
             const image = canvas.toDataURL('image/png', 1.0);
             const link = document.createElement('a');
-            link.download = `الجدول الدراسي.png`;
+            link.download = filename;  // Use the new filename
             link.href = image;
             
             document.body.appendChild(link);
@@ -766,7 +769,7 @@ function downloadAsPNG(event) {
                 }).then(canvas => {
                     const image = canvas.toDataURL('image/png', 1.0);
                     const link = document.createElement('a');
-                    link.download = `الجدول الدراسي.png`;
+                    link.download = filename;  // Use the new filename
                     link.href = image;
                     document.body.appendChild(link);
                     link.click();
