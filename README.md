@@ -1,6 +1,7 @@
 # IU Table Organizer
 
 [![Version](https://img.shields.io/chrome-web-store/v/oopkbojbjpdehknlnajbgedjjgafjbec)](https://chromewebstore.google.com/detail/iu-table-organizer/oopkbojbjpdehknlnajbgedjjgafjbec)
+[![Version](https://img.shields.io/greasyfork/v/432219?color=red)](https://greasyfork.org/en/scripts/432219-iu-table-organizer)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 📌 **Official Website:** [IU Table Organizer](https://jawadk.me/IU_Table_Organizer/)
