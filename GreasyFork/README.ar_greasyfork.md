@@ -1,6 +1,6 @@
 # منظم جدول الجامعة الإسلامية
 
-[![الإصدار](https://img.shields.io/badge/version-3.0-blue.svg)](https://github.com/JKc66/IU-table-organizer)
+[![الإصدار](https://img.shields.io/greasyfork/v/432219?color=red)](https://greasyfork.org/ar/scripts/432219-iu-table-organizer)
 [![الترخيص: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 سكربت مستخدم لتحسين وتنظيم عرض جدول المحاضرات في الجامعة الإسلامية. قم بتحويل جدولك الدراسي إلى تنسيق أكثر قابلية للقراءة بنقرة واحدة.
