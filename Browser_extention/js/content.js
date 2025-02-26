@@ -28,82 +28,56 @@ function convertToRamadanTime(timeStr) {
         return { hour, minute, period };
     }
 
-    // Helper function to format time
-    function formatTime(hour, minute) {
-        let period = 'ص';
-        if (hour >= 12) {
-            period = 'م';
-            if (hour > 12) hour -= 12;
-        }
-        if (hour === 0) hour = 12;
-        return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${period}`;
-    }
-
-    // Parse start and end times
+    // Parse start and end times to detect practical sessions
     const start = parseTime(startTime);
     const end = parseTime(endTime);
     
-    // Calculate duration in minutes
-    const duration = ((end.hour - start.hour) * 60 + (end.minute - start.minute));
-    
     // Determine if it's a practical session based on duration (80 minutes)
+    const duration = ((end.hour - start.hour) * 60 + (end.minute - start.minute));
     const isPractical = Math.abs(duration - 80) <= 5;  // Allow 5-minute flexibility
 
-    // Theoretical lecture time mappings (exact start times)
+    // Theoretical lecture time mappings
     const theoreticalMap = {
-        '08:00 ص': { hour: 10, minute: 0 },   // 10:00 - 10:35
-        '09:00 ص': { hour: 10, minute: 35 },  // 10:35 - 11:10
-        '10:00 ص': { hour: 11, minute: 15 },  // 11:15 - 11:50
-        '11:00 ص': { hour: 11, minute: 50 },  // 11:50 - 12:25
-        '12:00 م': { hour: 12, minute: 30 },  // 12:30 - 13:05
-        '01:00 م': { hour: 13, minute: 30 },  // 13:30 - 14:05
-        '02:00 م': { hour: 14, minute: 5 },   // 14:05 - 14:40
-        '03:00 م': { hour: 14, minute: 45 },  // 14:45 - 15:20
-        '04:00 م': { hour: 15, minute: 20 },  // 15:20 - 15:55
-        '05:00 م': { hour: 15, minute: 55 },  // 15:55 - 16:30
-        '06:00 م': { hour: 16, minute: 50 },  // 16:50 - 17:25
-        '07:00 م': { hour: 17, minute: 25 },  // 17:25 - 18:00
-        '08:00 م': null                       // Not in use
+        '08:00 ص': { start: '09:30 ص', end: '10:05 ص' },
+        '09:00 ص': { start: '10:10 ص', end: '10:45 ص' },
+        '10:00 ص': { start: '10:50 ص', end: '11:25 ص' },
+        '11:00 ص': { start: '11:30 ص', end: '12:05 م' },
+        '12:00 م': { start: '12:10 م', end: '12:45 م' },
+        '01:00 م': { start: '01:05 م', end: '01:40 م' },
+        '02:00 م': { start: '01:45 م', end: '02:20 م' },
+        '03:00 م': { start: '02:25 م', end: '03:00 م' },
+        '04:00 م': { start: '03:05 م', end: '03:40 م' },
+        '05:00 م': { start: '03:45 م', end: '04:20 م' },
+        '06:00 م': 'غير مستخدم',
+        '07:00 م': { start: '04:40 م', end: '05:15 م' }
     };
 
-    // Practical session time mappings (exact start times)
+    // Practical session time mappings
     const practicalMap = {
-        '08:00 ص': { hour: 10, minute: 0 },   // 10:00 - 10:50
-        '09:30 ص': { hour: 11, minute: 0 },   // 11:00 - 11:50
-        '11:00 ص': { hour: 12, minute: 0 },   // 12:00 - 12:50
-        '12:30 م': { hour: 13, minute: 10 },  // 13:10 - 14:00
-        '02:00 م': { hour: 14, minute: 10 },  // 14:10 - 15:00
-        '03:30 م': { hour: 15, minute: 10 },  // 15:10 - 16:00
-        '05:00 م': { hour: 16, minute: 20 }   // 16:20 - 17:10
+        '08:00 ص': { start: '09:30 ص', end: '10:20 ص' },
+        '09:30 ص': { start: '10:25 ص', end: '11:15 ص' },
+        '11:00 ص': { start: '11:20 ص', end: '12:10 م' },
+        '12:30 م': { start: '12:15 م', end: '01:05 م' },
+        '02:00 م': { start: '01:30 م', end: '02:20 م' },
+        '03:30 م': { start: '02:25 م', end: '03:15 م' },
+        '05:00 م': { start: '03:20 م', end: '04:10 م' }
     };
 
     // Get the mapped time based on session type
     const timeMap = isPractical ? practicalMap : theoreticalMap;
     const mappedTime = timeMap[startTime];
 
-    // Handle "not in use" case for evening theoretical lectures
-    if (!mappedTime) {
+    // Handle "not in use" case
+    if (mappedTime === 'غير مستخدم') {
         return 'غير مستخدم';
     }
 
-    // Get exact session duration
-    const durationInRamadan = isPractical ? 50 : 35;
-
-    // Calculate end time with exact duration
-    let endHour = mappedTime.hour;
-    let endMinute = mappedTime.minute + durationInRamadan;
-
-    // Adjust for hour overflow
-    if (endMinute >= 60) {
-        endHour += Math.floor(endMinute / 60);
-        endMinute = endMinute % 60;
+    // If no mapping found, return original time
+    if (!mappedTime) {
+        return timeStr;
     }
 
-    // Format times
-    const convertedStart = formatTime(mappedTime.hour, mappedTime.minute);
-    const convertedEnd = formatTime(endHour, endMinute);
-
-    return `${convertedStart} - ${convertedEnd}`;
+    return `${mappedTime.start} - ${mappedTime.end}`;
 }
 
 // Main initialization function
