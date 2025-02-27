@@ -42,6 +42,26 @@
                 // Update badge values
                 document.querySelector('.badge-chrome .badge-value').textContent = chromeVersion;
                 document.querySelector('.badge-greasy .badge-value').textContent = greasyforkVersion;
+                
+                // Check for version mismatch where Chrome is behind
+                const versionMismatchNotice = document.getElementById('version-mismatch-notice');
+                if (versionMismatchNotice) {
+                    if (chromeVersion !== greasyforkVersion) {
+                        // Simple version comparison, assuming semantic versioning
+                        // This will work for most version formats where newer versions are alphabetically "greater"
+                        const chromeIsOlder = chromeVersion < greasyforkVersion;
+                        
+                        if (chromeIsOlder) {
+                            versionMismatchNotice.classList.add('visible');
+                            const messageKey = document.documentElement.getAttribute('lang') === 'ar' ? 'versionMismatch.ar' : 'versionMismatch.en';
+                            versionMismatchNotice.querySelector('.version-notice-text').textContent = translations[document.documentElement.getAttribute('lang') || 'en'].versionMismatch;
+                        } else {
+                            versionMismatchNotice.classList.remove('visible');
+                        }
+                    } else {
+                        versionMismatchNotice.classList.remove('visible');
+                    }
+                }
             } catch (error) {
                 console.error('Error fetching versions:', error);
                 
@@ -51,6 +71,13 @@
                     const versionData = JSON.parse(cachedData);
                     document.querySelector('.badge-chrome .badge-value').textContent = versionData.chrome;
                     document.querySelector('.badge-greasy .badge-value').textContent = versionData.greasy;
+                    
+                    // Also check for version mismatch in cached data
+                    const versionMismatchNotice = document.getElementById('version-mismatch-notice');
+                    if (versionMismatchNotice && versionData.chrome !== versionData.greasy && versionData.chrome < versionData.greasy) {
+                        versionMismatchNotice.classList.add('visible');
+                        versionMismatchNotice.querySelector('.version-notice-text').textContent = translations[document.documentElement.getAttribute('lang') || 'en'].versionMismatch;
+                    }
                 } else {
                     // No cache available, show loading state
                     document.querySelector('.badge-chrome .badge-value').textContent = '...';
@@ -92,6 +119,10 @@
                         <span class="badge-value">MPL 2.0</span>
                     </div>
                 </div>
+            </div>
+            <div id="version-mismatch-notice" class="version-mismatch-notice" data-translate="versionMismatch">
+                <i class="fas fa-exclamation-triangle version-notice-icon"></i>
+                <span class="version-notice-text"></span>
             </div>
         </div>
     </header>

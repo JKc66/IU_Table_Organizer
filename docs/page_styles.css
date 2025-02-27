@@ -2292,4 +2292,118 @@ img.browser-icon-inline {
 
 [dir="rtl"] .mobile-compatibility p {
     text-align: right;
+}
+
+/* Version Mismatch Notice */
+.version-mismatch-notice {
+    display: none;
+    background: #e74c3c; /* Nice reddish color */
+    color: white;
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: var(--border-radius);
+    margin: 1.25rem auto 0;
+    max-width: 800px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+    font-size: 0.95rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: relative;
+    border-left: 4px solid #ffcc00;
+    line-height: 1.6;
+    font-weight: 500;
+    z-index: 1;
+}
+
+.version-mismatch-notice.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInDown 0.5s ease forwards;
+}
+
+.version-mismatch-notice::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 110px; /* Position to point to Chrome badge */
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #e74c3c; /* Match background color */
+    z-index: 2;
+}
+
+.version-notice-icon {
+    color: #ffcc00;
+    font-size: 1.2rem;
+    margin-right: 12px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+    animation: warningPulse 2s infinite;
+}
+
+@keyframes warningPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.version-notice-text {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+[dir="rtl"] .version-mismatch-notice {
+    font-family: 'Tajawal', 'Cairo', sans-serif;
+    border-left: none;
+    border-right: 4px solid #ffcc00;
+    text-align: right;
+    background: #e74c3c; /* Same red color in RTL */
+}
+
+[dir="rtl"] .version-mismatch-notice::before {
+    left: auto;
+    right: 630px; /* Adjusted to point to Chrome badge in RTL mode */
+}
+
+[dir="rtl"] .version-notice-icon {
+    margin-right: 0;
+    margin-left: 12px;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .version-mismatch-notice {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+        margin: 0.8rem auto;
+    }
+    
+    .version-mismatch-notice::before {
+        left: 170px; /* Adjust for mobile */
+    }
+    
+    [dir="rtl"] .version-mismatch-notice::before {
+        right: 170px; /* Keep same position as desktop */
+        left: auto;
+    }
 } 

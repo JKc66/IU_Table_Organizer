@@ -2,6 +2,7 @@ const translations = {
     en: {
         title: "IU Table Organizer",
         subtitle: "Transform your Islamic University schedule into a more readable format with one click.",
+        versionMismatch: "Chrome Web Store version is slightly behind. This is normal as Chrome takes up to 24 hours to review updates. The latest features will be available soon!",
         demo: {
             title: "Before & After",
             beforeTitle: "Before Organizing",
@@ -86,6 +87,7 @@ const translations = {
     ar: {
         title: "منظم جدول الجامعة الإسلامية",
         subtitle: "حول جدول الجامعة الإسلامية إلى تنسيق أكثر وضوحاً بنقرة واحدة",
+        versionMismatch: "إصدار متجر كروم متأخر قليلاً. هذا طبيعي حيث يستغرق كروم ما يصل إلى 24 ساعة لمراجعة التحديثات. ستتوفر أحدث الميزات قريبًا!",
         demo: {
             title: "قبل وبعد",
             beforeTitle: "قبل التنظيم",
@@ -123,7 +125,7 @@ const translations = {
                     title: "تثبيت Tampermonkey",
                     description: "أضف إضافة Tampermonkey إلى متصفحك لإدارة السكربتات",
                     mobileNote: "متوافق مع الجوال!",
-                    mobileDesc: "يعمل على الأجهزة المحمولة و الأجهزة اللوحية و باستخدام متصفحات <span class=\"browser-wrapper\"> <span class=\"browser-name\">Firefox</span><i class=\"browser-icon-inline fab fa-firefox\"></i></span> و <span class=\"browser-wrapper\"> <span class=\"browser-name\">Edge</span><i class=\"browser-icon-inline fab fa-edge\"></i></span> و <span class=\"browser-wrapper\"> <span class=\"browser-name\">Kiwi</span><img src=\"assets/kiwi-browser.svg\" alt=\"Kiwi Browser\" class=\"browser-icon-inline\"></span>",
+                    mobileDesc: "يعمل على الأجهزة المحمولة و الأجهزة اللوحية باستخدام متصفحات <span class=\"browser-wrapper\"> <span class=\"browser-name\">Firefox</span><i class=\"browser-icon-inline fab fa-firefox\"></i></span> و <span class=\"browser-wrapper\"> <span class=\"browser-name\">Edge</span><i class=\"browser-icon-inline fab fa-edge\"></i></span> و <span class=\"browser-wrapper\"> <span class=\"browser-name\">Kiwi</span><img src=\"assets/kiwi-browser.svg\" alt=\"Kiwi Browser\" class=\"browser-icon-inline\"></span>",
                     button: "تثبيت Tampermonkey"
                 },
                 step2: {
