@@ -1,8 +1,8 @@
 :root {
-    --primary-color: #4f46e5;
-    --primary-color-rgb: 79, 70, 229;
-    --secondary-color: #1e1b4b;
-    --accent-color: #6366f1;
+    --primary-color: #0b8f9c;
+    --primary-color-rgb: 11, 143, 156;
+    --secondary-color: #1a6e76;
+    --accent-color: #c8a83a;
     --background-color: #0f1729;
     --text-color: #f8fafc;
     --text-color-secondary: #cbd5e1;
@@ -13,17 +13,17 @@
     --transition: all 0.25s ease;
     --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --header-gradient-start: #4338ca;
-    --header-gradient-end: #3730a3;
+    --header-gradient-start: #0b8f9c;
+    --header-gradient-end: #127883;
     --button-text: #ffffff;
-    --link-color: #818cf8;
+    --link-color: #2dc5d3;
     --code-background: #334155;
     --overlay-background: rgba(0, 0, 0, 0.4);
     --overlay-hover: rgba(0, 0, 0, 0.5);
     /* New design variables */
-    --glow-color: rgba(99, 102, 241, 0.4);
+    --glow-color: rgba(11, 143, 156, 0.4);
     --card-hover-transform: translateY(-5px);
-    --badge-gradient: linear-gradient(135deg, #4f46e5, #6366f1);
+    --badge-gradient: linear-gradient(135deg, #0b8f9c, #c8a83a);
     --header-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     /* Arabic Support Variables */
     --font-family-arabic: 'Noto Sans Arabic', 'Tajawal', 'Cairo', system-ui, -apple-system, sans-serif;
@@ -455,7 +455,7 @@ header h1 {
     bottom: 0;
     left: 0;
     border-radius: 3px;
-    background: linear-gradient(to right, var(--accent-color), transparent);
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
 }
 
 /* Demo Images */
@@ -978,11 +978,11 @@ header h1 {
     padding: 0.5rem 0.75rem;
     border-radius: var(--border-radius);
     transition: all 0.2s ease;
-    background: rgba(74, 144, 226, 0.1);
+    background: rgba(11, 143, 156, 0.1);
 }
 
 .credits-content a:hover {
-    background: rgba(74, 144, 226, 0.2);
+    background: rgba(11, 143, 156, 0.2);
     transform: translateY(-1px);
     color: var(--accent-color);
 }
@@ -1390,10 +1390,10 @@ footer {
 
 @keyframes heartGlow {
     0% {
-        filter: drop-shadow(0 0 15px rgba(255, 107, 107, 0.4));
+        filter: drop-shadow(0 0 15px rgba(11, 143, 156, 0.4));
     }
     100% {
-        filter: drop-shadow(0 0 25px rgba(255, 107, 107, 0.8));
+        filter: drop-shadow(0 0 25px rgba(11, 143, 156, 0.8));
     }
 }
 
