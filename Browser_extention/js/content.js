@@ -233,9 +233,6 @@ function getTableInfo() {
     processRows(row2);
 }
 
-// Rest of your functions (getNewTable, appendTable, etc.) go here...
-// [Previous functions remain mostly unchanged, just remove the styles injection part]
-
 // Start initialization
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
