@@ -112,6 +112,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (value) {
                 if (element.tagName === 'INPUT' && element.type === 'placeholder') {
                     element.placeholder = value;
+                } else if (key.includes('mobileDesc')) {
+                    // Use innerHTML for browser icon elements
+                    element.innerHTML = value;
                 } else {
                     element.textContent = value;
                 }

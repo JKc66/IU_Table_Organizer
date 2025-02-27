@@ -25,7 +25,7 @@ const translations = {
                     secure: "Secure installation"
                 },
                 mobileNote: "Mobile Compatible!",
-                mobileDesc: "Works on mobile and tablet devices using Edge and Kiwi browsers",
+                mobileDesc: "Works on mobile and tablet devices using <span class=\"browser-wrapper\"><img src=\"assets/kiwi-browser.svg\" alt=\"Kiwi Browser\" class=\"browser-icon-inline\"><span class=\"browser-name\">Kiwi</span></span> browser",
                 button: "Add to Browser",
                 compatibleTitle: "Compatible Browsers:",
                 compatibleText: "For any browser that supports Chrome Web Store extensions"
@@ -39,7 +39,7 @@ const translations = {
                     title: "Install Tampermonkey",
                     description: "Add the Tampermonkey extension to your browser for userscript management",
                     mobileNote: "Mobile Compatible!",
-                    mobileDesc: "Works on mobile and tablet devices using Firefox and Kiwi browsers",
+                    mobileDesc: "Works on mobile and tablet devices using <span class=\"browser-wrapper\"><i class=\"browser-icon-inline fab fa-firefox\"></i><span class=\"browser-name\">Firefox</span></span>, <span class=\"browser-wrapper\"><i class=\"browser-icon-inline fab fa-edge\"></i><span class=\"browser-name\">Edge</span></span>, and <span class=\"browser-wrapper\"><img src=\"assets/kiwi-browser.svg\" alt=\"Kiwi Browser\" class=\"browser-icon-inline\"><span class=\"browser-name\">Kiwi</span></span> browsers",
                     button: "Get Tampermonkey"
                 },
                 step2: {
@@ -75,6 +75,12 @@ const translations = {
             title: "Credits",
             madeWith: "Made with love by",
             using: "Using"
+        },
+        contribute: {
+            title: "Contribute",
+            description: "Want to improve IU Table Organizer? We welcome your contributions!",
+            button: "Contribute on GitHub",
+            text: "Create a pull request or open an issue to help make this project even better."
         }
     },
     ar: {
@@ -103,7 +109,7 @@ const translations = {
                     secure: "تثبيت آمن"
                 },
                 mobileNote: "متوافق مع الجوال!",
-                mobileDesc: "يعمل على الأجهزة المحمولة والأجهزة اللوحية باستخدام متصفحات Edge و Kiwi",
+                mobileDesc: "يعمل على الأجهزة المحمولة والأجهزة اللوحية باستخدام متصفح <span class=\"browser-wrapper\"><span class=\"browser-name\">Kiwi</span><img src=\"assets/kiwi-browser.svg\" alt=\"Kiwi Browser\" class=\"browser-icon-inline\"></span>",
                 button: "إضافة للمتصفح",
                 compatibleTitle: "متصفحات متوافقة:",
                 compatibleText: "لأي متصفح يدعم متجر المتصفحات الموسعة"
@@ -117,7 +123,7 @@ const translations = {
                     title: "تثبيت Tampermonkey",
                     description: "أضف إضافة Tampermonkey إلى متصفحك لإدارة السكربتات",
                     mobileNote: "متوافق مع الجوال!",
-                    mobileDesc: "يعمل على الأجهزة المحمولة والأجهزة اللوحية باستخدام متصفحات Firefox و Kiwi",
+                    mobileDesc: "يعمل على الأجهزة المحمولة و الأجهزة اللوحية و باستخدام متصفحات <span class=\"browser-wrapper\"> <span class=\"browser-name\">Firefox</span><i class=\"browser-icon-inline fab fa-firefox\"></i></span> و <span class=\"browser-wrapper\"> <span class=\"browser-name\">Edge</span><i class=\"browser-icon-inline fab fa-edge\"></i></span> و <span class=\"browser-wrapper\"> <span class=\"browser-name\">Kiwi</span><img src=\"assets/kiwi-browser.svg\" alt=\"Kiwi Browser\" class=\"browser-icon-inline\"></span>",
                     button: "تثبيت Tampermonkey"
                 },
                 step2: {
@@ -153,6 +159,12 @@ const translations = {
             title: "شكر وتقدير",
             madeWith: "صُنع بحب بواسطة",
             using: "باستخدام"
+        },
+        contribute: {
+            title: "المساهمة",
+            description: "هل ترغب في تحسين منظم جدول الجامعة الإسلامية؟ نرحب بمساهماتك!",
+            button: "ساهم على GitHub",
+            text: "قم بإنشاء طلب سحب أو فتح مشكلة للمساعدة في جعل هذا المشروع أفضل."
         }
     }
 }; 
