@@ -796,15 +796,17 @@ function toggleTheme(theme) {
     if (summary) {
         summary.classList.remove('theme-light', 'theme-dark');
         summary.classList.add(`theme-${theme}`);
-    }
-    
-    // Apply theme-specific styles
-    if (theme === 'dark') {
-        table.style.backgroundColor = '#1a1a1a';
-        table.style.color = '#ffffff';
-    } else {
-        table.style.backgroundColor = '';
-        table.style.color = '';
+        
+        // Update button states
+        const lightThemeBtn = summary.querySelector('#lightThemeBtn');
+        const darkThemeBtn = summary.querySelector('#darkThemeBtn');
+        
+        if (lightThemeBtn) {
+            lightThemeBtn.classList.toggle('active', theme === 'light');
+        }
+        if (darkThemeBtn) {
+            darkThemeBtn.classList.toggle('active', theme === 'dark');
+        }
     }
 }
 
@@ -854,89 +856,28 @@ function createSummary() {
                 <span style="font-weight: 500;">📊 اليوم الأكثر:</span>
                 <span>${busyDays.join(', ')} (${maxLectures})</span>
             </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
-                <button class="control-button theme-btn" id="lightThemeBtn" style="background: ${currentTheme === 'light' ? '#4CAF50' : '#666'};">
+            <div class="control-buttons">
+                <button class="control-button theme-btn ${currentTheme === 'light' ? 'active' : ''}" id="lightThemeBtn">
                     ☀️ فاتح
                 </button>
-                <button class="control-button theme-btn" id="darkThemeBtn" style="background: ${currentTheme === 'dark' ? '#4CAF50' : '#666'};">
+                <button class="control-button theme-btn ${currentTheme === 'dark' ? 'active' : ''}" id="darkThemeBtn">
                     🌙 داكن
                 </button>
-                <button class="control-button" id="ramadanBtn" style="background: ${ramadanMode ? '#4CAF50' : '#666'};">
+                <button class="control-button ${ramadanMode ? 'active' : ''}" id="ramadanBtn">
                     🕌 توقيت رمضان
                 </button>
-                <div class="download-group" style="
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    background: ${currentTheme === 'dark' ? '#1f1f1f' : '#f0f0f0'};
-                    padding: 4px;
-                    border-radius: 12px;
-                    border: 1px solid ${currentTheme === 'dark' ? '#333' : '#e0e0e0'};
-                ">
-                    <button class="control-button" id="downloadButton" style="margin: 0;">
+                <div class="download-group">
+                    <button class="control-button" id="downloadButton">
                         💾 تحميل كصورة
                     </button>
-                    <label class="custom-checkbox-container" style="
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        background: ${currentTheme === 'dark' ? '#2d2d2d' : '#f5f5f5'};
-                        padding: 8px 16px;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        margin: 0;
-                    ">
-                        <div class="checkbox-wrapper" style="position: relative; width: 18px; height: 18px;">
-                            <input type="checkbox" id="includeSummaryCheckbox" ${includeSummaryInDownload ? 'checked' : ''} style="
-                                position: absolute;
-                                opacity: 0;
-                                cursor: pointer;
-                                height: 0;
-                                width: 0;
-                            ">
-                            <span class="checkmark" style="
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                height: 18px;
-                                width: 18px;
-                                background-color: ${currentTheme === 'dark' ? '#404040' : '#ffffff'};
-                                border: 2px solid ${currentTheme === 'dark' ? '#666' : '#ccc'};
-                                border-radius: 4px;
-                                transition: all 0.2s ease;
-                            "></span>
+                    <label class="custom-checkbox-container">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="includeSummaryCheckbox" ${includeSummaryInDownload ? 'checked' : ''}>
+                            <span class="checkmark"></span>
                         </div>
-                        <span style="color: ${currentTheme === 'dark' ? '#fff' : '#000'}; user-select: none;">تضمين الملخص</span>
+                        <span>تضمين الملخص</span>
                     </label>
                 </div>
-                <style>
-                    .custom-checkbox-container:hover .checkmark {
-                        border-color: ${currentTheme === 'dark' ? '#888' : '#4CAF50'} !important;
-                    }
-                    .custom-checkbox-container input:checked ~ .checkmark {
-                        background-color: #4CAF50 !important;
-                        border-color: #4CAF50 !important;
-                    }
-                    .custom-checkbox-container input:checked ~ .checkmark:after {
-                        content: '';
-                        position: absolute;
-                        left: 5px;
-                        top: 2px;
-                        width: 4px;
-                        height: 8px;
-                        border: solid white;
-                        border-width: 0 2px 2px 0;
-                        transform: rotate(45deg);
-                    }
-                    .custom-checkbox-container:hover {
-                        background: ${currentTheme === 'dark' ? '#363636' : '#e8e8e8'} !important;
-                    }
-                    .download-group:hover {
-                        border-color: ${currentTheme === 'dark' ? '#444' : '#ccc'};
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                    }
-                </style>
             </div>
         </div>
     `;
@@ -969,7 +910,7 @@ function createSummary() {
         if (ramadanBtn) {
             ramadanBtn.addEventListener('click', () => {
                 ramadanMode = !ramadanMode;
-                ramadanBtn.style.background = ramadanMode ? '#4CAF50' : '#666';
+                ramadanBtn.classList.toggle('active');
                 getNewTable();
                 appendTable();
             });

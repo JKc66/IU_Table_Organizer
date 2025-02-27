@@ -224,9 +224,9 @@
     text-align: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
-    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2),
-                0 4px 8px rgba(37, 99, 235, 0.1),
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25),
+                0 4px 8px rgba(0, 0, 0, 0.15),
                 inset 0 2px 4px rgba(255, 255, 255, 0.1);
     text-decoration: none;
     margin: 4px 8px;
@@ -236,7 +236,25 @@
     cursor: pointer;
     color: white;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+}
+
+@keyframes indicatorGlow {
+    0% {
+        box-shadow: 0 0 5px #ef4444,
+                    0 0 10px #ef4444,
+                    0 0 15px rgba(239, 68, 68, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 8px #ef4444,
+                    0 0 15px #ef4444,
+                    0 0 25px rgba(239, 68, 68, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 5px #ef4444,
+                    0 0 10px #ef4444,
+                    0 0 15px rgba(239, 68, 68, 0.5);
+    }
 }
 
 .control-button::before {
@@ -253,9 +271,10 @@
 
 .control-button:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3),
-                0 8px 16px rgba(37, 99, 235, 0.2),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35),
+                0 8px 16px rgba(0, 0, 0, 0.25),
+                inset 0 2px 4px rgba(255, 255, 255, 0.15);
+    filter: brightness(1.1);
 }
 
 .control-button:hover::before {
@@ -268,63 +287,63 @@
                 inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.control-button.active {
-    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2),
-                0 4px 8px rgba(5, 150, 105, 0.1),
-                inset 0 2px 4px rgba(255, 255, 255, 0.1);
-}
-
 /* Theme buttons specific styles */
-.theme-btn {
+.theme-btn, #ramadanBtn {
     min-width: 100px;
     backdrop-filter: blur(8px);
+    position: relative;
+    padding-right: 2.5rem;
 }
 
+.theme-btn::after, #ramadanBtn::after {
+    content: '';
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.theme-btn.active::after, #ramadanBtn.active::after {
+    background: #ef4444;
+    border-color: #ef4444;
+    animation: indicatorGlow 2s infinite;
+}
+
+/* Set permanent colors for light theme button */
 #lightThemeBtn {
-    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-    box-shadow: 0 2px 4px rgba(217, 119, 6, 0.2),
-                0 4px 8px rgba(217, 119, 6, 0.1),
-                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #451a03 0%, #582402 100%);
 }
 
-#lightThemeBtn:hover {
-    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3),
-                0 8px 16px rgba(217, 119, 6, 0.2),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+/* Dark theme - only modify the indicator */
+.theme-dark .theme-btn.active::after,
+.theme-dark #ramadanBtn.active::after {
+    background: #ef4444;
+    border-color: #ef4444;
+    animation: indicatorGlow 2s infinite;
 }
 
-#darkThemeBtn {
-    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-    box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2),
-                0 4px 8px rgba(79, 70, 229, 0.1),
-                inset 0 2px 4px rgba(255, 255, 255, 0.1);
-}
-
-#darkThemeBtn:hover {
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3),
-                0 8px 16px rgba(79, 70, 229, 0.2),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
-}
-
-#downloadButton {
-    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-    box-shadow: 0 2px 4px rgba(13, 148, 136, 0.2),
-                0 4px 8px rgba(13, 148, 136, 0.1),
-                inset 0 2px 4px rgba(255, 255, 255, 0.1);
-}
-
-#downloadButton:hover {
-    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3),
-                0 8px 16px rgba(13, 148, 136, 0.2),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+#ramadanBtn.active::after {
+    background: #ef4444;
+    border-color: #ef4444;
+    animation: indicatorGlow 2s infinite;
 }
 
 #ramadanBtn {
-    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
-    box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2),
-                0 4px 8px rgba(124, 58, 237, 0.1),
+    background: linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25),
+                0 4px 8px rgba(0, 0, 0, 0.15),
                 inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+#ramadanBtn::after {
+    background: #2a1650;
 }
 
 #ramadanBtn:hover {
@@ -335,50 +354,40 @@
 
 /* Dark theme support for control buttons */
 .theme-dark .control-button {
-    background: linear-gradient(135deg, #2d3a6a 0%, #3d4a8a 100%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
-                0 4px 8px rgba(0, 0, 0, 0.2),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4),
+                0 4px 8px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.05);
     color: #e0e0ff;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .theme-dark .control-button:hover {
+    filter: brightness(1.1);
     transform: translateY(-2px) scale(1.02);
-    background: linear-gradient(135deg, #3d4a8a 0%, #4d5aaa 100%);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4),
-                0 8px 16px rgba(0, 0, 0, 0.3),
-                inset 0 1px 2px rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .theme-dark .control-button:active {
     transform: translateY(1px) scale(0.98);
-    background: linear-gradient(135deg, #2d3a6a 0%, #3d4a8a 100%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
-                inset 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+/* Remove the theme-dark override for lightThemeBtn */
 .theme-dark .control-button.active {
-    background: linear-gradient(135deg, #2d6a3a 0%, #3d8a4a 100%);
+    background: inherit;
     border-color: rgba(255, 255, 255, 0.1);
 }
 
-.theme-dark #lightThemeBtn {
-    background: linear-gradient(135deg, #6a4a2d 0%, #8a5a3d 100%);
-}
-
+/* Remove the light theme button override and keep only dark theme button override */
 .theme-dark #darkThemeBtn {
-    background: linear-gradient(135deg, #2d3a6a 0%, #3d4a8a 100%);
+    background: linear-gradient(135deg, #172554 0%, #1e3a8a 100%);
 }
 
 .theme-dark #downloadButton {
-    background: linear-gradient(135deg, #2d6a6a 0%, #3d8a8a 100%);
+    background: linear-gradient(135deg, #042f2e 0%, #134e4a 100%);
 }
 
 .theme-dark #ramadanBtn {
-    background: linear-gradient(135deg, #4a2d6a 0%, #5a3d8a 100%);
+    background: linear-gradient(135deg, #3b0764 0%, #4c1d95 100%);
 }
 
 .schedule-organizer-btn {
@@ -548,4 +557,117 @@
     background: #1e2a4a;
     color: #a0b8ff;
     border-color: #2e3f6a;
+}
+
+.download-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--download-group-bg, #f0f0f0);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--download-group-border, #e0e0e0);
+    transition: all 0.3s ease;
+}
+
+.theme-dark .download-group {
+    --download-group-bg: #1f1f1f;
+    --download-group-border: #333;
+}
+
+.download-group:hover {
+    border-color: var(--download-group-hover-border, #ccc);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.theme-dark .download-group:hover {
+    --download-group-hover-border: #444;
+}
+
+.custom-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--checkbox-container-bg, #f5f5f5);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0;
+    user-select: none;
+}
+
+.theme-dark .custom-checkbox-container {
+    --checkbox-container-bg: #2d2d2d;
+}
+
+.custom-checkbox-container:hover {
+    background: var(--checkbox-container-hover-bg, #e8e8e8);
+}
+
+.theme-dark .custom-checkbox-container:hover {
+    --checkbox-container-hover-bg: #363636;
+}
+
+.checkbox-wrapper {
+    position: relative;
+    width: 18px;
+    height: 18px;
+}
+
+.checkbox-wrapper input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: var(--checkmark-bg, #ffffff);
+    border: 2px solid var(--checkmark-border, #ccc);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.theme-dark .checkmark {
+    --checkmark-bg: #404040;
+    --checkmark-border: #666;
+}
+
+.custom-checkbox-container:hover .checkmark {
+    border-color: var(--checkmark-hover-border, #4CAF50);
+}
+
+.theme-dark .custom-checkbox-container:hover .checkmark {
+    --checkmark-hover-border: #888;
+}
+
+.custom-checkbox-container input:checked ~ .checkmark {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.custom-checkbox-container input:checked ~ .checkmark:after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.control-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
 }
