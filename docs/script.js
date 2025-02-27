@@ -9,6 +9,14 @@ let lastTouchDistance = 0;
 let initialScale = 1;
 let instructionsTimeout;
 
+// Title animation
+const letters = {
+    en: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    // Using isolated forms of Arabic letters for scrambling
+    ar: [..."ابتثجحخدذرزسشصضطظعغفقكلمنهوي"] // Convert string to array of individual characters
+};
+let interval = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     // Get DOM elements
     const modal = document.getElementById('imageModal');
@@ -245,6 +253,14 @@ document.addEventListener('DOMContentLoaded', function() {
         currentLanguage = newLang;
         updateTranslations();
         
+        // Update the title's data-value attribute based on language
+        const title = document.querySelector("h1");
+        if (title) {
+            const titleText = newLang === 'ar' ? 'منظم جدول الجامعة الإسلامية' : 'IU Table Organizer';
+            title.dataset.value = titleText;
+            title.innerText = titleText;
+        }
+        
         // Ensure RTL visibility after language toggle
         setTimeout(ensureRTLVisibility, 0);
     }
@@ -257,6 +273,15 @@ document.addEventListener('DOMContentLoaded', function() {
         document.documentElement.setAttribute('lang', storedLang);
         document.documentElement.setAttribute('dir', storedDir);
         currentLanguage = storedLang;
+        
+        // Set initial title based on stored language
+        const title = document.querySelector("h1");
+        if (title) {
+            const titleText = storedLang === 'ar' ? 'منظم جدول الجامعة الإسلامية' : 'IU Table Organizer';
+            title.dataset.value = titleText;
+            title.innerText = titleText;
+        }
+        
         // Ensure RTL visibility after initialization
         setTimeout(ensureRTLVisibility, 0);
     }
@@ -301,5 +326,75 @@ document.addEventListener('DOMContentLoaded', function() {
             top: 0,
             behavior: 'smooth'
         });
+    });
+
+    // Title animation
+    document.querySelector("h1").onmouseover = event => {  
+        let iteration = 0;
+        
+        clearInterval(interval);
+        
+        // Get current language for scrambling
+        const currentLang = document.documentElement.getAttribute('lang') || 'en';
+        const scrambleLetters = letters[currentLang];
+        const originalText = event.target.dataset.value;
+        
+        // Store original text parts (for Arabic handling)
+        const textParts = currentLang === 'ar' ? 
+            originalText.split(" ").filter(part => part.trim()) : 
+            originalText.split("");
+        
+        interval = setInterval(() => {
+            if (currentLang === 'ar') {
+                // Handle Arabic text word by word
+                event.target.innerText = textParts
+                    .map((word, wordIndex) => {
+                        if (wordIndex < iteration / 2) {
+                            return word;
+                        }
+                        // Generate a random word of similar length using Arabic letters
+                        return Array.from({length: word.length}, () => 
+                            scrambleLetters[Math.floor(Math.random() * scrambleLetters.length)]
+                        ).join('');
+                    })
+                    .join(" ");
+                
+                // Check if animation is complete
+                if (iteration >= textParts.length * 2) {
+                    clearInterval(interval);
+                    event.target.innerText = originalText; // Ensure original text is restored
+                }
+            } else {
+                // Original English animation
+                event.target.innerText = originalText
+                    .split("")
+                    .map((letter, index) => {
+                        if (index < iteration) {
+                            return letter;
+                        }
+                        return scrambleLetters[Math.floor(Math.random() * scrambleLetters.length)];
+                    })
+                    .join("");
+                
+                // Check if animation is complete
+                if (iteration >= originalText.length) {
+                    clearInterval(interval);
+                    event.target.innerText = originalText; // Ensure original text is restored
+                }
+            }
+            
+            iteration += currentLang === 'ar' ? 0.5 : 1/3;
+        }, currentLang === 'ar' ? 100 : 30);
+    }
+
+    // Add initial animation on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const title = document.querySelector("h1");
+        if (title) {
+            setTimeout(() => {
+                const event = { target: title };
+                title.onmouseover(event);
+            }, 800);
+        }
     });
 }); 
