@@ -15,7 +15,7 @@
     
     <title data-translate="title">IU Table Organizer</title>
     <link rel="stylesheet" href="page_styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Tajawal:wght@400;500;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="translations.js"></script>
     <script>
@@ -131,8 +131,10 @@
         <section id="installation" class="section">
             <h2 data-translate="installation.title">Installation</h2>
             <p class="installation-intro" data-translate="installation.intro">Choose one of the following installation methods:</p>
+            
             <div class="installation-methods">
-                <div class="method">
+                <div class="method preferred-method">
+                    <div class="recommended-badge" data-translate="installation.recommended">Recommended</div>
                     <div class="method-header">
                         <i class="fab fa-chrome"></i>
                         <h3 data-translate="installation.chromeExtension.title">Chrome Extension</h3>
@@ -142,22 +144,38 @@
                             <div class="step-content">
                                 <h4 data-translate="installation.chromeExtension.download">Install from Chrome Web Store</h4>
                                 <p data-translate="installation.chromeExtension.description">Get the extension directly from the Chrome Web Store for the easiest installation experience</p>
-                                <div class="features-list">
-                                    <div class="feature"><i class="fas fa-check"></i> <span data-translate="installation.chromeExtension.features.official">Official Chrome Web Store release</span></div>
-                                    <div class="feature"><i class="fas fa-check"></i> <span data-translate="installation.chromeExtension.features.automatic">Automatic updates</span></div>
-                                    <div class="feature"><i class="fas fa-check"></i> <span data-translate="installation.chromeExtension.features.secure">Secure installation</span></div>
+                                
+                                <div class="recommendation-note">
+                                    <i class="fas fa-star"></i>
+                                    <span data-translate="installation.preferredNote">This is the preferred installation method for the best experience</span>
                                 </div>
-                                <div class="compatibility-note">
-                                    <i class="fas fa-mobile-alt"></i>
-                                    <div class="note-content">
-                                        <strong data-translate="installation.chromeExtension.mobileNote">Mobile Compatible!</strong>
-                                        <p data-translate="installation.chromeExtension.mobileDesc">Works on mobile and tablet devices using Firefox and Kiwi browsers</p>
-                                        <div class="browser-icons">
+                                
+                                <div class="browser-compatibility compact">
+                                    <h5 data-translate="installation.chromeExtension.compatibleTitle">Compatible Browsers:</h5>
+                                    <div class="browser-icons-group">
+                                        <div class="browser-icon-item">
+                                            <i class="fab fa-chrome" title="Google Chrome"></i>
+                                            <span>Chrome</span>
+                                        </div>
+                                        <div class="browser-icon-item">
                                             <i class="fab fa-edge" title="Microsoft Edge"></i>
+                                            <span>Edge</span>
+                                        </div>
+                                        <div class="browser-icon-item">
+                                            <i class="fab fa-opera" title="Opera"></i>
+                                            <span>Opera</span>
+                                        </div>
+                                        <div class="browser-icon-item">
+                                            <i class="fa-brands fa-brave" title="Brave Browser"></i>
+                                            <span>Brave</span>
+                                        </div>
+                                        <div class="browser-icon-item">
                                             <img src="assets/kiwi-browser.svg" alt="Kiwi Browser" title="Kiwi Browser" class="browser-icon">
+                                            <span>Kiwi</span>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <a href="https://chromewebstore.google.com/detail/oopkbojbjpdehknlnajbgedjjgafjbec?utm_source=item-share-cp" class="button secondary-button" target="_blank" rel="noopener noreferrer">
                                     <i class="fab fa-chrome button-icon"></i>
                                     <span data-translate="installation.chromeExtension.button">Add to Browser</span>
@@ -166,21 +184,45 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="method-separator">
                     <span data-translate="installation.or">OR</span>
                 </div>
+                
                 <div class="method">
                     <div class="method-header">
                         <i class="fas fa-puzzle-piece"></i>
                         <h3 data-translate="installation.tampermonkey.title">Tampermonkey</h3>
                     </div>
                     <div class="steps">
-                        <div class="step-container">
+                        <div class="method-description">
+                            <p class="compatibility-text" data-translate="installation.tampermonkey.description">Choose this option if your browser doesn't support Chrome Web Store extensions</p>
+                        </div>
+                        
+                        <div class="browser-compatibility compact non-compatible">
+                            <h5 data-translate="installation.tampermonkey.useFor">Use this method for:</h5>
+                            <div class="browser-icons-group">
+                                <div class="browser-icon-item">
+                                    <i class="fab fa-firefox" title="Mozilla Firefox"></i>
+                                    <span>Firefox</span>
+                                </div>
+                                <div class="browser-icon-item">
+                                    <i class="fab fa-safari" title="Safari"></i>
+                                    <span>Safari</span>
+                                </div>
+                                <div class="browser-icon-item">
+                                    <i class="fab fa-internet-explorer" title="Internet Explorer"></i>
+                                    <span>IE</span>
+                                </div>
+                            </div>
+                            <div class="note" data-translate="installation.tampermonkey.note">Note: Both installation methods provide identical functionality</div>
+                        </div>
+                        
+                        <div class="step-container compact">
                             <div class="step">
                                 <div class="step-number">1</div>
                                 <div class="step-content">
                                     <h4 data-translate="installation.tampermonkey.step1.title">Install Tampermonkey</h4>
-                                    <p data-translate="installation.tampermonkey.step1.description">Add the Tampermonkey extension to your browser for userscript management</p>
                                     <a href="https://www.tampermonkey.net/" class="button secondary-button" target="_blank" rel="noopener noreferrer">
                                         <img src="assets/tampermonkeysvg.svg" alt="Tampermonkey Icon" class="button-icon">
                                         <span data-translate="installation.tampermonkey.step1.button">Get Tampermonkey</span>
@@ -191,12 +233,6 @@
                                 <div class="step-number">2</div>
                                 <div class="step-content">
                                     <h4 data-translate="installation.tampermonkey.step2.title">Install Script</h4>
-                                    <p data-translate="installation.tampermonkey.step2.description">Add the IU Table Organizer script from Greasyfork to enhance your schedule</p>
-                                    <div class="features-list">
-                                        <div class="feature"><i class="fas fa-check"></i> <span data-translate="installation.tampermonkey.step2.features.formatting">Automatic table formatting</span></div>
-                                        <div class="feature"><i class="fas fa-check"></i> <span data-translate="installation.tampermonkey.step2.features.darkMode">Dark mode support</span></div>
-                                        <div class="feature"><i class="fas fa-check"></i> <span data-translate="installation.tampermonkey.step2.features.installation">Easy installation</span></div>
-                                    </div>
                                     <a href="https://greasyfork.org/en/scripts/432219-iu-table-organizer" class="button secondary-button" target="_blank" rel="noopener noreferrer">
                                         <img src="assets/greasyfork.png" alt="Greasyfork Icon" class="button-icon">
                                         <span data-translate="installation.tampermonkey.step2.button">Install Script</span>

@@ -13,6 +13,8 @@ const translations = {
             title: "Installation",
             intro: "Choose one of the following installation methods:",
             or: "OR",
+            recommended: "Recommended",
+            preferredNote: "This is the preferred installation method for the best experience",
             chromeExtension: {
                 title: "Chrome Extension",
                 download: "Install from Chrome Web Store",
@@ -24,10 +26,15 @@ const translations = {
                 },
                 mobileNote: "Mobile Compatible!",
                 mobileDesc: "Works on mobile and tablet devices using Edge and Kiwi browsers",
-                button: "Add to Browser"
+                button: "Add to Browser",
+                compatibleTitle: "Compatible Browsers:",
+                compatibleText: "For any browser that supports Chrome Web Store extensions"
             },
             tampermonkey: {
                 title: "Tampermonkey",
+                description: "Choose this option if your browser doesn't support Chrome Web Store extensions",
+                useFor: "Use this method for:",
+                note: "Note: Both installation methods provide identical functionality",
                 step1: {
                     title: "Install Tampermonkey",
                     description: "Add the Tampermonkey extension to your browser for userscript management",
@@ -84,6 +91,8 @@ const translations = {
             title: "التثبيت",
             intro: "اختر إحدى طرق التثبيت التالية:",
             or: "أو",
+            recommended: "موصى به",
+            preferredNote: "هذه هي طريقة التثبيت المفضلة للحصول على أفضل تجربة",
             chromeExtension: {
                 title: "إضافة المتصفح",
                 download: "تثبيت من متجر كروم",
@@ -95,10 +104,15 @@ const translations = {
                 },
                 mobileNote: "متوافق مع الجوال!",
                 mobileDesc: "يعمل على الأجهزة المحمولة والأجهزة اللوحية باستخدام متصفحات Edge و Kiwi",
-                button: "إضافة للمتصفح"
+                button: "إضافة للمتصفح",
+                compatibleTitle: "متصفحات متوافقة:",
+                compatibleText: "لأي متصفح يدعم متجر المتصفحات الموسعة"
             },
             tampermonkey: {
                 title: "Tampermonkey",
+                description: "اختر هذا الخيار إذا كان متصفحك لا يدعم متجر المتصفحات",
+                useFor: "استخدم هذه الطريقة مع:",
+                note: "ملاحظة: كلتا طريقتي التثبيت توفران نفس الوظائف",
                 step1: {
                     title: "تثبيت Tampermonkey",
                     description: "أضف إضافة Tampermonkey إلى متصفحك لإدارة السكربتات",
