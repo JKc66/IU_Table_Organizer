@@ -17,27 +17,60 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ensure installation methods are visible in RTL
     function ensureRTLVisibility() {
-        if (document.dir === 'rtl') {
-            const methods = document.querySelector('.installation-methods');
-            if (methods) {
-                methods.style.display = 'flex';
-                methods.style.visibility = 'visible';
-                methods.style.overflow = 'visible';
-                
-                const allMethods = methods.querySelectorAll('.method');
-                allMethods.forEach(method => {
-                    method.style.display = 'block';
-                    method.style.visibility = 'visible';
-                    method.style.overflow = 'visible';
-                });
-                
-                const separator = methods.querySelector('.method-separator');
-                if (separator) {
-                    separator.style.display = 'flex';
-                    separator.style.visibility = 'visible';
-                    separator.style.overflow = 'visible';
+        const methods = document.querySelector('.installation-methods');
+        if (!methods) return;
+        
+        // Make sure the methods are visible
+        methods.style.display = 'flex';
+        methods.style.visibility = 'visible';
+        methods.style.overflow = 'visible';
+        
+        // For mobile view, always place Chrome Store on top
+        if (window.innerWidth <= 768) {
+            // Get the preferred method (Chrome Store), separator, and alternative method (Tampermonkey)
+            const preferredMethod = methods.querySelector('.preferred-method');
+            const separator = methods.querySelector('.method-separator');
+            const alternativeMethod = methods.querySelector('.method:not(.preferred-method)');
+            
+            if (preferredMethod && separator && alternativeMethod) {
+                // Make sure Chrome Store is first by checking if it's not already first
+                if (methods.firstElementChild !== preferredMethod) {
+                    // Remove all elements
+                    methods.removeChild(preferredMethod);
+                    methods.removeChild(separator);
+                    methods.removeChild(alternativeMethod);
+                    
+                    // Add them back with Chrome Store first (on top)
+                    methods.appendChild(preferredMethod);
+                    methods.appendChild(separator);
+                    methods.appendChild(alternativeMethod);
                 }
+                
+                // Set flex-direction to column
+                methods.style.flexDirection = 'column';
             }
+        } else {
+            // For desktop: use row for LTR, row-reverse for RTL
+            if (document.dir === 'rtl') {
+                methods.style.flexDirection = 'row-reverse';
+            } else {
+                methods.style.flexDirection = 'row';
+            }
+        }
+        
+        // Make sure all methods are visible
+        const allMethods = methods.querySelectorAll('.method');
+        allMethods.forEach(method => {
+            method.style.display = 'block';
+            method.style.visibility = 'visible';
+            method.style.overflow = 'visible';
+        });
+        
+        const separator = methods.querySelector('.method-separator');
+        if (separator) {
+            separator.style.display = 'flex';
+            separator.style.visibility = 'visible';
+            separator.style.overflow = 'visible';
         }
     }
 
@@ -229,7 +262,14 @@ document.addEventListener('DOMContentLoaded', function() {
     updateTranslations();
     
     // Ensure RTL visibility on load
-    ensureRTLVisibility();
+    setTimeout(ensureRTLVisibility, 100); // Increased timeout to ensure DOM is fully loaded
+
+    // Update RTL layout on window resize
+    window.addEventListener('resize', function() {
+        if (document.dir === 'rtl') {
+            ensureRTLVisibility();
+        }
+    });
 
     // Update version badge
     if (typeof window.setVersionBadge === 'function') {

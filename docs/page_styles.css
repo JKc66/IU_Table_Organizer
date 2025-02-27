@@ -616,22 +616,17 @@ header h1 {
 
 /* Responsive adjustments for installation methods */
 @media (max-width: 768px) {
+    [dir="rtl"] .installation-methods,
     .installation-methods {
         display: flex !important;
-        flex-direction: column;
+        flex-direction: column !important; /* Always column for mobile */
         gap: 1rem;
         width: 100%;
         height: auto;
         overflow: visible;
     }
 
-    [dir="rtl"] .installation-methods {
-        display: flex !important;
-        flex-direction: column;
-        gap: 1rem;
-        width: 100%;
-    }
-
+    [dir="rtl"] .method,
     .method {
         display: block !important;
         width: 100%;
@@ -639,6 +634,7 @@ header h1 {
         overflow: visible;
     }
 
+    [dir="rtl"] .method-separator,
     .method-separator {
         display: flex !important;
         width: 100%;
@@ -647,28 +643,10 @@ header h1 {
         margin: 1rem 0;
     }
 
-    .method-separator::before,
-    .method-separator::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: var(--border-color);
-        position: static;
-    }
-
-    .method-separator span {
-        margin: 0 1rem;
-        white-space: nowrap;
-        display: block !important;
-    }
-
-    [dir="rtl"] .method-separator {
-        display: flex !important;
-    }
-
-    [dir="rtl"] .method {
-        display: block !important;
-        width: 100%;
+    [dir="rtl"] .installation-methods > *,
+    .installation-methods > * {
+        opacity: 1;
+        visibility: visible;
     }
 }
 
@@ -1500,7 +1478,7 @@ footer {
 }
 
 [dir="rtl"] .installation-methods {
-    flex-direction: row-reverse;
+    flex-direction: row-reverse !important;
 }
 
 [dir="rtl"] .method-header i {
@@ -1941,23 +1919,26 @@ img.button-icon {
 }
 
 @media (max-width: 768px) {
-    [dir="rtl"] .installation-methods {
+    [dir="rtl"] .installation-methods,
+    .installation-methods {
         display: flex !important;
-        flex-direction: column;
+        flex-direction: column !important;
         gap: 1rem;
         width: 100%;
         height: auto;
         overflow: visible;
     }
 
-    [dir="rtl"] .method {
+    [dir="rtl"] .method,
+    .method {
         display: block !important;
         width: 100%;
         height: auto;
         overflow: visible;
     }
 
-    [dir="rtl"] .method-separator {
+    [dir="rtl"] .method-separator,
+    .method-separator {
         display: flex !important;
         width: 100%;
         height: auto;
@@ -1965,7 +1946,8 @@ img.button-icon {
         margin: 1rem 0;
     }
 
-    [dir="rtl"] .installation-methods > * {
+    [dir="rtl"] .installation-methods > *,
+    .installation-methods > * {
         opacity: 1;
         visibility: visible;
     }
