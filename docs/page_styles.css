@@ -96,6 +96,15 @@ body {
     background: linear-gradient(-135deg, var(--primary-color), var(--accent-color));
 }
 
+/* Fix for secondary button in RTL mode */
+[dir="rtl"] .secondary-button {
+    background: transparent;
+}
+
+[dir="rtl"] .secondary-button:hover::before {
+    transform-origin: right;
+}
+
 /* Animation Adjustments for RTL */
 [dir="rtl"] .author-link::after {
     transform: translateX(100%);
