@@ -224,12 +224,138 @@ header h1 {
 }
 
 .badges {
-    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .badges img {
     margin: 0 0.5rem;
     transform: scale(1.1);
+}
+
+.badge-link {
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.badge-link:hover {
+    transform: translateY(-2px);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(40, 44, 52, 0.95), rgba(40, 44, 52, 0.98));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.badge:hover::before {
+    opacity: 1;
+}
+
+.badge-icon {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+}
+
+.badge-label {
+    padding-right: 0.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    margin-right: 0.5rem;
+}
+
+.badge-value {
+    font-weight: 600;
+    position: relative;
+}
+
+/* Loading animation for badge values */
+.badge-value:empty::before,
+.badge-value:contains("...")::before {
+    content: "...";
+    animation: loadingDots 1.5s infinite;
+    opacity: 0.7;
+}
+
+@keyframes loadingDots {
+    0%, 20% { content: "."; }
+    40% { content: ".."; }
+    60%, 100% { content: "..."; }
+}
+
+.badge-chrome .badge-value {
+    color: #8bb9fe;
+}
+
+.badge-greasy .badge-value {
+    color: #ffa4a4;
+}
+
+.badge-license .badge-value {
+    color: #ffc107;
+}
+
+.badge-version .badge-value {
+    color: #90cdf4;
+}
+
+.badge-chrome {
+    background: linear-gradient(135deg, #1a73e8, #174ea6);
+}
+
+.badge-greasy {
+    background: linear-gradient(135deg, #e53e3e, #c53030);
+}
+
+.badge-license {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+}
+
+.badge-version {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+}
+
+@media (max-width: 768px) {
+    .badges {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .badge-link {
+        width: 100%;
+    }
+
+    .badge {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 /* Section Styles */

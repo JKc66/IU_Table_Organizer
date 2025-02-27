@@ -18,6 +18,50 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Tajawal:wght@400;500;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="translations.js"></script>
+    <script>
+        // Fetch badge versions
+        async function fetchVersions() {
+            try {
+                // Try to fetch new versions
+                const chromeRes = await fetch('https://img.shields.io/chrome-web-store/v/oopkbojbjpdehknlnajbgedjjgafjbec.json');
+                const chromeData = await chromeRes.json();
+                const chromeVersion = chromeData.value;
+                
+                const greasyforkRes = await fetch('https://img.shields.io/greasyfork/v/432219.json');
+                const greasyforkData = await greasyforkRes.json();
+                const greasyforkVersion = greasyforkData.value;
+                
+                // Store versions with timestamp
+                const versionData = {
+                    chrome: chromeVersion,
+                    greasy: greasyforkVersion,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('version_cache', JSON.stringify(versionData));
+                
+                // Update badge values
+                document.querySelector('.badge-chrome .badge-value').textContent = chromeVersion;
+                document.querySelector('.badge-greasy .badge-value').textContent = greasyforkVersion;
+            } catch (error) {
+                console.error('Error fetching versions:', error);
+                
+                // Try to use cached versions
+                const cachedData = localStorage.getItem('version_cache');
+                if (cachedData) {
+                    const versionData = JSON.parse(cachedData);
+                    document.querySelector('.badge-chrome .badge-value').textContent = versionData.chrome;
+                    document.querySelector('.badge-greasy .badge-value').textContent = versionData.greasy;
+                } else {
+                    // No cache available, show loading state
+                    document.querySelector('.badge-chrome .badge-value').textContent = '...';
+                    document.querySelector('.badge-greasy .badge-value').textContent = '...';
+                }
+            }
+        }
+
+        // Fetch versions when page loads
+        document.addEventListener('DOMContentLoaded', fetchVersions);
+    </script>
 </head>
 <body>
     <header>
@@ -27,8 +71,27 @@
             <h1 data-translate="title">IU Table Organizer</h1>
             <p class="subtitle" data-translate="subtitle">Transform your Islamic University schedule into a more readable format with one click.</p>
             <div class="badges">
-                <img id="version-badge" alt="Version">
-                <img src="https://img.shields.io/badge/License-MPL%202.0-orange.svg" alt="License">
+                <a href="https://chromewebstore.google.com/detail/iu-table-organizer/oopkbojbjpdehknlnajbgedjjgafjbec" class="badge-link" target="_blank" rel="noopener noreferrer">
+                    <div class="badge badge-chrome">
+                        <i class="fab fa-chrome badge-icon"></i>
+                        <span class="badge-label">Chrome Web Store</span>
+                        <span class="badge-value">...</span>
+                    </div>
+                </a>
+                <a href="https://greasyfork.org/en/scripts/432219-iu-table-organizer" class="badge-link" target="_blank" rel="noopener noreferrer">
+                    <div class="badge badge-greasy">
+                        <i class="fas fa-puzzle-piece badge-icon"></i>
+                        <span class="badge-label">Greasy Fork</span>
+                        <span class="badge-value">...</span>
+                    </div>
+                </a>
+                <div class="badge-link">
+                    <div class="badge badge-license">
+                        <i class="fas fa-file-contract badge-icon"></i>
+                        <span class="badge-label">License</span>
+                        <span class="badge-value">MPL 2.0</span>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -95,7 +158,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="https://bit.ly/42MW9NZ" class="button secondary-button" target="_blank" rel="noopener noreferrer">
+                                <a href="https://chromewebstore.google.com/detail/oopkbojbjpdehknlnajbgedjjgafjbec?utm_source=item-share-cp" class="button secondary-button" target="_blank" rel="noopener noreferrer">
                                     <i class="fas fa-puzzle-piece button-icon"></i>
                                     <span data-translate="installation.chromeExtension.button">Add to Browser</span>
                                 </a>

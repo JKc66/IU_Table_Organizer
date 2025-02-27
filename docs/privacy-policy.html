@@ -24,8 +24,27 @@
             <h1>Privacy Policy</h1>
             <p class="subtitle">IU Table Organizer Privacy Information</p>
             <div class="badges">
-                <img id="version-badge" alt="Version">
-                <img src="https://img.shields.io/badge/License-MPL%202.0-orange.svg" alt="License">
+                <a href="https://chromewebstore.google.com/detail/iu-table-organizer/oopkbojbjpdehknlnajbgedjjgafjbec" class="badge-link" target="_blank" rel="noopener noreferrer">
+                    <div class="badge badge-chrome">
+                        <i class="fab fa-chrome badge-icon"></i>
+                        <span class="badge-label">Chrome Web Store</span>
+                        <span class="badge-value">...</span>
+                    </div>
+                </a>
+                <a href="https://greasyfork.org/en/scripts/432219-iu-table-organizer" class="badge-link" target="_blank" rel="noopener noreferrer">
+                    <div class="badge badge-greasy">
+                        <i class="fas fa-puzzle-piece badge-icon"></i>
+                        <span class="badge-label">Greasy Fork</span>
+                        <span class="badge-value">...</span>
+                    </div>
+                </a>
+                <div class="badge-link">
+                    <div class="badge badge-license">
+                        <i class="fas fa-file-contract badge-icon"></i>
+                        <span class="badge-label">License</span>
+                        <span class="badge-value">MPL 2.0</span>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -230,11 +249,48 @@
     </style>
 
     <script>
-        // Update version badge
-        document.addEventListener('DOMContentLoaded', function() {
-            const versionBadge = document.getElementById('version-badge');
-            versionBadge.src = `https://img.shields.io/badge/version-${window.IU_VERSION}-blue.svg`;
-        });
+        // Update badge versions
+        async function updateVersions() {
+            try {
+                // Try to fetch new versions
+                const chromeRes = await fetch('https://img.shields.io/chrome-web-store/v/oopkbojbjpdehknlnajbgedjjgafjbec.json');
+                const chromeData = await chromeRes.json();
+                const chromeVersion = chromeData.value;
+                
+                const greasyforkRes = await fetch('https://img.shields.io/greasyfork/v/432219.json');
+                const greasyforkData = await greasyforkRes.json();
+                const greasyforkVersion = greasyforkData.value;
+                
+                // Store versions with timestamp
+                const versionData = {
+                    chrome: chromeVersion,
+                    greasy: greasyforkVersion,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('version_cache', JSON.stringify(versionData));
+                
+                // Update badge values
+                document.querySelector('.badge-chrome .badge-value').textContent = chromeVersion;
+                document.querySelector('.badge-greasy .badge-value').textContent = greasyforkVersion;
+            } catch (error) {
+                console.error('Error updating versions:', error);
+                
+                // Try to use cached versions
+                const cachedData = localStorage.getItem('version_cache');
+                if (cachedData) {
+                    const versionData = JSON.parse(cachedData);
+                    document.querySelector('.badge-chrome .badge-value').textContent = versionData.chrome;
+                    document.querySelector('.badge-greasy .badge-value').textContent = versionData.greasy;
+                } else {
+                    // No cache available, show loading state
+                    document.querySelector('.badge-chrome .badge-value').textContent = '...';
+                    document.querySelector('.badge-greasy .badge-value').textContent = '...';
+                }
+            }
+        }
+
+        // Update versions when page loads
+        document.addEventListener('DOMContentLoaded', updateVersions);
     </script>
 </body>
 </html> 
