@@ -110,7 +110,7 @@ const translations = {
             },
             tampermonkey: {
                 title: "Tampermonkey",
-                description: "اختر هذا الخيار إذا كان متصفحك لا يدعم متجر المتصفحات",
+                description: "اختر هذا الخيار إذا كان متصفحك لا يدعم متجر chrome",
                 useFor: "استخدم هذه الطريقة مع:",
                 note: "ملاحظة: كلتا طريقتي التثبيت توفران نفس الوظائف",
                 step1: {
