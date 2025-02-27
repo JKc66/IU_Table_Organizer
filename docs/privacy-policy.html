@@ -50,64 +50,75 @@
     </header>
 
     <main class="container">
-        <section class="section">
+        <section class="privacy-section">
             <h2>Overview</h2>
             <p>IU Table Organizer is committed to protecting your privacy. This privacy policy explains how our extension handles information.</p>
         </section>
 
-        <section class="section">
+        <section class="privacy-section">
             <h2>Data Collection and Usage</h2>
-            <div class="privacy-content">
-                <h3>What We Access</h3>
-                <ul>
-                    <li>We only access the schedule table from eduportal.iu.edu.sa</li>
-                    <li>This access is required to transform and enhance the schedule display</li>
-                </ul>
+            <div class="privacy-card">
+                <div class="privacy-item">
+                    <h3><i class="fas fa-database"></i> What We Access</h3>
+                    <ul>
+                        <li>We only access the schedule table from eduportal.iu.edu.sa</li>
+                        <li>This access is required to transform and enhance the schedule display</li>
+                    </ul>
+                </div>
 
-                <h3>How We Process Data</h3>
-                <ul>
-                    <li>All data processing happens locally in your browser</li>
-                    <li>No data is transmitted to external servers</li>
-                    <li>No personal information is collected or stored</li>
-                </ul>
+                <div class="privacy-item">
+                    <h3><i class="fas fa-cogs"></i> How We Process Data</h3>
+                    <ul>
+                        <li>All data processing happens locally in your browser</li>
+                        <li>No data is transmitted to external servers</li>
+                        <li>No personal information is collected or stored</li>
+                    </ul>
+                </div>
 
-                <h3>Data Storage</h3>
-                <ul>
-                    <li>We do not store any user data</li>
-                    <li>When you export your schedule as PNG, it is saved directly to your device</li>
-                    <li>No cloud storage or external data transfers occur</li>
-                </ul>
+                <div class="privacy-item">
+                    <h3><i class="fas fa-hdd"></i> Data Storage</h3>
+                    <ul>
+                        <li>We do not store any user data</li>
+                        <li>When you export your schedule as PNG, it is saved directly to your device</li>
+                        <li>No cloud storage or external data transfers occur</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
-        <section class="section">
+        <section class="privacy-section">
             <h2>Permissions</h2>
-            <div class="privacy-content">
-                <h3>Required Permissions</h3>
-                <ul>
-                    <li><strong>Host Permission (eduportal.iu.edu.sa)</strong>: Required to read and modify the schedule page on the Islamic University's portal</li>
-                    <li><strong>Downloads Permission</strong>: Required only for saving the organized schedule as a PNG image</li>
-                </ul>
+            <div class="privacy-card">
+                <div class="privacy-item">
+                    <h3><i class="fas fa-key"></i> Required Permissions</h3>
+                    <ul>
+                        <li><strong>Host Permission (eduportal.iu.edu.sa)</strong>: Required to read and modify the schedule page on the Islamic University's portal</li>
+                        <li><strong>Downloads Permission</strong>: Required only for saving the organized schedule as a PNG image</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
-        <section class="section">
+        <section class="privacy-section">
             <h2>Your Control</h2>
-            <div class="privacy-content">
-                <ul>
-                    <li>You have full control over your data</li>
-                    <li>The extension only operates when you visit the schedule page</li>
-                    <li>You can uninstall the extension at any time</li>
-                </ul>
+            <div class="privacy-card">
+                <div class="privacy-item">
+                    <h3><i class="fas fa-user-shield"></i> User Control</h3>
+                    <ul>
+                        <li>You have full control over your data</li>
+                        <li>The extension only operates when you visit the schedule page</li>
+                        <li>You can uninstall the extension at any time</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
-        <section class="section">
+        <section class="privacy-section">
             <h2>Changes to This Policy</h2>
             <p>We may update this privacy policy from time to time. Any changes will be posted on this page.</p>
         </section>
 
-        <section class="section">
+        <section class="privacy-section">
             <h2>Contact</h2>
             <div class="contact-content">
                 <div class="contact-card">
@@ -136,114 +147,121 @@
     </footer>
 
     <style>
-        .privacy-content {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .privacy-section {
+            margin: 3rem 0;
         }
-
-        .privacy-content ul {
+        
+        .privacy-card {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .privacy-card:hover {
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .privacy-item {
+            padding: 0.5rem;
+        }
+        
+        .privacy-item h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .privacy-item h3 i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .privacy-item ul {
             list-style: none;
             padding-left: 0;
         }
-
-        .privacy-content li {
+        
+        .privacy-item li {
             margin: 0.8rem 0;
             padding-left: 1.5rem;
             position: relative;
         }
-
-        .privacy-content li:before {
+        
+        .privacy-item li:before {
             content: "•";
-            color: var(--accent-color, #4a9eff);
+            color: var(--accent-color);
             position: absolute;
             left: 0;
+            font-weight: bold;
         }
-
+        
         .contact-content {
             display: flex;
             justify-content: center;
             padding: 2rem 0;
         }
-
+        
         .contact-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 2rem;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
             max-width: 500px;
             width: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+            box-shadow: var(--card-shadow);
         }
-
+        
         .contact-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transform: var(--card-hover-transform);
+            box-shadow: var(--hover-shadow);
         }
-
+        
         .github-link {
             display: inline-flex;
             align-items: center;
             gap: 0.8rem;
-            background: var(--accent-color, #4a9eff);
+            background: var(--primary-color);
             color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 500;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
-
+        
         .github-link:hover {
-            background-color: var(--accent-color-hover, #3182ce);
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(var(--primary-color-rgb), 0.3);
         }
-
+        
         .contact-description {
-            margin-top: 1rem;
-            color: rgba(255, 255, 255, 0.7);
+            margin-top: 1.5rem;
+            color: var(--text-color-secondary);
+            line-height: 1.6;
         }
-
-        .footer-links {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            padding: 1rem 0;
-        }
-
-        .footer-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-link:hover {
-            color: var(--accent-color, #4a9eff);
-        }
-
-        .footer-separator {
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .footer-text {
-            margin: 0;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
+        
         @media (max-width: 768px) {
-            .footer-links {
-                flex-direction: column;
-                text-align: center;
+            .privacy-card {
+                grid-template-columns: 1fr;
             }
-
-            .footer-separator {
-                display: none;
+            
+            .contact-card {
+                padding: 1.5rem;
             }
         }
     </style>
@@ -292,5 +310,11 @@
         // Update versions when page loads
         document.addEventListener('DOMContentLoaded', updateVersions);
     </script>
+
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
 </body>
 </html> 
