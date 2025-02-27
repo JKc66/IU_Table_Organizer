@@ -146,8 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.addEventListener('mousemove', function(e) {
-        e.preventDefault();
         if (panning && scale > 1) {
+            e.preventDefault();
             pointX = e.clientX - start.x;
             pointY = e.clientY - start.y;
             setTransform(modalImg);
@@ -274,62 +274,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Update version badge
-    if (typeof window.setVersionBadge === 'function') {
-        window.setVersionBadge();
-    } else {
-        // Fallback if version.js hasn't loaded properly
-        const versionBadge = document.getElementById('version-badge');
-        if (versionBadge) {
-            const span = document.createElement('span');
-            span.className = 'version-text';
-            span.textContent = `Version ${window.IU_VERSION || 'Unknown'}`;
-            versionBadge.parentNode.replaceChild(span, versionBadge);
-        }
-    }
-
     // Back to Top functionality
-    const backToTopButton = document.getElementById('backToTop');
+    let backToTopButton = document.getElementById('backToTop');
     
-    if (backToTopButton) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopButton.classList.add('visible');
-            } else {
-                backToTopButton.classList.remove('visible');
-            }
-        });
-        
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+    // Create back-to-top button if it doesn't exist
+    if (!backToTopButton) {
+        backToTopButton = document.createElement('button');
+        backToTopButton.id = 'backToTop';
+        backToTopButton.className = 'back-to-top';
+        backToTopButton.setAttribute('aria-label', 'Back to top');
+        backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
+        document.body.appendChild(backToTopButton);
     }
-
-    // Add back-to-top button to privacy policy page if it doesn't exist
-    if (!document.getElementById('backToTop')) {
-        const backToTop = document.createElement('button');
-        backToTop.id = 'backToTop';
-        backToTop.className = 'back-to-top';
-        backToTop.setAttribute('aria-label', 'Back to top');
-        backToTop.innerHTML = '<i class="fas fa-arrow-up"></i>';
-        document.body.appendChild(backToTop);
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
+    
+    // Add event listeners to the back-to-top button
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+    
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
-        
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
+    });
 }); 
