@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- Cache Control -->
+    <!-- Cache Control - No cache for dynamic content -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    
+    <!-- Cache Control for Images -->
+    <link rel="preload" href="assets/before.png" as="image">
+    <link rel="preload" href="assets/after_dark.webp" as="image">
+    <link rel="preload" href="assets/after_dark.jpg" as="image">
+    <link rel="preload" href="assets/after_light.webp" as="image">
+    <link rel="preload" href="assets/after_light.jpg" as="image">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96" />
