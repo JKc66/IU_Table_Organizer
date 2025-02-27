@@ -73,9 +73,7 @@ const translations = {
             subtitle: "Please wait while we process the table"
         },
         credits: {
-            title: "Credits",
-            madeWith: "Made with love by",
-            using: "Using"
+            madeWith: "Made with love by"
         },
         contribute: {
             title: "Contribute",
@@ -158,9 +156,7 @@ const translations = {
             subtitle: "يرجى الانتظار بينما نقوم بمعالجة الجدول"
         },
         credits: {
-            title: "شكر وتقدير",
-            madeWith: "صُنع بحب بواسطة",
-            using: "باستخدام"
+            madeWith: "صُنع بحب بواسطة"
         },
         contribute: {
             title: "المساهمة",
