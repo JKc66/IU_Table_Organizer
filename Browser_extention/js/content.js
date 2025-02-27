@@ -996,15 +996,19 @@ function appendTable() {
     let table = document.createElement('table');
     table.id = "newTable";
     table.classList.add('rowFlow', `theme-${currentTheme}`);
-    table.width = "100%";
     table.cellPadding = '0';
     table.cellSpacing = '0';
     table.border = '1';
     
-    originalTableNode.insertAdjacentElement('afterend', table);
+    // Create a wrapper div for the table
+    const tableWrapper = document.createElement('div');
+    tableWrapper.className = 'table-wrapper';
+    
+    originalTableNode.insertAdjacentElement('afterend', tableWrapper);
+    tableWrapper.appendChild(table);
 
     let thead = document.createElement('thead');
-    let tbody = document.createElement('tbody')
+    let tbody = document.createElement('tbody');
     table.appendChild(thead);
     table.appendChild(tbody);
 
@@ -1057,19 +1061,19 @@ function appendTable() {
                         .replace('background: #757575', 'background: #3d3d3d');
                 }
                 
-                let content = `<div style="margin-bottom: 3px;">
-                    <strong style="font-size: 1.1em; color: ${currentTheme === 'dark' ? '#e4e4e7' : 'inherit'}">${lecture.subject}</strong>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+                let content = `<div style="margin-bottom: 2px;">
+                    <strong style="font-size: 1.05em; color: ${currentTheme === 'dark' ? '#e4e4e7' : 'inherit'}">${lecture.subject}</strong>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px;">
                         <div style="text-align: right;">
                             <div style="${activityStyle}">
                                 ${getActivityIcon(lecture.activity)} ${lecture.activity}
                             </div>
-                            <div style="background: ${currentTheme === 'dark' ? '#1a2f3a' : '#e8eaf6'}; border-radius: 6px; padding: 4px 8px; color: ${currentTheme === 'dark' ? '#8ebbff' : '#283593'}; display: inline-block; margin-top: 5px;">
+                            <div style="background: ${currentTheme === 'dark' ? '#1a2f3a' : '#e8eaf6'}; border-radius: 6px; padding: 3px 4px; color: ${currentTheme === 'dark' ? '#8ebbff' : '#283593'}; display: inline-block; margin-top: 3px;">
                                 🔢 الشعبة: ${lecture.section}
                             </div>
                         </div>
                         <div style="text-align: left;">
-                            <div style="font-weight: bold; color: ${currentTheme === 'dark' ? '#8ebbff' : '#1a237e'}">${lecture.time}</div>
+                            <div style="font-weight: bold; color: ${currentTheme === 'dark' ? '#8ebbff' : '#1a237e'}; white-space: nowrap; font-size: 0.95em;">${formatTimeDisplay(lecture.time)}</div>
                             <div class="lecture-hall">🏛️ ${lecture.place}</div>
                         </div>
                     </div>
@@ -1082,6 +1086,13 @@ function appendTable() {
 
     newTableNode = table;
     let summary = createSummary();
+    summary.style.cssText = `
+        width: 100%;
+        max-width: 1100px;
+        margin: 5px auto;
+        overflow-x: auto;
+        display: block;
+    `;
     originalTableNode.insertAdjacentElement('afterend', summary);
 }
 
@@ -1121,4 +1132,22 @@ function adjustColorForDarkMode(color) {
     });
     
     return `rgb(${adjustedRgb.join(',')})`;
+}
+
+// Add this helper function before appendTable()
+function formatTimeDisplay(timeStr) {
+    // Split the time range
+    const [startTime, endTime] = timeStr.split(' - ');
+    
+    // Split each time into components
+    const [startTimeComponent, startPeriod] = startTime.trim().split(' ');
+    const [endTimeComponent, endPeriod] = endTime.trim().split(' ');
+    
+    // If both periods are the same, show it only once at the end
+    if (startPeriod === endPeriod) {
+        return `${startTimeComponent} - ${endTimeComponent} ${startPeriod}`;
+    }
+    
+    // If periods are different, keep both but make it more compact
+    return `${startTimeComponent}${startPeriod} - ${endTimeComponent}${endPeriod}`;
 } 
