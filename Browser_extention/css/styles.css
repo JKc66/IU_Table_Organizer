@@ -505,13 +505,14 @@
 }
 
 #newTable.theme-dark thead tr {
-    background: linear-gradient(to bottom, #c0a160 0%, #9c834f 100%);
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
     color: #ffffff;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 #newTable.theme-dark th {
     border-left: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
 }
 
 #newTable.theme-dark th::after {
@@ -670,4 +671,293 @@
     gap: 8px;
     align-items: center;
     flex-wrap: wrap;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    /* Override Bootstrap and parent container styles */
+    .main_content.col-md-12 {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        flex: 0 0 100% !important;
+    }
+
+    .main_content.col-md-12 > .row {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    /* Handle all parent tables */
+    .main_content table,
+    .main_content table[width="100%"],
+    .main_content table[align="center"],
+    .main_content table[width="95%"],
+    .main_content table[width="70%"] {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .main_content td {
+        width: auto !important;
+        display: block !important;
+        padding: 0 !important;
+    }
+
+    /* Original mobile styles continue below */
+    .table-wrapper {
+        width: 100%;
+        margin: 0;
+        padding: 10px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #newTable {
+        min-width: 100%;
+        font-size: 0.85em;
+    }
+
+    #newTable th {
+        padding: 8px 4px;
+        width: auto;
+        min-width: 150px;
+    }
+
+    #newTable td {
+        padding: 4px;
+        width: auto;
+        min-width: 150px;
+    }
+
+    .lecture-cell {
+        padding: 8px;
+        margin: 4px;
+    }
+
+    .lecture-cell > div > div {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .lecture-cell > div > div > div {
+        text-align: center;
+    }
+
+    .lecture-hall {
+        margin-top: 8px !important;
+    }
+
+    .break-cell {
+        padding: 8px;
+        margin: 4px;
+        font-size: 0.9em;
+    }
+
+    .schedule-summary {
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .schedule-summary > div {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .schedule-summary > div > div {
+        width: 100%;
+        text-align: center;
+    }
+
+    .control-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .control-button {
+        width: 100%;
+        margin: 4px 0;
+        padding: 12px;
+        font-size: 1em;
+    }
+
+    .theme-btn, #ramadanBtn {
+        width: 100%;
+        margin: 4px 0;
+    }
+
+    .download-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .custom-checkbox-container {
+        width: 100%;
+        justify-content: center;
+        margin-top: 8px;
+    }
+
+    /* Improve touch targets */
+    .control-button,
+    .theme-btn,
+    #ramadanBtn,
+    .schedule-organizer-btn {
+        min-height: 44px;
+    }
+
+    /* Adjust font sizes for readability */
+    .lecture-cell strong {
+        font-size: 1em;
+    }
+
+    .day-name {
+        font-size: 1.1em !important;
+    }
+
+    /* Improve loading notification on mobile */
+    .loading-notification {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+    }
+
+    /* Additional fixes for nested structures */
+    form[id="scheduleFrm"] {
+        width: 100% !important;
+        padding: 0 8px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Fix for the schedule controls row */
+    form[id="scheduleFrm"] > table[width="100%"] > tbody > tr[align="right"] {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 10px !important;
+    }
+
+    form[id="scheduleFrm"] > table[width="100%"] > tbody > tr[align="right"] > td {
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    /* Make select dropdown full width */
+    form[id="scheduleFrm"] select {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 5px 0 !important;
+    }
+
+    /* Adjust print and organize buttons container */
+    .back {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .back td {
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    /* Make the schedule organizer button full width */
+    .schedule-organizer-btn {
+        width: 100% !important;
+        margin: 5px 0 !important;
+    }
+
+    /* Handle the original table better on mobile */
+    #scheduleFrm\\:studScheduleTable {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* Fix for any fieldset elements */
+    fieldset {
+        margin: 0 !important;
+        padding: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* Additional styles for very small screens */
+@media screen and (max-width: 480px) {
+    #newTable {
+        font-size: 0.8em;
+    }
+
+    .lecture-cell {
+        padding: 6px;
+    }
+
+    .break-cell {
+        padding: 6px;
+    }
+
+    .schedule-summary {
+        font-size: 0.9em;
+    }
+
+    /* Stack summary items vertically */
+    .schedule-summary > div > div {
+        padding: 8px;
+    }
+
+    /* Make buttons more touch-friendly */
+    .control-button,
+    .theme-btn,
+    #ramadanBtn {
+        padding: 14px;
+        font-size: 1.1em;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .control-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .control-button,
+    .theme-btn,
+    #ramadanBtn {
+        width: calc(50% - 8px);
+    }
+
+    .download-group {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+    }
+}
+
+/* Dark theme adjustments for mobile */
+@media screen and (max-width: 768px) {
+    .theme-dark #newTable th {
+        background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    }
+
+    .theme-dark .lecture-cell {
+        background: #1c2238;
+    }
+
+    .theme-dark .break-cell {
+        background: #1a1a2e;
+    }
+
+    .theme-dark .schedule-summary {
+        background: linear-gradient(45deg, #1a1a2e, #232338);
+    }
 }
