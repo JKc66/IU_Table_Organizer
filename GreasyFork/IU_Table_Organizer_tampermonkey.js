@@ -842,7 +842,8 @@ let subject_colors = {};
 let color_index = 0;
 let currentTheme = 'light';
 let includeSummaryInDownload = false;
-let githubToken = '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';
+let githubToken = '';
+
 
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
