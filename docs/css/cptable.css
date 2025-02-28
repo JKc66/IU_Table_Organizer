@@ -188,6 +188,7 @@
     width: 100%;
     box-sizing: border-box;
     min-width: auto;
+    max-width: 1100px;
 }
 
 .schedule-summary > div {
@@ -1089,29 +1090,46 @@ body.theme-dark .back-link:hover {
     }
     
     .schedule-summary {
-        padding: 15px;
-        margin: 10px auto;
-        border-radius: 12px;
+        margin: 7px 0;
+        width: 100%;
+        padding: 10px 5px;
+    }
+    
+    .schedule-summary > div {
+        gap: 10px;
+        padding: 0 5px;
+    }
+    
+    .summary-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+    
+    .control-buttons {
+        justify-content: center;
+        width: 100%;
+        gap: 8px;
+        padding: 10px 0;
     }
     
     .control-button {
-        padding: 12px 20px;
-        font-size: 1.1em;
-        min-width: 130px;
+        min-width: 110px;
+        padding: 8px 16px;
+        margin: 2px;
     }
     
-    #copyDataBtn, #redirectBtn {
-        padding: 15px 20px;
-        font-size: 1.2em;
-        margin: 5px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .theme-btn {
+        min-width: 100px;
+        padding-right: 3rem;
+        margin: 2px;
     }
     
-    #copyDataBtn:active, #redirectBtn:active {
-        transform: translateY(2px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    .download-group {
+        justify-content: center;
+        width: 100%;
     }
 }
 

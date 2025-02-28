@@ -715,31 +715,78 @@
 .mobile-action-button {
     display: block;
     width: 100%;
-    padding: 15px 20px;
+    padding: 12px 16px;
     background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-    color: white;
+    color: #ffffff !important;  /* Force white text color */
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     font-family: "Segoe UI", "Traditional Arabic", Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 600;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    text-decoration: none !important;  /* Prevent text decoration */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+                inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;  /* Remove tap highlight on mobile */
+}
+
+.mobile-action-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 .mobile-action-button:hover {
     background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+}
+
+.mobile-action-button:hover::before {
+    opacity: 1;
 }
 
 .mobile-action-button:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transform: translateY(1px) scale(0.98);
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1),
+                inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #ffffff !important;
+}
+
+/* Dark theme support for mobile buttons */
+.theme-dark .mobile-action-button {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 1px 2px rgba(255, 255, 255, 0.05);
+    color: #ffffff !important;
+}
+
+.theme-dark .mobile-action-button:hover {
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25),
+                inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    color: #ffffff !important;
+}
+
+.theme-dark .mobile-action-button:active {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #ffffff !important;
 }
 
 /* Hide organize button on mobile */

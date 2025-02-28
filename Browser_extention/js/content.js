@@ -1304,7 +1304,7 @@ function createMobileButtons() {
     const viewTableButton = document.createElement('a');
     viewTableButton.href = 'https://jkc66.github.io/IU_Table_Organizer/cptable.html';
     viewTableButton.className = 'mobile-action-button';
-    viewTableButton.innerHTML = '📱 عرض الجدول المنظم';
+    viewTableButton.innerHTML = 'موقع منظم الجدول 📱';
     viewTableButton.target = '_blank';
     viewTableButton.onclick = copyScheduleJSON;
 
