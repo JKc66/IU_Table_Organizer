@@ -11,15 +11,6 @@ let color_index = 0;
 let currentTheme = 'light';
 let includeSummaryInDownload = false;
 
-// Add day name mapping at the top with global variables
-const dayMappings = {
-    'الأحد': 'Sunday',
-    'الإثنين': 'Monday',
-    'الثلاثاء': 'Tuesday',
-    'الأربعاء': 'Wednesday',
-    'الخميس': 'Thursday'
-};
-
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
     // Split the time range
@@ -116,18 +107,17 @@ function waitForElement(selector, callback, maxTries = 100) {
 
 // Remove the DOMContentLoaded listener and replace with this:
 function init() {
-    waitForElement('scheduleFrm:studScheduleTable', async (element) => {
+    waitForElement('scheduleFrm:studScheduleTable', (element) => {
         try {
-            await initializeTableOrganizer();
+            initializeTableOrganizer();
         } catch (error) {
             console.error('Error initializing table organizer:', error);
-            showNotification('حدث خطأ في تهيئة المنظم', 'يرجى تحديث الصفحة والمحاولة مرة أخرى', 'error');
         }
     });
 }
 
 // Add error handling to the table check
-async function initializeTableOrganizer() {
+function initializeTableOrganizer() {
     const originalTableNode = document.getElementById('scheduleFrm:studScheduleTable');
     if (!originalTableNode) {
         console.log('Schedule table not found');
@@ -139,15 +129,8 @@ async function initializeTableOrganizer() {
         // For mobile: Add mobile buttons to main content
         const mainContent = document.querySelector('.main_content.col-md-12');
         if (mainContent) {
-            try {
-                const mobileButtons = await createMobileButtons();
-                if (mobileButtons) {
-                    mainContent.insertBefore(mobileButtons, mainContent.firstChild);
-                }
-            } catch (error) {
-                console.error('Error creating mobile buttons:', error);
-                showNotification('حدث خطأ في تهيئة الأزرار', 'يرجى تحديث الصفحة والمحاولة مرة أخرى', 'error');
-            }
+            const mobileButtons = createMobileButtons();
+            mainContent.insertBefore(mobileButtons, mainContent.firstChild);
         }
         return; // Don't add the regular organize button for mobile
     }
@@ -1231,14 +1214,8 @@ function showNotification(title, subtitle, type = 'success', duration = 3000) {
     }, duration);
 }
 
-// Function to send schedule data via POST request
-async function sendScheduleData(scheduleData) {
-    // Skip POST attempt and directly use URL parameters
-    const encodedData = encodeURIComponent(scheduleData);
-    return `https://jkc66.github.io/IU_Table_Organizer/cptable.html?data=${encodedData}`;
-}
-
-function getScheduleData() {
+// Update copyScheduleJSON function
+function copyScheduleJSON() {
     if (rows.length === 0) {
         getTableInfo();
         getNewTable();
@@ -1246,52 +1223,26 @@ function getScheduleData() {
 
     // Create a cleaned version of the schedule without breaks and time values
     const cleanedSchedule = {};
-    
-    // Initialize all days with empty arrays using English names
-    const englishDays = days.map(day => dayMappings[day]);
-    englishDays.forEach(day => {
-        cleanedSchedule[day] = [];
-    });
-
-    // Then add any lectures we have, using English day names
     for (const day in newTable) {
-        const englishDay = dayMappings[day];
-        if (newTable[day] && Array.isArray(newTable[day])) {
-            cleanedSchedule[englishDay] = newTable[day]
-                .filter(lecture => lecture.activity !== "break")
-                .map(lecture => ({
-                    subject: lecture.subject,
-                    activity: lecture.activity,
-                    time: lecture.time,
-                    place: lecture.place,
-                    section: lecture.section
-                }));
-        }
+        cleanedSchedule[day] = newTable[day]
+            .filter(lecture => lecture.activity !== "break")
+            .map(lecture => ({
+                subject: lecture.subject,
+                activity: lecture.activity,
+                time: lecture.time,
+                place: lecture.place,
+                section: lecture.section
+            }));
     }
 
-    // Get unique subjects from rows, even if there are no lectures
-    const subjects = Array.from(new Set(rows.map(row => row['اسم المقرر']).filter(Boolean)));
-
-    // Create the final format with complete structure using English days
+    // Create the final format
     const formattedData = {
-        subjects: subjects,
-        days: englishDays,
+        subjects: Array.from(new Set(rows.map(row => row['اسم المقرر']).filter(Boolean))),
+        days: days,
         schedule: cleanedSchedule
     };
 
     const scheduleData = JSON.stringify(formattedData);
-    
-    return { 
-        scheduleData,
-        getUrl: async () => {
-            return await sendScheduleData(scheduleData);
-        }
-    };
-}
-
-// Update copyScheduleJSON to still support copying if needed
-function copyScheduleJSON() {
-    const { scheduleData } = getScheduleData();
 
     // Try using the modern Clipboard API first
     if (navigator.clipboard && window.isSecureContext) {
@@ -1307,6 +1258,7 @@ function copyScheduleJSON() {
                 document.body.appendChild(textarea);
                 textarea.select();
                 try {
+                    document.execCommand('copy');
                     showNotification('تم نسخ البيانات بنجاح! ✨', 'يمكنك الآن لصق البيانات في موقع منظم الجدول', 'success');
                 } catch (e) {
                     console.error('Fallback failed:', e);
@@ -1322,6 +1274,7 @@ function copyScheduleJSON() {
         document.body.appendChild(textarea);
         textarea.select();
         try {
+            document.execCommand('copy');
             showNotification('تم نسخ البيانات بنجاح! ✨', 'يمكنك الآن لصق البيانات في موقع منظم الجدول', 'success');
         } catch (e) {
             console.error('Copy failed:', e);
@@ -1332,8 +1285,8 @@ function copyScheduleJSON() {
     }
 }
 
-// Update createMobileButtons to use the async URL method
-async function createMobileButtons() {
+// Add function to create mobile buttons
+function createMobileButtons() {
     const mobileButtonsContainer = document.createElement('div');
     mobileButtonsContainer.className = 'mobile-buttons-container';
     mobileButtonsContainer.style.cssText = `
@@ -1347,32 +1300,23 @@ async function createMobileButtons() {
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     `;
 
-    // Create View Table button that uses POST request with URL parameter fallback
+    // Create View Table button
     const viewTableButton = document.createElement('a');
+    viewTableButton.href = 'https://jkc66.github.io/IU_Table_Organizer/cptable.html';
     viewTableButton.className = 'mobile-action-button';
     viewTableButton.innerHTML = '📱 عرض الجدول المنظم';
     viewTableButton.target = '_blank';
-    
-    // Show loading state
-    viewTableButton.innerHTML = '⏳ جاري التحميل...';
-    viewTableButton.style.opacity = '0.7';
-    viewTableButton.style.pointerEvents = 'none';
-    
-    // Get the schedule data and URL
-    const { getUrl } = getScheduleData();
-    try {
-        const url = await getUrl();
-        viewTableButton.href = url;
-        viewTableButton.innerHTML = '📱 عرض الجدول المنظم';
-        viewTableButton.style.opacity = '1';
-        viewTableButton.style.pointerEvents = 'auto';
-    } catch (error) {
-        console.error('Error getting URL:', error);
-        viewTableButton.innerHTML = '❌ حدث خطأ';
-        showNotification('حدث خطأ في تحميل الجدول', 'يرجى المحاولة مرة أخرى', 'error');
-    }
+    viewTableButton.onclick = copyScheduleJSON;
+
+    // Create Copy Data button
+    const copyDataButton = document.createElement('button');
+    copyDataButton.className = 'mobile-action-button';
+    copyDataButton.innerHTML = '📋 نسخ بيانات الجدول';
+    copyDataButton.onclick = copyScheduleJSON;
 
     mobileButtonsContainer.appendChild(viewTableButton);
+    mobileButtonsContainer.appendChild(copyDataButton);
+
     return mobileButtonsContainer;
 }
 
