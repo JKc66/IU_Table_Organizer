@@ -869,7 +869,23 @@ function createSummary(days) {
         document.addEventListener('DOMContentLoaded', () => {
         const generateTableBtn = document.getElementById('generateTableBtn');
         const userInput = document.getElementById('userInput');
+        const clearBtn = document.getElementById('clearBtn');
+
         generateTableBtn.addEventListener('click', () => {
             generateTable(userInput.value);
-        });});
+        });
+
+        clearBtn.addEventListener('click', () => {
+            userInput.value = '';
+            // Clear the existing table and summary if they exist
+            const tableContainer = document.getElementById('tableContainer');
+            const summaryContainer = document.getElementById('summaryContainer');
+            if (tableContainer) tableContainer.innerHTML = '';
+            if (summaryContainer) summaryContainer.innerHTML = '';
+            // Reset the newTable object and other relevant state
+            newTable = {};
+            subject_colors = {};
+            color_index = 0;
+        });
+    });
 
