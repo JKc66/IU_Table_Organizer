@@ -25,9 +25,22 @@ function getScheduleFromURL() {
         const decodedData = decodeURIComponent(encodedData);
         const scheduleData = JSON.parse(decodedData);
 
-        // Validate the required fields
-        if (!scheduleData.subjects || !scheduleData.days || !scheduleData.schedule) {
+        // Validate the required fields and structure
+        if (!Array.isArray(scheduleData.subjects) || 
+            !Array.isArray(scheduleData.days) || 
+            !scheduleData.schedule || 
+            typeof scheduleData.schedule !== 'object') {
             showNotification('بيانات الجدول غير صالحة', 'يرجى التأكد من صحة البيانات', 'error');
+            return null;
+        }
+
+        // Validate that all days in the schedule match the days array
+        const hasValidDays = scheduleData.days.every(day => 
+            day in scheduleData.schedule && Array.isArray(scheduleData.schedule[day])
+        );
+
+        if (!hasValidDays) {
+            showNotification('بيانات الأيام غير متطابقة', 'يرجى التأكد من صحة البيانات', 'error');
             return null;
         }
 
