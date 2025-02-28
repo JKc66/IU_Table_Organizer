@@ -10,6 +10,7 @@ let subject_colors = {};
 let color_index = 0;
 let currentTheme = 'light';
 let includeSummaryInDownload = false;
+let githubToken = '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';
 
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
@@ -1214,7 +1215,29 @@ function showNotification(title, subtitle, type = 'success', duration = 3000) {
     }, duration);
 }
 
-function copyScheduleJSON() {
+// Function to delete a gist
+async function deleteGist(gistId) {
+    try {
+        const response = await fetch(`https://api.github.com/gists/${gistId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${githubToken}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        
+        if (response.status === 204) {
+            console.log(`Gist ${gistId} deleted successfully`);
+        } else {
+            console.log(`Failed to delete gist ${gistId}`);
+        }
+    } catch (error) {
+        console.log(`Error deleting gist: ${error}`);
+    }
+}
+
+// Update copyScheduleJSON function
+async function copyScheduleJSON() {
     try {
         if (rows.length === 0) {
             getTableInfo();
@@ -1243,73 +1266,109 @@ function copyScheduleJSON() {
         };
 
         const scheduleData = JSON.stringify(formattedData);
-        
-        // Store in localStorage with timestamp
-        const storageKey = 'iu_schedule_' + Date.now();
-        localStorage.setItem(storageKey, scheduleData);
-        
-        // Open the website with the storage key
-        const baseUrl = 'https://jkc66.github.io/IU_Table_Organizer/cptable.html';
-        window.open(`${baseUrl}?key=${storageKey}`, '_blank');
-        showNotification('تم فتح منظم الجدول! ✨', 'تم نقل بيانات جدولك تلقائياً', 'success');
+
+        // First, try to create a gist
+        try {
+            if (!githubToken) {
+                throw new Error('No GitHub token set');
+            }
+
+            const gistResponse = await fetch('https://api.github.com/gists', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${githubToken}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                },
+                body: JSON.stringify({
+                    public: true,
+                    files: {
+                        'iu_schedule_app.json': {
+                            content: scheduleData
+                        }
+                    },
+                    description: 'IU Table Organizer Schedule Data (Auto-deletes in 10 minutes)'
+                })
+            });
+
+            if (!gistResponse.ok) {
+                const errorData = await gistResponse.json();
+                throw new Error(`Gist creation failed: ${gistResponse.status}, ${JSON.stringify(errorData)}`);
+            }
+
+            const gist = await gistResponse.json();
+
+            // Schedule gist deletion after 10 minutes
+            setTimeout(() => deleteGist(gist.id), 10 * 60 * 1000);
+
+            // Also copy to clipboard as backup
+            copyToClipboard(scheduleData);
+            
+            // Open the website with the gist ID
+            const baseUrl = 'https://jkc66.github.io/IU_Table_Organizer/cptable.html';
+            window.open(`${baseUrl}?gist=${gist.id}`, '_blank');
+            showNotification('تم فتح منظم الجدول! ✨', 'تم نسخ البيانات ونقلها تلقائياً', 'success');
+
+        } catch (gistError) {
+            // If gist creation fails, fall back to copy method
+            fallbackCopy(scheduleData);
+        }
 
     } catch (error) {
-        console.error('Error processing schedule:', error);
-        // If there's any error, fall back to the copy method
-        try {
-            const scheduleData = JSON.stringify({
-                subjects: Array.from(new Set(rows.map(row => row['اسم المقرر']).filter(Boolean))),
-                days: days,
-                schedule: cleanedSchedule
-            });
-            fallbackCopy(scheduleData);
-        } catch (e) {
-            console.error('Fallback error:', e);
-            showNotification('حدث خطأ في معالجة الجدول ❌', 'يرجى المحاولة مرة أخرى', 'error');
-        }
+        showNotification('حدث خطأ في معالجة الجدول ❌', 'جاري المحاولة بطريقة بديلة...', 'error');
+        fallbackCopy(scheduleData);
     }
 }
 
-function fallbackCopy(scheduleData) {
+// New helper function for clipboard operations
+function copyToClipboard(text) {
+    // Try the modern Clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                console.log('Clipboard API: Copy successful');
+                return true;
+            })
+            .catch(err => {
+                console.error('Clipboard API failed:', err);
+                return fallbackCopyToClipboard(text);
+            });
+    } else {
+        return fallbackCopyToClipboard(text);
+    }
+}
+
+function fallbackCopyToClipboard(text) {
     const textarea = document.createElement('textarea');
-    textarea.value = scheduleData;
+    textarea.value = text;
     document.body.appendChild(textarea);
     textarea.select();
     try {
-        document.execCommand('copy');
-        showNotification('تم نسخ البيانات بنجاح! ✨', 'يرجى فتح موقع منظم الجدول ولصق البيانات هناك', 'success');
-        // Open the website in a new tab
-        window.open('https://jkc66.github.io/IU_Table_Organizer/cptable.html', '_blank');
+        const success = document.execCommand('copy');
+        console.log('Fallback copy success:', success);
+        return success;
     } catch (e) {
-        console.error('Copy failed:', e);
-        showNotification('حدث خطأ أثناء النسخ ❌', 'يرجى المحاولة مرة أخرى لاحقاً', 'error');
+        console.error('Fallback copy failed:', e);
+        return false;
     } finally {
         document.body.removeChild(textarea);
     }
 }
 
-// Add cleanup function for old localStorage items
-function cleanupOldSchedules() {
-    try {
-        const keys = Object.keys(localStorage);
-        const now = Date.now();
-        const oneHour = 60 * 60 * 1000; // milliseconds in an hour
-        
-        keys.forEach(key => {
-            if (key.startsWith('iu_schedule_')) {
-                const timestamp = parseInt(key.split('_')[2]);
-                if (now - timestamp > oneHour) {
-                    localStorage.removeItem(key);
-                }
-            }
-        });
-    } catch (e) {
-        console.error('Error cleaning up old schedules:', e);
+// Update fallback copy to use new helper
+function fallbackCopy(scheduleData) {
+    console.log('Entering fallback copy with data length:', scheduleData.length);
+    const success = copyToClipboard(scheduleData);
+    
+    if (success) {
+        showNotification('تم نسخ البيانات بنجاح! ✨', 'يرجى فتح موقع منظم الجدول ولصق البيانات هناك', 'success');
+    } else {
+        showNotification('حدث خطأ أثناء النسخ ❌', 'يرجى المحاولة مرة أخرى لاحقاً', 'error');
     }
+    
+    // Open the website in a new tab
+    window.open('https://jkc66.github.io/IU_Table_Organizer/cptable.html', '_blank');
 }
-
-// Call cleanup periodically
-setInterval(cleanupOldSchedules, 15 * 60 * 1000); // every 15 minutes
 
 // Add function to create mobile buttons
 function createMobileButtons() {

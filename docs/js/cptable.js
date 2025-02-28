@@ -1041,47 +1041,49 @@ function createSummary(days) {
         // If periods are different, keep both but make it more compact
         return `${startTimeComponent}${startPeriod} - ${endTimeComponent}${endPeriod}`;}
 
-        // Function to load schedule from URL
-        function loadScheduleFromURL() {
+        // Function to load schedule from URL using GitHub Gist
+        async function loadScheduleFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
-            const storageKey = urlParams.get('key');
+            const gistId = urlParams.get('gist');
             
-            if (storageKey) {
+            if (gistId) {
                 try {
-                    // Try to get data from localStorage
-                    const scheduleData = localStorage.getItem(storageKey);
-                    if (scheduleData) {
-                        const userInput = document.getElementById('userInput');
-                        if (userInput) {
-                            userInput.value = scheduleData;
-                            generateTable(scheduleData);
-                            showNotification('تم تحميل الجدول من الرابط بنجاح', 'success', ramadanMode);
-                            return true;
-                        }
+                    const response = await fetch(`https://api.github.com/gists/${gistId}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch gist');
+                    }
+                    
+                    const gist = await response.json();
+                    const scheduleData = gist.files['schedule.json'].content;
+                    
+                    const userInput = document.getElementById('userInput');
+                    if (userInput) {
+                        userInput.value = scheduleData;
+                        generateTable(scheduleData);
+                        showNotification('تم تحميل الجدول بنجاح', 'success', ramadanMode);
+                        return true;
                     }
                 } catch (e) {
-                    console.error('Error loading from localStorage:', e);
-                    showNotification('حدث خطأ أثناء تحميل الجدول من الرابط', 'error', ramadanMode);
+                    console.error('Error loading from gist:', e);
+                    showNotification('حدث خطأ أثناء تحميل الجدول من GitHub Gist', 'error', ramadanMode);
                 }
             }
             return false;
         }
 
         // Event Listeners and Initialization
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
         const generateTableBtn = document.getElementById('generateTableBtn');
         const userInput = document.getElementById('userInput');
         const clearBtn = document.getElementById('clearBtn');
 
         // Try to load schedule from URL first
-        const scheduleLoaded = loadScheduleFromURL();
+        const scheduleLoaded = await loadScheduleFromURL();
 
-        // Only show the paste interface if no schedule was loaded from URL
-        if (!scheduleLoaded) {
-            userInput.style.display = 'block';
-            generateTableBtn.style.display = 'inline-block';
-            clearBtn.style.display = 'inline-block';
-        }
+        // Always show the paste interface since we might need it
+        userInput.style.display = 'block';
+        generateTableBtn.style.display = 'inline-block';
+        clearBtn.style.display = 'inline-block';
 
         generateTableBtn.addEventListener('click', () => {
             if (!userInput.value.trim()) {
