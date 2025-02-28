@@ -1,5 +1,3 @@
-// js/cptable.js
-
 // Global Variables
 let newTable = {};
 let newTableNode;
