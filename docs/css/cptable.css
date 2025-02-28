@@ -565,24 +565,26 @@
     align-items: center;
     gap: 8px;
     background: var(--download-group-bg, #f0f0f0);
-    padding: 4px;
+    padding: 8px 12px;
     border-radius: 12px;
     border: 1px solid var(--download-group-border, #e0e0e0);
     transition: all 0.3s ease;
 }
 
 .theme-dark .download-group {
-    --download-group-bg: #1f1f1f;
-    --download-group-border: #333;
+    --download-group-bg: #1a1a2e;
+    --download-group-border: #2e2e4a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .download-group:hover {
     border-color: var(--download-group-hover-border, #ccc);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .theme-dark .download-group:hover {
-    --download-group-hover-border: #444;
+    --download-group-hover-border: #3f3f5f;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .custom-checkbox-container {

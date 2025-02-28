@@ -250,7 +250,9 @@ function downloadAsPNG(event) {
         event.preventDefault();
     }
 
-    //Create and show loading overlay
+    console.log('Download initiated.');
+
+    // Create and show loading overlay
     const loadingOverlay = document.createElement('div');
     loadingOverlay.className = 'loading-notification';
 
@@ -263,6 +265,8 @@ function downloadAsPNG(event) {
             </div>
         </div>
     `;
+
+    console.log('Loading overlay created.');
 
     // Add styles for the notification
     const style = document.createElement('style');
@@ -281,63 +285,6 @@ function downloadAsPNG(event) {
             animation: slideIn 0.3s ease-out;
             backdrop-filter: blur(10px);
         }
-
-        .notification-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .notification-text {
-            flex: 1;
-        }
-
-        .notification-title {
-            color: ${currentTheme === 'dark' ? '#ffffff' : '#000000'};
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .notification-subtitle {
-            color: ${currentTheme === 'dark' ? '#888' : '#666'};
-            font-size: 0.9em;
-        }
-
-        .modern-spinner {
-            width: 24px;
-            height: 24px;
-            border: 3px solid ${currentTheme === 'dark' ? '#333' : '#f0f0f0'};
-            border-top: 3px solid ${currentTheme === 'dark' ? '#4CAF50' : '#2196F3'};
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideOut {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-        }
     `;
 
     document.head.appendChild(style);
@@ -346,6 +293,8 @@ function downloadAsPNG(event) {
     const element = document.getElementById('newTable');
     const summary = document.querySelector('.schedule-summary');
 
+    console.log('Element to capture:', element);
+
     // Create filename based on mode
     const filename = ramadanMode ? 'الجدول_الدراسي_توقيت_رمضان.png' : 'الجدول_الدراسي.png';
 
@@ -353,6 +302,8 @@ function downloadAsPNG(event) {
     const tableWidth = element.offsetWidth;
     const summaryWidth = summary ? summary.offsetWidth : 0;
     const maxWidth = Math.max(tableWidth, summaryWidth);
+
+    console.log('Max width calculated:', maxWidth);
 
     const wrapper = document.createElement('div');
     wrapper.style.cssText = `
@@ -389,6 +340,8 @@ function downloadAsPNG(event) {
     }
 
     const tableClone = element.cloneNode(true);
+
+    console.log('Table cloned.');
 
     // If in Ramadan mode, find a suitable cell for the indicator
     if (ramadanMode) {
@@ -432,22 +385,6 @@ function downloadAsPNG(event) {
                                 font-weight: 500;
                             ">توقيت رمضان</span>
                         </div>
-                        <style>
-                            @keyframes ramadanGlow {
-                                0%, 100% {
-                                    box-shadow: ${currentTheme === 'dark' ?
-                                        '0 4px 15px rgba(123, 97, 255, 0.2), 0 0 20px rgba(123, 97, 255, 0.1)' :
-                                        '0 4px 15px rgba(156, 39, 176, 0.1), 0 0 20px rgba(156, 39, 176, 0.05)'
-                                    };
-                                }
-                                50% {
-                                    box-shadow: ${currentTheme === 'dark' ?
-                                        '0 4px 20px rgba(123, 97, 255, 0.3), 0 0 30px rgba(123, 97, 255, 0.2)' :
-                                        '0 4px 20px rgba(156, 39, 176, 0.2), 0 0 30px rgba(156, 39, 176, 0.1)'
-                                    };
-                                }
-                            }
-                        </style>
                     `;
                     cell.innerHTML = ramadanIndicator;
                     indicatorPlaced = true;
@@ -492,28 +429,12 @@ function downloadAsPNG(event) {
                                     border: 2px solid ${currentTheme === 'dark' ? '#4a3f6b' : '#e1bee7'};
                                     animation: ramadanGlow 2s ease-in-out infinite;
                                 ">
-                                    <span style="font-size: 1.4em;">🌙</span>
-                                    <span style="
-                                        color: ${currentTheme === 'dark' ? '#fff' : '#000'};
-                                        font-weight: 500;
-                                    ">توقيت رمضان</span>
-                                </div>
-                                <style>
-                                    @keyframes ramadanGlow {
-                                        0%, 100% {
-                                            box-shadow: ${currentTheme === 'dark' ?
-                                                '0 4px 15px rgba(123, 97, 255, 0.2), 0 0 20px rgba(123, 97, 255, 0.1)' :
-                                                '0 4px 15px rgba(156, 39, 176, 0.1), 0 0 20px rgba(156, 39, 176, 0.05)'
-                                            };
-                                        }
-                                        50% {
-                                            box-shadow: ${currentTheme === 'dark' ?
-                                                '0 4px 20px rgba(123, 97, 255, 0.3), 0 0 30px rgba(123, 97, 255, 0.2)' :
-                                                '0 4px 20px rgba(156, 39, 176, 0.2), 0 0 30px rgba(156, 39, 176, 0.1)'
-                                            };
-                                        }
-                                    }
-                                </style>
+                                <span style="font-size: 1.4em;">🌙</span>
+                                <span style="
+                                    color: ${currentTheme === 'dark' ? '#fff' : '#000'};
+                                    font-weight: 500;
+                                ">توقيت رمضان</span>
+                            </div>
                             `;
                             cell.innerHTML = ramadanIndicator;
                             indicatorPlaced = true;
@@ -529,6 +450,8 @@ function downloadAsPNG(event) {
 
     wrapper.appendChild(tableClone);
     document.body.appendChild(wrapper);
+
+    console.log('Wrapper appended to the document.');
 
     // Enhanced style preservation
     const preserveStyles = (element) => {
@@ -562,6 +485,8 @@ function downloadAsPNG(event) {
     // Use fixed scale of 7
     const scale = 7;
 
+    console.log('Starting html2canvas...');
+
     html2canvas(wrapper, {
         backgroundColor: '#ffffff',
         scale: scale,
@@ -575,6 +500,7 @@ function downloadAsPNG(event) {
             preserveStyles(clonedWrapper);
         }
     }).then(canvas => {
+        console.log('Canvas generated successfully.');
         wrapper.remove();
         // Add slide out animation before removing
         loadingOverlay.style.animation = 'slideOut 0.3s ease-in';
@@ -592,6 +518,7 @@ function downloadAsPNG(event) {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            console.log('Download link clicked.');
         } catch (error) {
             console.error('Error saving image:', error);
             alert('خطأ في حفظ الصورة. يرجى المحاولة مرة أخرى.');
@@ -726,7 +653,7 @@ function createSummary(days) {
                                 <input type="checkbox" id="includeSummaryCheckbox" ${includeSummaryInDownload ? 'checked' : ''}>
                                 <span class="checkmark"></span>
                             </div>
-                            <span>تضمين الملخص</span>
+                            <span style="color: ${currentTheme === 'dark' ? '#e0e0e0' : '#333'};">تضمين الملخص</span>
                         </label>
                     </div>
                 </div>
