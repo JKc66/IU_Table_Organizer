@@ -844,6 +844,7 @@ let currentTheme = 'light';
 let includeSummaryInDownload = false;
 let githubToken = '';
 
+
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
     // Split the time range
