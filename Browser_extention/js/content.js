@@ -112,57 +112,10 @@ function init() {
             // Check if user is on mobile
             isMobile = detectMobile();
             initializeTableOrganizer();
-            
-            // Find the main_content col-md-12 container and add buttons there
-            const mainContentContainer = document.querySelector('.main_content.col-md-12');
-            if (mainContentContainer) {
-                addButtonsToMainContent(mainContentContainer);
-            }
         } catch (error) {
             console.error('Error initializing table organizer:', error);
         }
     });
-}
-
-// Function to add buttons to the main_content col-md-12 container
-function addButtonsToMainContent(container) {
-    // Create a container for the buttons
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'control-buttons';
-    buttonsContainer.style.cssText = 'margin: 15px 0; display: flex; justify-content: center;';
-    
-    // Create copy button
-    const copyButton = document.createElement('button');
-    copyButton.className = 'control-button';
-    copyButton.id = 'mainCopyDataBtn';
-    copyButton.innerHTML = '📋 نسخ بيانات الجدول';
-    copyButton.addEventListener('click', copyTableData);
-    
-    // Create redirect button that also copies data
-    const redirectButton = document.createElement('a');
-    redirectButton.className = 'control-button';
-    redirectButton.id = 'mainRedirectBtn';
-    redirectButton.innerHTML = '🌐 عرض الجدول المنظم';
-    redirectButton.href = 'http://jawadk.me/IU_Table_Organizer/cptable.html';
-    redirectButton.target = '_blank'; // Open in new tab
-    redirectButton.style.textDecoration = 'none';
-    redirectButton.style.display = 'inline-flex';
-    redirectButton.style.alignItems = 'center';
-    redirectButton.style.justifyContent = 'center';
-    
-    // Make the redirect button also copy data before redirecting
-    redirectButton.addEventListener('click', function(e) {
-        // Copy data first
-        copyTableData();
-        // Don't prevent default - let the link open in a new tab
-    });
-    
-    // Add buttons to container
-    buttonsContainer.appendChild(copyButton);
-    buttonsContainer.appendChild(redirectButton);
-    
-    // Add container to the main content
-    container.insertAdjacentElement('afterbegin', buttonsContainer);
 }
 
 // Add error handling to the table check
@@ -178,11 +131,11 @@ function initializeTableOrganizer() {
     let cell = document.createElement('td');
     button.classList.add("schedule-organizer-btn");
 
+    // Set initial button state
+    button.innerHTML = on ? "الجدول الاصلي" : "نظم الجدول";
     if (on) {
         button.classList.add("active");
-        button.innerHTML = "الجدول الاصلي";
-        originalTableNode.style.display = 'none';   
-
+        originalTableNode.style.display = 'none';
         if (newTableNode) {
             newTableNode.style.display = null;
         } else {
@@ -191,18 +144,25 @@ function initializeTableOrganizer() {
             appendTable();
         }
     } else {
-        button.innerHTML = "نظم الجدول";
         if (newTableNode) {
             newTableNode.style.display = 'none';
         }
     }
 
+    // Append button to table
     cell.appendChild(button);
     const printLink = document.getElementById("scheduleFrm:printLink");
     if (printLink && printLink.parentElement && printLink.parentElement.parentElement) {
         printLink.parentElement.parentElement.appendChild(cell);
+    } else {
+        // Fallback: append to the table directly if printLink is not found
+        const firstRow = originalTableNode.querySelector('tr');
+        if (firstRow) {
+            firstRow.appendChild(cell);
+        }
     }
 
+    // Add click handler
     button.onclick = function() {
         if (on) {
             on = false;
@@ -287,13 +247,6 @@ function getTableInfo() {
 
     processRows(row1);
     processRows(row2);
-}
-
-// Start initialization
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
 }
 
 function getNewTable() {
@@ -941,128 +894,92 @@ function createSummary() {
             subjectCount.add(slot.subject);
         });
     }
-    
-    // Different UI for mobile devices
-    if (isMobile) {
-        summary.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <div style="display: flex; flex-direction: column; align-items: center; width: 100%; gap: 10px;">
-                    <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 10px; text-align: center;">الجدول لا يظهر بشكل جيد على الأجهزة المحمولة</div>
-                    <div style="display: flex; width: 100%; justify-content: center; gap: 10px;">
-                        <button class="control-button" id="copyDataBtn" style="flex: 1; max-width: 45%;">
-                            📋 نسخ البيانات
-                        </button>
-                        <a href="http://jawadk.me/IU_Table_Organizer/cptable.html" class="control-button" id="redirectBtn" style="flex: 1; max-width: 45%; text-decoration: none; display: flex; align-items: center; justify-content: center;" target="_blank">
-                            🌐 عرض الجدول
-                        </a>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        setTimeout(() => {
-            const copyDataBtn = summary.querySelector('#copyDataBtn');
-            const redirectBtn = summary.querySelector('#redirectBtn');
-            
-            if (copyDataBtn) {
-                copyDataBtn.addEventListener('click', copyTableData);
-            }
-            
-            if (redirectBtn) {
-                redirectBtn.addEventListener('click', function(e) {
-                    // Copy data first
-                    copyTableData();
-                    // Don't prevent default - let the link open in a new tab
-                });
-            }
-        }, 0);
-    } else {
-        // Original desktop UI
-        summary.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#1a2f4d' : '#e3f2fd'}; padding: 8px 16px; border-radius: 8px;">
-                    <span style="font-weight: 500;">📚 المواد:</span>
-                    <span>${subjectCount.size}</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#2d1f3d' : '#f3e5f5'}; padding: 8px 16px; border-radius: 8px;">
-                    <span style="font-weight: 500;">⏰ الساعات:</span>
-                    <span>${totalHours}</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#1f3d2d' : '#e8f5e9'}; padding: 8px 16px; border-radius: 8px;">
-                    <span style="font-weight: 500;">📅 أيام الدراسة:</span>
-                    <span>${daysWithClasses.size}</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#3d2d1f' : '#fff3e0'}; padding: 8px 16px; border-radius: 8px;">
-                    <span style="font-weight: 500;">📊 اليوم الأكثر:</span>
-                    <span>${busyDays.join(', ')} (${maxLectures})</span>
-                </div>
-                <div class="control-buttons">
-                    <button class="control-button theme-btn ${currentTheme === 'light' ? 'active' : ''}" id="lightThemeBtn">
-                        ☀️ فاتح
-                    </button>
-                    <button class="control-button theme-btn ${currentTheme === 'dark' ? 'active' : ''}" id="darkThemeBtn">
-                        🌙 داكن
-                    </button>
-                    <button class="control-button ${ramadanMode ? 'active' : ''}" id="ramadanBtn">
-                        🕌 توقيت رمضان
-                    </button>
-                    <div class="download-group">
-                        <button class="control-button" id="downloadButton">
-                            💾 تحميل كصورة
-                        </button>
-                        <label class="custom-checkbox-container">
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" id="includeSummaryCheckbox" ${includeSummaryInDownload ? 'checked' : ''}>
-                                <span class="checkmark"></span>
-                            </div>
-                            <span>تضمين الملخص</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        setTimeout(() => {
-            const downloadButton = summary.querySelector('#downloadButton');
-            const lightThemeBtn = summary.querySelector('#lightThemeBtn');
-            const darkThemeBtn = summary.querySelector('#darkThemeBtn');
-            const ramadanBtn = summary.querySelector('#ramadanBtn');
-            const includeSummaryCheckbox = summary.querySelector('#includeSummaryCheckbox');
-            
-            if (downloadButton) {
-                downloadButton.addEventListener('click', downloadAsPNG);
-            }
-            
-            if (lightThemeBtn) {
-                lightThemeBtn.addEventListener('click', () => {
-                    toggleTheme('light');
-                    appendTable();
-                });
-            }
-            
-            if (darkThemeBtn) {
-                darkThemeBtn.addEventListener('click', () => {
-                    toggleTheme('dark');
-                    appendTable();
-                });
-            }
-            
-            if (ramadanBtn) {
-                ramadanBtn.addEventListener('click', () => {
-                    ramadanMode = !ramadanMode;
-                    ramadanBtn.classList.toggle('active');
-                    getNewTable();
-                    appendTable();
-                });
-            }
 
-            if (includeSummaryCheckbox) {
-                includeSummaryCheckbox.addEventListener('change', (e) => {
-                    includeSummaryInDownload = e.target.checked;
-                });
-            }
-        }, 0);
-    }
+    // Desktop UI
+    summary.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#1a2f4d' : '#e3f2fd'}; padding: 8px 16px; border-radius: 8px;">
+                <span style="font-weight: 500;">📚 المواد:</span>
+                <span>${subjectCount.size}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#2d1f3d' : '#f3e5f5'}; padding: 8px 16px; border-radius: 8px;">
+                <span style="font-weight: 500;">⏰ الساعات:</span>
+                <span>${totalHours}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#1f3d2d' : '#e8f5e9'}; padding: 8px 16px; border-radius: 8px;">
+                <span style="font-weight: 500;">📅 أيام الدراسة:</span>
+                <span>${daysWithClasses.size}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#3d2d1f' : '#fff3e0'}; padding: 8px 16px; border-radius: 8px;">
+                <span style="font-weight: 500;">📊 اليوم الأكثر:</span>
+                <span>${busyDays.join(', ')} (${maxLectures})</span>
+            </div>
+            <div class="control-buttons">
+                <button class="control-button theme-btn ${currentTheme === 'light' ? 'active' : ''}" id="lightThemeBtn">
+                    ☀️ فاتح
+                </button>
+                <button class="control-button theme-btn ${currentTheme === 'dark' ? 'active' : ''}" id="darkThemeBtn">
+                    🌙 داكن
+                </button>
+                <button class="control-button ${ramadanMode ? 'active' : ''}" id="ramadanBtn">
+                    🕌 توقيت رمضان
+                </button>
+                <div class="download-group">
+                    <button class="control-button" id="downloadButton">
+                        💾 تحميل كصورة
+                    </button>
+                    <label class="custom-checkbox-container">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="includeSummaryCheckbox" ${includeSummaryInDownload ? 'checked' : ''}>
+                            <span class="checkmark"></span>
+                        </div>
+                        <span>تضمين الملخص</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    setTimeout(() => {
+        const downloadButton = summary.querySelector('#downloadButton');
+        const lightThemeBtn = summary.querySelector('#lightThemeBtn');
+        const darkThemeBtn = summary.querySelector('#darkThemeBtn');
+        const ramadanBtn = summary.querySelector('#ramadanBtn');
+        const includeSummaryCheckbox = summary.querySelector('#includeSummaryCheckbox');
+        
+        if (downloadButton) {
+            downloadButton.addEventListener('click', downloadAsPNG);
+        }
+        
+        if (lightThemeBtn) {
+            lightThemeBtn.addEventListener('click', () => {
+                toggleTheme('light');
+                appendTable();
+            });
+        }
+        
+        if (darkThemeBtn) {
+            darkThemeBtn.addEventListener('click', () => {
+                toggleTheme('dark');
+                appendTable();
+            });
+        }
+        
+        if (ramadanBtn) {
+            ramadanBtn.addEventListener('click', () => {
+                ramadanMode = !ramadanMode;
+                ramadanBtn.classList.toggle('active');
+                getNewTable();
+                appendTable();
+            });
+        }
+
+        if (includeSummaryCheckbox) {
+            includeSummaryCheckbox.addEventListener('change', (e) => {
+                includeSummaryInDownload = e.target.checked;
+            });
+        }
+    }, 0);
     
     return summary;
 }
@@ -1076,22 +993,7 @@ function appendTable() {
 
     const originalTableNode = document.getElementById('scheduleFrm:studScheduleTable');
     
-    // For mobile devices, only show the summary with copy and redirect buttons
-    if (isMobile) {
-        let summary = createSummary();
-        summary.style.cssText = `
-            width: 100%;
-            max-width: 600px;
-            margin: 5px auto;
-            overflow-x: auto;
-            display: block;
-        `;
-        originalTableNode.insertAdjacentElement('afterend', summary);
-        newTableNode = document.createElement('div'); // Create empty div as placeholder
-        return;
-    }
-    
-    // Continue with normal table creation for desktop
+    // Continue with normal table creation
     let table = document.createElement('table');
     table.id = "newTable";
     table.classList.add('rowFlow', `theme-${currentTheme}`);
@@ -1249,4 +1151,11 @@ function formatTimeDisplay(timeStr) {
     
     // If periods are different, keep both but make it more compact
     return `${startTimeComponent}${startPeriod} - ${endTimeComponent}${endPeriod}`;
+}
+
+// Start initialization
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
 }

@@ -208,8 +208,9 @@
 
 .control-buttons {
     display: flex;
-    gap: 10px;
-    margin: 10px 0;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .control-button {
@@ -415,6 +416,8 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    z-index: 100;
+    visibility: visible !important;
 }
 
 .schedule-organizer-btn::before {
@@ -666,52 +669,11 @@
     transform: rotate(45deg);
 }
 
+/* Remove mobile-specific styles and desktop-specific styles */
 .control-buttons {
     display: flex;
     gap: 8px;
     align-items: center;
     flex-wrap: wrap;
-}
-
-/* Mobile-specific styles */
-@media (max-width: 768px) {
-    .schedule-summary {
-        padding: 15px;
-        margin: 10px auto;
-        border-radius: 12px;
-    }
-    
-    .control-button {
-        padding: 12px 20px;
-        font-size: 1.1em;
-        min-width: 130px;
-    }
-    
-    #copyDataBtn, #redirectBtn {
-        padding: 15px 20px;
-        font-size: 1.2em;
-        margin: 5px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    
-    #copyDataBtn:active, #redirectBtn:active {
-        transform: translateY(2px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-    
-    /* Hide the schedule organizer button on mobile */
-    .schedule-organizer-btn {
-        display: none !important;
-    }
-}
-
-/* Desktop-specific styles */
-@media (min-width: 769px) {
-    /* Hide the main copy and redirect buttons on desktop */
-    #mainCopyDataBtn, #mainRedirectBtn {
-        display: none !important;
-    }
 }
 
