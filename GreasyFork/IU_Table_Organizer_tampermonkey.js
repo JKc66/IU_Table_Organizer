@@ -2047,27 +2047,6 @@ function showNotification(title, subtitle, type = 'success', duration = 3000) {
     }, duration);
 }
 
-// Function to delete a gist
-async function deleteGist(gistId) {
-    try {
-        const response = await fetch(`https://api.github.com/gists/${gistId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${githubToken}`,
-                'Accept': 'application/vnd.github.v3+json'
-            }
-        });
-        
-        if (response.status === 204) {
-            console.log(`Gist ${gistId} deleted successfully`);
-        } else {
-            console.log(`Failed to delete gist ${gistId}`);
-        }
-    } catch (error) {
-        console.log(`Error deleting gist: ${error}`);
-    }
-}
-
 // Update copyScheduleJSON function
 async function copyScheduleJSON() {
     try {
@@ -2119,7 +2098,7 @@ async function copyScheduleJSON() {
                             content: scheduleData
                         }
                     },
-                    description: 'IU Table Organizer Schedule Data (Auto-deletes in 10 minutes)'
+                    description: 'IU Table Organizer Schedule Data'
                 })
             });
 
@@ -2129,9 +2108,6 @@ async function copyScheduleJSON() {
             }
 
             const gist = await gistResponse.json();
-
-            // Schedule gist deletion after 10 minutes
-            setTimeout(() => deleteGist(gist.id), 10 * 60 * 1000);
 
             // Also copy to clipboard as backup
             copyToClipboard(scheduleData);
