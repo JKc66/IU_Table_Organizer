@@ -750,23 +750,89 @@ body {
 .page-header {
     text-align: center;
     margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    position: relative;
+}
+
+.page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #1a237e, transparent);
 }
 
 .page-header h1 {
-    font-size: 2.2rem;
-    color: #1a237e;
+    font-size: 2.4rem;
+    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin: 0;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.page-header h1 i {
+    font-size: 0.9em;
+    color: #1a237e;
+    animation: float 3s ease-in-out infinite;
 }
 
 .subtitle {
     display: block;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: #666;
+    font-weight: 500;
+    margin-top: 8px;
+    opacity: 0.9;
+}
+
+.header-description {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 12px 0 0;
     font-weight: 400;
-    margin-top: 5px;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Dark theme support */
+.theme-dark .page-header {
+    border-bottom-color: #333;
+}
+
+.theme-dark .page-header::after {
+    background: linear-gradient(90deg, transparent, #3f51b5, transparent);
+}
+
+.theme-dark .page-header h1 {
+    background: linear-gradient(135deg, #5c6bc0 0%, #3f51b5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.theme-dark .page-header h1 i {
+    color: #5c6bc0;
+}
+
+.theme-dark .subtitle,
+.theme-dark .header-description {
+    color: #aaa;
 }
 
 .main-content {
