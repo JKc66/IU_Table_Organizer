@@ -8,6 +8,163 @@ let colors = ["Blue", "Black", "Crimson", "Green", "Grey", "OrangeRed", "Purple"
 let subject_colors = {};
 let color_index = 0;
 
+// Notification function
+function showNotification(message, type = 'success', isRamadan = false) {
+    // Remove any existing notification
+    const existingNotification = document.querySelector('.notification-toast');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+
+    const notification = document.createElement('div');
+    notification.className = `notification-toast ${type}${isRamadan ? ' ramadan' : ''}`;
+    
+    // Icon based on notification type and Ramadan mode
+    let icon = '✅';
+    if (type === 'error') icon = '❌';
+    if (type === 'info') icon = 'ℹ️';
+    if (isRamadan) {
+        if (type === 'success') icon = '🌙';
+        if (type === 'info') icon = '🕌';
+    }
+
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-icon">${icon}</span>
+            <span class="notification-message">${message}</span>
+            ${isRamadan ? '<span class="notification-decoration"></span>' : ''}
+        </div>
+    `;
+
+    // Add styles for the notification
+    const style = document.createElement('style');
+    style.textContent = `
+        .notification-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease-out;
+            border: 1px solid;
+            direction: rtl;
+        }
+
+        .notification-toast.ramadan {
+            background: ${currentTheme === 'dark' ? 
+                'linear-gradient(135deg, #1a1a1a 0%, #2d1f3d 100%)' : 
+                'linear-gradient(135deg, #ffffff 0%, #f3e5f5 100%)'};
+            border-width: 2px;
+            border-image: linear-gradient(45deg, #9c27b0, #673ab7) 1;
+            box-shadow: 0 4px 20px rgba(156, 39, 176, 0.2);
+        }
+
+        .notification-toast.success {
+            border-color: #4caf50;
+            color: ${currentTheme === 'dark' ? '#81c784' : '#2e7d32'};
+        }
+
+        .notification-toast.error {
+            border-color: #f44336;
+            color: ${currentTheme === 'dark' ? '#e57373' : '#c62828'};
+        }
+
+        .notification-toast.info {
+            border-color: #2196f3;
+            color: ${currentTheme === 'dark' ? '#64b5f6' : '#1565c0'};
+        }
+
+        .notification-toast.ramadan.success {
+            border-image: linear-gradient(45deg, #9c27b0, #673ab7) 1;
+            color: ${currentTheme === 'dark' ? '#ce93d8' : '#6a1b9a'};
+        }
+
+        .notification-toast.ramadan.info {
+            border-image: linear-gradient(45deg, #673ab7, #3f51b5) 1;
+            color: ${currentTheme === 'dark' ? '#9575cd' : '#4527a0'};
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        .notification-icon {
+            font-size: 1.2em;
+        }
+
+        .notification-message {
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .notification-decoration {
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1em;
+            opacity: 0.7;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(156, 39, 176, 0.2);
+            }
+            50% {
+                box-shadow: 0 4px 30px rgba(156, 39, 176, 0.4);
+            }
+        }
+
+        .notification-toast.ramadan {
+            animation: slideIn 0.3s ease-out, glow 2s ease-in-out infinite;
+        }
+    `;
+
+    document.head.appendChild(style);
+    document.body.appendChild(notification);
+
+    // Remove the notification after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = isRamadan ? 
+            'slideOut 0.3s ease-in forwards, glow 2s ease-in-out infinite' : 
+            'slideOut 0.3s ease-in forwards';
+        setTimeout(() => {
+            notification.remove();
+            style.remove();
+        }, 300);
+    }, 3000);
+}
 
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
@@ -82,6 +239,11 @@ function convertToRamadanTime(timeStr) {
 function generateTable(jsonData) {
     try {
         const data = JSON.parse(jsonData);
+        if (!data || !data.days || !data.schedule) {
+            showNotification('خطأ: تنسيق JSON غير صحيح. يرجى التحقق من البيانات المدخلة.', 'error');
+            return;
+        }
+
         const days = data.days;
         const schedule = data.schedule;
 
@@ -192,9 +354,16 @@ function generateTable(jsonData) {
         // Now, generate and append the table to the container
         appendTable(data.days);
 
+        // Show success notification after table is generated
+        if (ramadanMode) {
+            showNotification('تم إنشاء جدول رمضان بنجاح! رمضان كريم 🌙', 'success', true);
+        } else {
+            showNotification('تم إنشاء الجدول بنجاح! 🎉');
+        }
+
     } catch (error) {
         console.error('Error parsing JSON or generating table:', error);
-        alert('Error: Could not generate table. Please check your JSON data.');
+        showNotification('خطأ: تعذر إنشاء الجدول. يرجى التحقق من صحة البيانات المدخلة.', 'error');
     }
 }
 
@@ -689,17 +858,24 @@ function createSummary(days) {
             ramadanBtn.addEventListener('click', () => {
                 ramadanMode = !ramadanMode;
                 ramadanBtn.classList.toggle('active');
+                if (ramadanMode) {
+                    showNotification('تم تفعيل توقيت رمضان 🌙 رمضان كريم', 'info', true);
+                } else {
+                    showNotification('تم إلغاء توقيت رمضان', 'info');
+                }
                 // Re-generate the table with the new Ramadan mode
                 const userInput = document.getElementById('userInput').value;
-                generateTable(userInput);
+                if (userInput.trim()) {
+                    generateTable(userInput);
+                }
             });
-            }
-            if (includeSummaryCheckbox) {
-                includeSummaryCheckbox.addEventListener('change', (e) => {
-                    includeSummaryInDownload = e.target.checked;
-                });
-            }
-        }, 0);
+        }
+        if (includeSummaryCheckbox) {
+            includeSummaryCheckbox.addEventListener('change', (e) => {
+                includeSummaryInDownload = e.target.checked;
+            });
+        }
+    }, 0);
         
         return summary;}
 
@@ -872,10 +1048,19 @@ function createSummary(days) {
         const clearBtn = document.getElementById('clearBtn');
 
         generateTableBtn.addEventListener('click', () => {
+            if (!userInput.value.trim()) {
+                showNotification('يرجى إدخال بيانات الجدول أولاً.', 'info', ramadanMode);
+                return;
+            }
             generateTable(userInput.value);
         });
 
         clearBtn.addEventListener('click', () => {
+            if (!userInput.value.trim() && !document.getElementById('newTable')) {
+                showNotification('لا يوجد شيء للمسح.', 'info', ramadanMode);
+                return;
+            }
+            
             userInput.value = '';
             // Clear the existing table and summary if they exist
             const tableContainer = document.getElementById('tableContainer');
@@ -886,6 +1071,8 @@ function createSummary(days) {
             newTable = {};
             subject_colors = {};
             color_index = 0;
+            
+            showNotification('تم مسح كل شيء بنجاح.', 'success', ramadanMode);
         });
     });
 
