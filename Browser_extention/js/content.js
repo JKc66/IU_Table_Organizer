@@ -11,6 +11,15 @@ let color_index = 0;
 let currentTheme = 'light';
 let includeSummaryInDownload = false;
 
+// Add day name mapping at the top with global variables
+const dayMappings = {
+    'الأحد': 'Sunday',
+    'الإثنين': 'Monday',
+    'الثلاثاء': 'Tuesday',
+    'الأربعاء': 'Wednesday',
+    'الخميس': 'Thursday'
+};
+
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
     // Split the time range
@@ -1237,22 +1246,36 @@ function getScheduleData() {
 
     // Create a cleaned version of the schedule without breaks and time values
     const cleanedSchedule = {};
+    
+    // Initialize all days with empty arrays using English names
+    const englishDays = days.map(day => dayMappings[day]);
+    englishDays.forEach(day => {
+        cleanedSchedule[day] = [];
+    });
+
+    // Then add any lectures we have, using English day names
     for (const day in newTable) {
-        cleanedSchedule[day] = newTable[day]
-            .filter(lecture => lecture.activity !== "break")
-            .map(lecture => ({
-                subject: lecture.subject,
-                activity: lecture.activity,
-                time: lecture.time,
-                place: lecture.place,
-                section: lecture.section
-            }));
+        const englishDay = dayMappings[day];
+        if (newTable[day] && Array.isArray(newTable[day])) {
+            cleanedSchedule[englishDay] = newTable[day]
+                .filter(lecture => lecture.activity !== "break")
+                .map(lecture => ({
+                    subject: lecture.subject,
+                    activity: lecture.activity,
+                    time: lecture.time,
+                    place: lecture.place,
+                    section: lecture.section
+                }));
+        }
     }
 
-    // Create the final format
+    // Get unique subjects from rows, even if there are no lectures
+    const subjects = Array.from(new Set(rows.map(row => row['اسم المقرر']).filter(Boolean)));
+
+    // Create the final format with complete structure using English days
     const formattedData = {
-        subjects: Array.from(new Set(rows.map(row => row['اسم المقرر']).filter(Boolean))),
-        days: days,
+        subjects: subjects,
+        days: englishDays,
         schedule: cleanedSchedule
     };
 
@@ -1261,7 +1284,6 @@ function getScheduleData() {
     return { 
         scheduleData,
         getUrl: async () => {
-            // Try POST first, fallback to URL parameters
             return await sendScheduleData(scheduleData);
         }
     };

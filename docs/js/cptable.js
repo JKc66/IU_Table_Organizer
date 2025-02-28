@@ -9,6 +9,15 @@ let subject_colors = {};
 let color_index = 0;
 let days = [];
 
+// Add day name mapping at the top with global variables
+const dayMappings = {
+    'Sunday': 'الأحد',
+    'Monday': 'الإثنين',
+    'Tuesday': 'الثلاثاء',
+    'Wednesday': 'الأربعاء',
+    'Thursday': 'الخميس'
+};
+
 // Function to get and parse schedule data from URL
 function getScheduleFromURL() {
     try {
@@ -34,9 +43,22 @@ function getScheduleFromURL() {
             return null;
         }
 
+        // Translate English days to Arabic
+        const translatedData = {
+            ...scheduleData,
+            days: scheduleData.days.map(day => dayMappings[day] || day),
+            schedule: {}
+        };
+
+        // Translate schedule keys from English to Arabic
+        for (const day in scheduleData.schedule) {
+            const arabicDay = dayMappings[day] || day;
+            translatedData.schedule[arabicDay] = scheduleData.schedule[day];
+        }
+
         // Validate that all days in the schedule match the days array
-        const hasValidDays = scheduleData.days.every(day => 
-            day in scheduleData.schedule && Array.isArray(scheduleData.schedule[day])
+        const hasValidDays = translatedData.days.every(day => 
+            day in translatedData.schedule && Array.isArray(translatedData.schedule[day])
         );
 
         if (!hasValidDays) {
@@ -44,7 +66,7 @@ function getScheduleFromURL() {
             return null;
         }
 
-        return scheduleData;
+        return translatedData;
     } catch (error) {
         console.error('Error parsing schedule data:', error);
         showNotification('حدث خطأ في قراءة بيانات الجدول', 'يرجى المحاولة مرة أخرى', 'error');
