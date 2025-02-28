@@ -10,7 +10,6 @@ let subject_colors = {};
 let color_index = 0;
 let currentTheme = 'light';
 let includeSummaryInDownload = false;
-let isMobile = false;
 
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
@@ -81,6 +80,13 @@ function convertToRamadanTime(timeStr) {
     return `${mappedTime.start} - ${mappedTime.end}`;
 }
 
+// Start initialization
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
+
 // Main initialization function
 function waitForElement(selector, callback, maxTries = 100) {
     if (maxTries <= 0) {
@@ -99,18 +105,10 @@ function waitForElement(selector, callback, maxTries = 100) {
     }, 100);
 }
 
-// Function to detect if the user is on a mobile device
-function detectMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-           (window.innerWidth <= 768);
-}
-
 // Remove the DOMContentLoaded listener and replace with this:
 function init() {
     waitForElement('scheduleFrm:studScheduleTable', (element) => {
         try {
-            // Check if user is on mobile
-            isMobile = detectMobile();
             initializeTableOrganizer();
         } catch (error) {
             console.error('Error initializing table organizer:', error);
@@ -816,57 +814,6 @@ function toggleTheme(theme) {
     }
 }
 
-// Function to serialize table data for copying to clipboard
-function serializeTableData() {
-    let data = {
-        subjects: [],
-        days: days,
-        schedule: {}
-    };
-    
-    // Initialize schedule object with empty arrays for each day
-    days.forEach(day => {
-        data.schedule[day] = [];
-    });
-    
-    // Collect unique subjects
-    for (let i in rows) {
-        if (rows[i]['اسم المقرر'] && !data.subjects.includes(rows[i]['اسم المقرر'])) {
-            data.subjects.push(rows[i]['اسم المقرر']);
-        }
-    }
-    
-    // Add lectures to schedule
-    for (let day in newTable) {
-        newTable[day].forEach(lecture => {
-            if (lecture.activity !== "break") {
-                data.schedule[day].push({
-                    subject: lecture.subject,
-                    activity: lecture.activity,
-                    time: lecture.time,
-                    place: lecture.place,
-                    section: lecture.section
-                });
-            }
-        });
-    }
-    
-    return JSON.stringify(data);
-}
-
-// Function to copy table data to clipboard
-function copyTableData() {
-    const data = serializeTableData();
-    navigator.clipboard.writeText(data)
-        .then(() => {
-            alert('تم نسخ بيانات الجدول! يمكنك الآن الانتقال إلى الموقع لعرض الجدول.');
-        })
-        .catch(err => {
-            console.error('فشل نسخ البيانات:', err);
-            alert('حدث خطأ أثناء نسخ البيانات. يرجى المحاولة مرة أخرى.');
-        });
-}
-
 function createSummary() {
     let summary = document.createElement('div');
     summary.classList.add('schedule-summary', `theme-${currentTheme}`);
@@ -1153,9 +1100,3 @@ function formatTimeDisplay(timeStr) {
     return `${startTimeComponent}${startPeriod} - ${endTimeComponent}${endPeriod}`;
 }
 
-// Start initialization
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
-}

@@ -240,24 +240,6 @@
     overflow: visible;
 }
 
-@keyframes indicatorGlow {
-    0% {
-        box-shadow: 0 0 5px #ef4444,
-                    0 0 10px #ef4444,
-                    0 0 15px rgba(239, 68, 68, 0.5);
-    }
-    50% {
-        box-shadow: 0 0 8px #ef4444,
-                    0 0 15px #ef4444,
-                    0 0 25px rgba(239, 68, 68, 0.5);
-    }
-    100% {
-        box-shadow: 0 0 5px #ef4444,
-                    0 0 10px #ef4444,
-                    0 0 15px rgba(239, 68, 68, 0.5);
-    }
-}
-
 .control-button::before {
     content: '';
     position: absolute;
@@ -293,7 +275,7 @@
     min-width: 100px;
     backdrop-filter: blur(8px);
     position: relative;
-    padding-right: 2.5rem;
+    padding-right: 3rem;
 }
 
 .theme-btn::after, #ramadanBtn::after {
@@ -302,19 +284,58 @@
     right: 0.75rem;
     top: 50%;
     transform: translateY(-50%);
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: #1a1a1a;
+    width: 20px;
+    height: 10px;
+    border-radius: 2px;
+    background: #2a2a2a;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
     z-index: 1;
+    box-shadow: 
+        inset 0 1px 2px rgba(0, 0, 0, 0.3),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.1);
 }
 
 .theme-btn.active::after, #ramadanBtn.active::after {
-    background: #ef4444;
-    border-color: #ef4444;
+    background: linear-gradient(180deg, 
+        rgba(239, 68, 68, 1) 0%,
+        rgba(239, 68, 68, 0.8) 50%,
+        rgba(239, 68, 68, 0.9) 100%
+    );
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    box-shadow: 
+        0 0 2px rgba(239, 68, 68, 0.4),
+        0 0 4px rgba(239, 68, 68, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8);
     animation: indicatorGlow 2s infinite;
+}
+
+@keyframes indicatorGlow {
+    0%, 100% {
+        background: linear-gradient(180deg, 
+            rgba(239, 68, 68, 1) 0%,
+            rgba(239, 68, 68, 0.8) 50%,
+            rgba(239, 68, 68, 0.9) 100%
+        );
+        box-shadow: 
+            0 0 2px rgba(239, 68, 68, 0.4),
+            0 0 4px rgba(239, 68, 68, 0.2),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+            inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    }
+    50% {
+        background: linear-gradient(180deg, 
+            rgba(239, 68, 68, 0.95) 0%,
+            rgba(239, 68, 68, 0.75) 50%,
+            rgba(239, 68, 68, 0.85) 100%
+        );
+        box-shadow: 
+            0 0 4px rgba(239, 68, 68, 0.6),
+            0 0 8px rgba(239, 68, 68, 0.4),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+            inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    }
 }
 
 /* Set permanent colors for light theme button */
@@ -323,19 +344,31 @@
 }
 
 /* Dark theme - only modify the indicator */
+.theme-dark .theme-btn::after, 
+.theme-dark #ramadanBtn::after {
+    background: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.5),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.05);
+}
+
 .theme-dark .theme-btn.active::after,
 .theme-dark #ramadanBtn.active::after {
-    background: #ef4444;
-    border-color: #ef4444;
-    animation: indicatorGlow 2s infinite;
+    background: linear-gradient(180deg, 
+        rgba(239, 68, 68, 0.9) 0%,
+        rgba(239, 68, 68, 0.7) 50%,
+        rgba(239, 68, 68, 0.8) 100%
+    );
+    border-color: rgba(239, 68, 68, 0.3);
+    box-shadow: 
+        0 0 4px rgba(239, 68, 68, 0.4),
+        0 0 8px rgba(239, 68, 68, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4);
 }
 
-#ramadanBtn.active::after {
-    background: #ef4444;
-    border-color: #ef4444;
-    animation: indicatorGlow 2s infinite;
-}
-
+/* Remove redundant Ramadan button indicator styles */
 #ramadanBtn {
     background: linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25),
@@ -372,18 +405,13 @@
     transform: translateY(1px) scale(0.98);
 }
 
-/* Remove the theme-dark override for lightThemeBtn */
-.theme-dark .control-button.active {
-    background: inherit;
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
 /* Remove the light theme button override and keep only dark theme button override */
 .theme-dark #darkThemeBtn {
     background: linear-gradient(135deg, #172554 0%, #1e3a8a 100%);
 }
 
-.theme-dark #downloadButton {
+/* Add specific style for download button in both themes */
+#downloadButton {
     background: linear-gradient(135deg, #042f2e 0%, #134e4a 100%);
 }
 
