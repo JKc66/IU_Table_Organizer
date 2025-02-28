@@ -9,7 +9,7 @@
 // @include https://eduportal.iu.edu.sa/iu/ui/student/*/*/*
 // @include http://eduportal.iu.edu.sa/iu/ui/student/*
 // @include https://eduportal.iu.edu.sa/iu/ui/student/student_schedule/index/studentScheduleIndex.faces
-// @version 4.1
+// @version 4.2
 // @icon https://www.google.com/s2/favicons?domain=sso.iu.edu.sa
 // @namespace https://greasyfork.org/users/814159
 // @icon https://icons.iconarchive.com/icons/fatcow/farm-fresh/32/table-icon.png
@@ -26,15 +26,29 @@
     // Add styles
     GM_addStyle(`#newTable {
     border-collapse: collapse;
-    margin: 15px auto;
+    margin: 0;
     font-size: 0.9em;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background: white;
-    width: 98%;
-    min-width: 1400px;
+    width: fit-content;
+    min-width: auto;
     table-layout: fixed;
+    display: table;
+    direction: rtl;
+}
+
+/* Add styles for the table wrapper */
+.table-wrapper {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    border-radius: 8px;
 }
 
 #newTable thead tr {
@@ -48,16 +62,15 @@
     font-feature-settings: "kern", "liga", "clig", "calt", "arab";
     -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "arab";
     font-family: "Segoe UI", "Traditional Arabic", Tahoma, Geneva, Verdana, sans-serif;
-    direction: rtl;
 }
 
 #newTable th {
-    width: 20%;
-    padding: 12px;
+    padding: 1px;
     position: relative;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     border-left: 1px solid rgba(255,255,255,0.15);
     transition: background-color 0.3s ease;
+    width: 220px;  /* 1100px / 5 columns */
 }
 
 #newTable th:last-child {
@@ -101,12 +114,13 @@
 }
 
 #newTable td {
-    padding: 8px;
+    padding: 1px;
     text-align: center;
     vertical-align: middle;
     height: auto;
-    width: 20%;
+    width: 220px;  /* 1100px / 5 columns */
     font-size: 0.85em;
+    direction: rtl;
 }
 
 #newTable td:empty {
@@ -127,23 +141,35 @@
     background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
     color: #424242;
     font-style: italic;
-    padding: 8px;
+    padding: 4px;
     border-radius: 6px;
-    margin: 4px;
-    font-size: 1.3em;
+    margin: 1px;
+    font-size: 1.1em;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     text-align: center;
     border: 1px solid #e0e0e0;
+    display: inline-block;
+    box-sizing: border-box;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.break-content {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0 8px;
 }
 
 .lecture-cell {
     border-left: 4px solid;
-    padding: 8px;
+    padding: 4px;
     background: #fff;
     border-radius: 6px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin: 4px;
+    margin: 1px;
     transition: all 0.2s ease;
+    display: block;
+    box-sizing: border-box;
 }
 
 .lecture-cell:hover {
@@ -157,20 +183,45 @@
 }
 
 .lecture-cell div {
-    margin: 0;
-    line-height: 1.2;
+    margin: 0px;
+    line-height: 1.15;
+}
+
+.lecture-cell > div {
+    margin-bottom: 2px;
+}
+
+.lecture-cell .lecture-hall {
+    display: block;
+    background: #e8f5e9;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 1.1em;
+    color: #2e7d32;
+    margin-top: 5px;
+    font-weight: 500;
+    border: 1px solid #c8e6c9;
+    text-align: center;
+}
+
+/* Update grid layout margins and gaps */
+.lecture-cell > div > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 6px;
 }
 
 .schedule-summary {
     background: linear-gradient(45deg, #f5f5f5, #fff);
     border-radius: 8px;
-    padding: 20px;
-    margin: 15px auto;
+    padding: 10px;
+    margin: 7px auto 0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border: 1px solid #e0e0e0;
-    width: 98%;
+    width: 100%;
     box-sizing: border-box;
-    min-width: 1400px;
+    min-width: auto;
 }
 
 .schedule-summary > div {
@@ -191,8 +242,9 @@
 
 .control-buttons {
     display: flex;
-    gap: 10px;
-    margin: 10px 0;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .control-button {
@@ -207,9 +259,9 @@
     text-align: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
-    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2),
-                0 4px 8px rgba(37, 99, 235, 0.1),
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25),
+                0 4px 8px rgba(0, 0, 0, 0.15),
                 inset 0 2px 4px rgba(255, 255, 255, 0.1);
     text-decoration: none;
     margin: 4px 8px;
@@ -219,7 +271,7 @@
     cursor: pointer;
     color: white;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .control-button::before {
@@ -236,9 +288,10 @@
 
 .control-button:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3),
-                0 8px 16px rgba(37, 99, 235, 0.2),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35),
+                0 8px 16px rgba(0, 0, 0, 0.25),
+                inset 0 2px 4px rgba(255, 255, 255, 0.15);
+    filter: brightness(1.1);
 }
 
 .control-button:hover::before {
@@ -251,63 +304,114 @@
                 inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.control-button.active {
-    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-    box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2),
-                0 4px 8px rgba(5, 150, 105, 0.1),
-                inset 0 2px 4px rgba(255, 255, 255, 0.1);
-}
-
 /* Theme buttons specific styles */
-.theme-btn {
+.theme-btn, #ramadanBtn {
     min-width: 100px;
     backdrop-filter: blur(8px);
+    position: relative;
+    padding-right: 3rem;
 }
 
+.theme-btn::after, #ramadanBtn::after {
+    content: '';
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 10px;
+    border-radius: 2px;
+    background: #2a2a2a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1;
+    box-shadow: 
+        inset 0 1px 2px rgba(0, 0, 0, 0.3),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.theme-btn.active::after, #ramadanBtn.active::after {
+    background: linear-gradient(180deg, 
+        rgba(239, 68, 68, 1) 0%,
+        rgba(239, 68, 68, 0.8) 50%,
+        rgba(239, 68, 68, 0.9) 100%
+    );
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    box-shadow: 
+        0 0 2px rgba(239, 68, 68, 0.4),
+        0 0 4px rgba(239, 68, 68, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    animation: indicatorGlow 2s infinite;
+}
+
+@keyframes indicatorGlow {
+    0%, 100% {
+        background: linear-gradient(180deg, 
+            rgba(239, 68, 68, 1) 0%,
+            rgba(239, 68, 68, 0.8) 50%,
+            rgba(239, 68, 68, 0.9) 100%
+        );
+        box-shadow: 
+            0 0 2px rgba(239, 68, 68, 0.4),
+            0 0 4px rgba(239, 68, 68, 0.2),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+            inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    }
+    50% {
+        background: linear-gradient(180deg, 
+            rgba(239, 68, 68, 0.95) 0%,
+            rgba(239, 68, 68, 0.75) 50%,
+            rgba(239, 68, 68, 0.85) 100%
+        );
+        box-shadow: 
+            0 0 4px rgba(239, 68, 68, 0.6),
+            0 0 8px rgba(239, 68, 68, 0.4),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+            inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* Set permanent colors for light theme button */
 #lightThemeBtn {
-    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-    box-shadow: 0 2px 4px rgba(217, 119, 6, 0.2),
-                0 4px 8px rgba(217, 119, 6, 0.1),
-                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #451a03 0%, #582402 100%);
 }
 
-#lightThemeBtn:hover {
-    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3),
-                0 8px 16px rgba(217, 119, 6, 0.2),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+/* Dark theme - only modify the indicator */
+.theme-dark .theme-btn::after, 
+.theme-dark #ramadanBtn::after {
+    background: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        inset 0 1px 3px rgba(0, 0, 0, 0.5),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.05);
 }
 
-#darkThemeBtn {
-    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-    box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2),
-                0 4px 8px rgba(79, 70, 229, 0.1),
-                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+.theme-dark .theme-btn.active::after,
+.theme-dark #ramadanBtn.active::after {
+    background: linear-gradient(180deg, 
+        rgba(239, 68, 68, 0.9) 0%,
+        rgba(239, 68, 68, 0.7) 50%,
+        rgba(239, 68, 68, 0.8) 100%
+    );
+    border-color: rgba(239, 68, 68, 0.3);
+    box-shadow: 
+        0 0 4px rgba(239, 68, 68, 0.4),
+        0 0 8px rgba(239, 68, 68, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4);
 }
 
-#darkThemeBtn:hover {
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3),
-                0 8px 16px rgba(79, 70, 229, 0.2),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
-}
-
-#downloadButton {
-    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-    box-shadow: 0 2px 4px rgba(13, 148, 136, 0.2),
-                0 4px 8px rgba(13, 148, 136, 0.1),
-                inset 0 2px 4px rgba(255, 255, 255, 0.1);
-}
-
-#downloadButton:hover {
-    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3),
-                0 8px 16px rgba(13, 148, 136, 0.2),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
-}
-
+/* Remove redundant Ramadan button indicator styles */
 #ramadanBtn {
-    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
-    box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2),
-                0 4px 8px rgba(124, 58, 237, 0.1),
+    background: linear-gradient(135deg, #5b21b6 0%, #6d28d9 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25),
+                0 4px 8px rgba(0, 0, 0, 0.15),
                 inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+#ramadanBtn::after {
+    background: #2a1650;
 }
 
 #ramadanBtn:hover {
@@ -318,50 +422,35 @@
 
 /* Dark theme support for control buttons */
 .theme-dark .control-button {
-    background: linear-gradient(135deg, #2d3a6a 0%, #3d4a8a 100%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
-                0 4px 8px rgba(0, 0, 0, 0.2),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4),
+                0 4px 8px rgba(0, 0, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.05);
     color: #e0e0ff;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .theme-dark .control-button:hover {
+    filter: brightness(1.1);
     transform: translateY(-2px) scale(1.02);
-    background: linear-gradient(135deg, #3d4a8a 0%, #4d5aaa 100%);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4),
-                0 8px 16px rgba(0, 0, 0, 0.3),
-                inset 0 1px 2px rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .theme-dark .control-button:active {
     transform: translateY(1px) scale(0.98);
-    background: linear-gradient(135deg, #2d3a6a 0%, #3d4a8a 100%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
-                inset 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.theme-dark .control-button.active {
-    background: linear-gradient(135deg, #2d6a3a 0%, #3d8a4a 100%);
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.theme-dark #lightThemeBtn {
-    background: linear-gradient(135deg, #6a4a2d 0%, #8a5a3d 100%);
-}
-
+/* Remove the light theme button override and keep only dark theme button override */
 .theme-dark #darkThemeBtn {
-    background: linear-gradient(135deg, #2d3a6a 0%, #3d4a8a 100%);
+    background: linear-gradient(135deg, #172554 0%, #1e3a8a 100%);
 }
 
-.theme-dark #downloadButton {
-    background: linear-gradient(135deg, #2d6a6a 0%, #3d8a8a 100%);
+/* Add specific style for download button in both themes */
+#downloadButton {
+    background: linear-gradient(135deg, #042f2e 0%, #134e4a 100%);
 }
 
 .theme-dark #ramadanBtn {
-    background: linear-gradient(135deg, #4a2d6a 0%, #5a3d8a 100%);
+    background: linear-gradient(135deg, #3b0764 0%, #4c1d95 100%);
 }
 
 .schedule-organizer-btn {
@@ -389,6 +478,8 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    z-index: 100;
+    visibility: visible !important;
 }
 
 .schedule-organizer-btn::before {
@@ -445,172 +536,12 @@
     background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
 }
 
-.lecture-hall {
-    display: block;
-    background: #e8f5e9;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 1.2em;
-    color: #2e7d32;
-    margin-top: 5px;
-    font-weight: 500;
-    border: 1px solid #c8e6c9;
-    text-align: center;
-}
-
-/* Loading Overlay Styles */
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 240, 255, 0.98));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 999999;
-    direction: rtl;
-    opacity: 0;
-    animation: fadeIn 0.3s ease-out forwards;
-    animation-fill-mode: forwards;
-    backdrop-filter: blur(5px);
-}
-
-.loading-content {
-    background: white;
-    padding: 30px 40px;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    transform: translateY(20px);
-    animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    animation-fill-mode: forwards;
-    animation-delay: 0.1s;
-}
-
-.loading-spinner {
-    width: 60px;
-    height: 60px;
-    border: 4px solid rgba(52, 152, 219, 0.2);
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-.loading-text {
-    font-size: 20px;
-    color: #2c3e50;
-    font-weight: 500;
-    animation: fadeInOut 2s ease-in-out infinite;
-    animation-fill-mode: both;
-}
-
-.loading-subtext {
-    font-size: 14px;
-    color: #7f8c8d;
-    text-align: center;
-    opacity: 0.8;
-    animation: fadeIn 0.5s ease-out forwards;
-    animation-delay: 0.3s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes fadeInOut {
-    0%, 100% {
-        opacity: 0.8;
-        transform: translateY(0);
-    }
-    50% {
-        opacity: 1;
-        transform: translateY(-2px);
-    }
-}
-
-.schedule-summary div {
-    font-size: 1.1em;
-    padding: 10px 20px;
-}
-
-/* Dark Theme Styles */
-#newTable.theme-dark {
-    background: #1a1a2e;
-    border-color: #2e2e4a;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-#newTable.theme-dark thead tr {
-    background: linear-gradient(135deg, #1e2a4a 0%, #2d3a6a 100%);
-    color: #ffffff;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-#newTable.theme-dark th {
-    border-left: 1px solid rgba(255,255,255,0.1);
-}
-
-#newTable.theme-dark tbody tr {
-    border-bottom: 1px solid #2e2e4a;
-    transition: background-color 0.3s ease;
-}
-
-#newTable.theme-dark tbody tr:hover {
-    background-color: #232338;
-}
-
-#newTable.theme-dark td {
-    color: #e4e4e7;
-}
-
-#newTable.theme-dark .break-cell {
-    background: #232338;
-    color: #b0b0c0;
-    border-color: #2e2e4a;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-#newTable.theme-dark .lecture-cell {
-    background: #232338;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    border-width: 0 0 0 4px;
-}
-
-#newTable.theme-dark .lecture-hall {
-    background: #1e2a4a;
-    color: #a0b8ff;
-    border-color: #2e3f6a;
-}
-
 .schedule-summary.theme-dark {
     background: linear-gradient(45deg, #1a1a2e, #232338);
     border-color: #2e2e4a;
     color: #e0e0ff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    margin: 7px auto 0;
 }
 
 /* Dark theme loading overlay */
@@ -631,9 +562,272 @@
     color: #a0a0a7;
 }
 
-#newTable.theme-dark th.HEADING {
-    background: linear-gradient(135deg, #1a2b3f 0%, #2d4258 100%) !important;
+#newTable.theme-dark {
+    background: #151b30;
+    border-color: #2e2e4a;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    margin: 0;
+}
+
+#newTable.theme-dark thead tr {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
     color: #ffffff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+#newTable.theme-dark th {
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+}
+
+#newTable.theme-dark th::after {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#newTable.theme-dark th .day-name {
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+    font-size: 18.2px;
+}
+
+#newTable.theme-dark tbody tr {
+    border-bottom: 1px solid #2e2e4a;
+}
+
+#newTable.theme-dark tbody tr:hover {
+    background-color: #1c2238;
+}
+
+#newTable.theme-dark td {
+    color: #e4e4e7;
+}
+
+#newTable.theme-dark .break-cell {
+    background: #1c2238;
+    color: #b0b0c0;
+    border-color: #2e2e4a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#newTable.theme-dark .lecture-cell {
+    background: #1c2238;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#newTable.theme-dark .lecture-cell strong {
+    color: #e4e4e7;
+}
+
+#newTable.theme-dark .lecture-hall {
+    background: #1e2a4a;
+    color: #a0b8ff;
+    border-color: #2e3f6a;
+}
+
+.download-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--download-group-bg, #f0f0f0);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--download-group-border, #e0e0e0);
+    transition: all 0.3s ease;
+}
+
+.theme-dark .download-group {
+    --download-group-bg: #1f1f1f;
+    --download-group-border: #333;
+}
+
+.download-group:hover {
+    border-color: var(--download-group-hover-border, #ccc);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.theme-dark .download-group:hover {
+    --download-group-hover-border: #444;
+}
+
+.custom-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--checkbox-container-bg, #f5f5f5);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0;
+    user-select: none;
+}
+
+.theme-dark .custom-checkbox-container {
+    --checkbox-container-bg: #2d2d2d;
+}
+
+.custom-checkbox-container:hover {
+    background: var(--checkbox-container-hover-bg, #e8e8e8);
+}
+
+.theme-dark .custom-checkbox-container:hover {
+    --checkbox-container-hover-bg: #363636;
+}
+
+.checkbox-wrapper {
+    position: relative;
+    width: 18px;
+    height: 18px;
+}
+
+.checkbox-wrapper input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: var(--checkmark-bg, #ffffff);
+    border: 2px solid var(--checkmark-border, #ccc);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.theme-dark .checkmark {
+    --checkmark-bg: #404040;
+    --checkmark-border: #666;
+}
+
+.custom-checkbox-container:hover .checkmark {
+    border-color: var(--checkmark-hover-border, #4CAF50);
+}
+
+.theme-dark .custom-checkbox-container:hover .checkmark {
+    --checkmark-hover-border: #888;
+}
+
+.custom-checkbox-container input:checked ~ .checkmark {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.custom-checkbox-container input:checked ~ .checkmark:after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Remove mobile-specific styles and desktop-specific styles */
+.control-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Mobile-specific styles */
+.mobile-buttons-container {
+    width: 100%;
+    box-sizing: border-box;
+    direction: rtl;
+}
+
+.mobile-action-button {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: #ffffff !important;  /* Force white text color */
+    border: none;
+    border-radius: 10px;
+    font-family: "Segoe UI", "Traditional Arabic", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 8px;
+    cursor: pointer;
+    text-decoration: none !important;  /* Prevent text decoration */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+                inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;  /* Remove tap highlight on mobile */
+}
+
+.mobile-action-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.mobile-action-button:hover {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+}
+
+.mobile-action-button:hover::before {
+    opacity: 1;
+}
+
+.mobile-action-button:active {
+    transform: translateY(1px) scale(0.98);
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1),
+                inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #ffffff !important;
+}
+
+/* Dark theme support for mobile buttons */
+.theme-dark .mobile-action-button {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 1px 2px rgba(255, 255, 255, 0.05);
+    color: #ffffff !important;
+}
+
+.theme-dark .mobile-action-button:hover {
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25),
+                inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    color: #ffffff !important;
+}
+
+.theme-dark .mobile-action-button:active {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2),
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #ffffff !important;
+}
+
+/* Hide organize button on mobile */
+@media (max-width: 768px) {
+    .schedule-organizer-btn {
+        display: none !important;
+    }
 }`);
     
 // Global variables
@@ -648,6 +842,7 @@ let subject_colors = {};
 let color_index = 0;
 let currentTheme = 'light';
 let includeSummaryInDownload = false;
+let githubToken = '';
 
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
@@ -718,6 +913,13 @@ function convertToRamadanTime(timeStr) {
     return `${mappedTime.start} - ${mappedTime.end}`;
 }
 
+// Start initialization
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
+
 // Main initialization function
 function waitForElement(selector, callback, maxTries = 100) {
     if (maxTries <= 0) {
@@ -755,16 +957,27 @@ function initializeTableOrganizer() {
         return;
     }
 
-    // Create control button
+    // Check if mobile device
+    if (isMobileDevice()) {
+        // For mobile: Add mobile buttons to main content
+        const mainContent = document.querySelector('.main_content.col-md-12');
+        if (mainContent) {
+            const mobileButtons = createMobileButtons();
+            mainContent.insertBefore(mobileButtons, mainContent.firstChild);
+        }
+        return; // Don't add the regular organize button for mobile
+    }
+
+    // Desktop version continues with existing code
     let button = document.createElement('span');
     let cell = document.createElement('td');
     button.classList.add("schedule-organizer-btn");
 
+    // Set initial button state
+    button.innerHTML = on ? "الجدول الاصلي" : "نظم الجدول";
     if (on) {
         button.classList.add("active");
-        button.innerHTML = "الجدول الاصلي";
-        originalTableNode.style.display = 'none';   
-
+        originalTableNode.style.display = 'none';
         if (newTableNode) {
             newTableNode.style.display = null;
         } else {
@@ -773,18 +986,25 @@ function initializeTableOrganizer() {
             appendTable();
         }
     } else {
-        button.innerHTML = "نظم الجدول";
         if (newTableNode) {
             newTableNode.style.display = 'none';
         }
     }
 
+    // Append button to table
     cell.appendChild(button);
     const printLink = document.getElementById("scheduleFrm:printLink");
     if (printLink && printLink.parentElement && printLink.parentElement.parentElement) {
         printLink.parentElement.parentElement.appendChild(cell);
+    } else {
+        // Fallback: append to the table directly if printLink is not found
+        const firstRow = originalTableNode.querySelector('tr');
+        if (firstRow) {
+            firstRow.appendChild(cell);
+        }
     }
 
+    // Add click handler
     button.onclick = function() {
         if (on) {
             on = false;
@@ -869,16 +1089,6 @@ function getTableInfo() {
 
     processRows(row1);
     processRows(row2);
-}
-
-// Rest of your functions (getNewTable, appendTable, etc.) go here...
-// [Previous functions remain mostly unchanged, just remove the styles injection part]
-
-// Start initialization
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
 }
 
 function getNewTable() {
@@ -1434,15 +1644,17 @@ function toggleTheme(theme) {
     if (summary) {
         summary.classList.remove('theme-light', 'theme-dark');
         summary.classList.add(`theme-${theme}`);
-    }
-    
-    // Apply theme-specific styles
-    if (theme === 'dark') {
-        table.style.backgroundColor = '#1a1a1a';
-        table.style.color = '#ffffff';
-    } else {
-        table.style.backgroundColor = '';
-        table.style.color = '';
+        
+        // Update button states
+        const lightThemeBtn = summary.querySelector('#lightThemeBtn');
+        const darkThemeBtn = summary.querySelector('#darkThemeBtn');
+        
+        if (lightThemeBtn) {
+            lightThemeBtn.classList.toggle('active', theme === 'light');
+        }
+        if (darkThemeBtn) {
+            darkThemeBtn.classList.toggle('active', theme === 'dark');
+        }
     }
 }
 
@@ -1473,7 +1685,8 @@ function createSummary() {
             subjectCount.add(slot.subject);
         });
     }
-    
+
+    // Desktop UI
     summary.innerHTML = `
         <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 4px; background: ${currentTheme === 'dark' ? '#1a2f4d' : '#e3f2fd'}; padding: 8px 16px; border-radius: 8px;">
@@ -1492,89 +1705,28 @@ function createSummary() {
                 <span style="font-weight: 500;">📊 اليوم الأكثر:</span>
                 <span>${busyDays.join(', ')} (${maxLectures})</span>
             </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
-                <button class="control-button theme-btn" id="lightThemeBtn" style="background: ${currentTheme === 'light' ? '#4CAF50' : '#666'};">
+            <div class="control-buttons">
+                <button class="control-button theme-btn ${currentTheme === 'light' ? 'active' : ''}" id="lightThemeBtn">
                     ☀️ فاتح
                 </button>
-                <button class="control-button theme-btn" id="darkThemeBtn" style="background: ${currentTheme === 'dark' ? '#4CAF50' : '#666'};">
+                <button class="control-button theme-btn ${currentTheme === 'dark' ? 'active' : ''}" id="darkThemeBtn">
                     🌙 داكن
                 </button>
-                <button class="control-button" id="ramadanBtn" style="background: ${ramadanMode ? '#4CAF50' : '#666'};">
+                <button class="control-button ${ramadanMode ? 'active' : ''}" id="ramadanBtn">
                     🕌 توقيت رمضان
                 </button>
-                <div class="download-group" style="
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    background: ${currentTheme === 'dark' ? '#1f1f1f' : '#f0f0f0'};
-                    padding: 4px;
-                    border-radius: 12px;
-                    border: 1px solid ${currentTheme === 'dark' ? '#333' : '#e0e0e0'};
-                ">
-                    <button class="control-button" id="downloadButton" style="margin: 0;">
+                <div class="download-group">
+                    <button class="control-button" id="downloadButton">
                         💾 تحميل كصورة
                     </button>
-                    <label class="custom-checkbox-container" style="
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        background: ${currentTheme === 'dark' ? '#2d2d2d' : '#f5f5f5'};
-                        padding: 8px 16px;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        margin: 0;
-                    ">
-                        <div class="checkbox-wrapper" style="position: relative; width: 18px; height: 18px;">
-                            <input type="checkbox" id="includeSummaryCheckbox" ${includeSummaryInDownload ? 'checked' : ''} style="
-                                position: absolute;
-                                opacity: 0;
-                                cursor: pointer;
-                                height: 0;
-                                width: 0;
-                            ">
-                            <span class="checkmark" style="
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                height: 18px;
-                                width: 18px;
-                                background-color: ${currentTheme === 'dark' ? '#404040' : '#ffffff'};
-                                border: 2px solid ${currentTheme === 'dark' ? '#666' : '#ccc'};
-                                border-radius: 4px;
-                                transition: all 0.2s ease;
-                            "></span>
+                    <label class="custom-checkbox-container">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="includeSummaryCheckbox" ${includeSummaryInDownload ? 'checked' : ''}>
+                            <span class="checkmark"></span>
                         </div>
-                        <span style="color: ${currentTheme === 'dark' ? '#fff' : '#000'}; user-select: none;">تضمين الملخص</span>
+                        <span>تضمين الملخص</span>
                     </label>
                 </div>
-                <style>
-                    .custom-checkbox-container:hover .checkmark {
-                        border-color: ${currentTheme === 'dark' ? '#888' : '#4CAF50'} !important;
-                    }
-                    .custom-checkbox-container input:checked ~ .checkmark {
-                        background-color: #4CAF50 !important;
-                        border-color: #4CAF50 !important;
-                    }
-                    .custom-checkbox-container input:checked ~ .checkmark:after {
-                        content: '';
-                        position: absolute;
-                        left: 5px;
-                        top: 2px;
-                        width: 4px;
-                        height: 8px;
-                        border: solid white;
-                        border-width: 0 2px 2px 0;
-                        transform: rotate(45deg);
-                    }
-                    .custom-checkbox-container:hover {
-                        background: ${currentTheme === 'dark' ? '#363636' : '#e8e8e8'} !important;
-                    }
-                    .download-group:hover {
-                        border-color: ${currentTheme === 'dark' ? '#444' : '#ccc'};
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                    }
-                </style>
             </div>
         </div>
     `;
@@ -1607,7 +1759,7 @@ function createSummary() {
         if (ramadanBtn) {
             ramadanBtn.addEventListener('click', () => {
                 ramadanMode = !ramadanMode;
-                ramadanBtn.style.background = ramadanMode ? '#4CAF50' : '#666';
+                ramadanBtn.classList.toggle('active');
                 getNewTable();
                 appendTable();
             });
@@ -1631,18 +1783,24 @@ function appendTable() {
     document.querySelectorAll('.schedule-summary').forEach(el => el.remove());
 
     const originalTableNode = document.getElementById('scheduleFrm:studScheduleTable');
+    
+    // Continue with normal table creation
     let table = document.createElement('table');
     table.id = "newTable";
     table.classList.add('rowFlow', `theme-${currentTheme}`);
-    table.width = "100%";
     table.cellPadding = '0';
     table.cellSpacing = '0';
     table.border = '1';
     
-    originalTableNode.insertAdjacentElement('afterend', table);
+    // Create a wrapper div for the table
+    const tableWrapper = document.createElement('div');
+    tableWrapper.className = 'table-wrapper';
+    
+    originalTableNode.insertAdjacentElement('afterend', tableWrapper);
+    tableWrapper.appendChild(table);
 
     let thead = document.createElement('thead');
-    let tbody = document.createElement('tbody')
+    let tbody = document.createElement('tbody');
     table.appendChild(thead);
     table.appendChild(tbody);
 
@@ -1695,19 +1853,19 @@ function appendTable() {
                         .replace('background: #757575', 'background: #3d3d3d');
                 }
                 
-                let content = `<div style="margin-bottom: 3px;">
-                    <strong style="font-size: 1.1em; color: ${currentTheme === 'dark' ? '#e4e4e7' : 'inherit'}">${lecture.subject}</strong>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+                let content = `<div style="margin-bottom: 2px;">
+                    <strong style="font-size: 1.05em; color: ${currentTheme === 'dark' ? '#e4e4e7' : 'inherit'}">${lecture.subject}</strong>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px;">
                         <div style="text-align: right;">
                             <div style="${activityStyle}">
                                 ${getActivityIcon(lecture.activity)} ${lecture.activity}
                             </div>
-                            <div style="background: ${currentTheme === 'dark' ? '#1a2f3a' : '#e8eaf6'}; border-radius: 6px; padding: 4px 8px; color: ${currentTheme === 'dark' ? '#8ebbff' : '#283593'}; display: inline-block; margin-top: 5px;">
+                            <div style="background: ${currentTheme === 'dark' ? '#1a2f3a' : '#e8eaf6'}; border-radius: 6px; padding: 3px 4px; color: ${currentTheme === 'dark' ? '#8ebbff' : '#283593'}; display: inline-block; margin-top: 3px;">
                                 🔢 الشعبة: ${lecture.section}
                             </div>
                         </div>
                         <div style="text-align: left;">
-                            <div style="font-weight: bold; color: ${currentTheme === 'dark' ? '#8ebbff' : '#1a237e'}">${lecture.time}</div>
+                            <div style="font-weight: bold; color: ${currentTheme === 'dark' ? '#8ebbff' : '#1a237e'}; white-space: nowrap; font-size: 0.95em;">${formatTimeDisplay(lecture.time)}</div>
                             <div class="lecture-hall">🏛️ ${lecture.place}</div>
                         </div>
                     </div>
@@ -1720,6 +1878,13 @@ function appendTable() {
 
     newTableNode = table;
     let summary = createSummary();
+    summary.style.cssText = `
+        width: 100%;
+        max-width: 1100px;
+        margin: 5px auto;
+        overflow-x: auto;
+        display: block;
+    `;
     originalTableNode.insertAdjacentElement('afterend', summary);
 }
 
@@ -1759,5 +1924,307 @@ function adjustColorForDarkMode(color) {
     });
     
     return `rgb(${adjustedRgb.join(',')})`;
+}
+
+// Add this helper function before appendTable()
+function formatTimeDisplay(timeStr) {
+    // Split the time range
+    const [startTime, endTime] = timeStr.split(' - ');
+    
+    // Split each time into components
+    const [startTimeComponent, startPeriod] = startTime.trim().split(' ');
+    const [endTimeComponent, endPeriod] = endTime.trim().split(' ');
+    
+    // If both periods are the same, show it only once at the end
+    if (startPeriod === endPeriod) {
+        return `${startTimeComponent} - ${endTimeComponent} ${startPeriod}`;
+    }
+    
+    // If periods are different, keep both but make it more compact
+    return `${startTimeComponent}${startPeriod} - ${endTimeComponent}${endPeriod}`;
+}
+
+// Add mobile detection function
+function isMobileDevice() {
+    return (window.innerWidth <= 768);
+}
+
+// Add notification function
+function showNotification(title, subtitle, type = 'success', duration = 3000) {
+    const notification = document.createElement('div');
+    notification.className = 'loading-notification';
+    
+    // Set icon based on type
+    const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️';
+    
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon">${icon}</div>
+            <div class="notification-text">
+                <div class="notification-title">${title}</div>
+                ${subtitle ? `<div class="notification-subtitle">${subtitle}</div>` : ''}
+            </div>
+        </div>
+    `;
+    
+    // Add styles for the notification
+    const style = document.createElement('style');
+    style.textContent = `
+        .loading-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
+            border: 1px solid ${currentTheme === 'dark' ? '#333' : '#e0e0e0'};
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            max-width: 300px;
+            animation: slideIn 0.3s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notification-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .notification-text {
+            flex: 1;
+        }
+
+        .notification-title {
+            color: ${currentTheme === 'dark' ? '#ffffff' : '#000000'};
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-subtitle {
+            color: ${currentTheme === 'dark' ? '#888' : '#666'};
+            font-size: 0.9em;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
+    `;
+    
+    document.head.appendChild(style);
+    document.body.appendChild(notification);
+    
+    // Remove notification after duration
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => {
+            notification.remove();
+            style.remove();
+        }, 300);
+    }, duration);
+}
+
+// Function to delete a gist
+async function deleteGist(gistId) {
+    try {
+        const response = await fetch(`https://api.github.com/gists/${gistId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${githubToken}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+        
+        if (response.status === 204) {
+            console.log(`Gist ${gistId} deleted successfully`);
+        } else {
+            console.log(`Failed to delete gist ${gistId}`);
+        }
+    } catch (error) {
+        console.log(`Error deleting gist: ${error}`);
+    }
+}
+
+// Update copyScheduleJSON function
+async function copyScheduleJSON() {
+    try {
+        if (rows.length === 0) {
+            getTableInfo();
+            getNewTable();
+        }
+
+        // Create a cleaned version of the schedule without breaks and time values
+        const cleanedSchedule = {};
+        for (const day in newTable) {
+            cleanedSchedule[day] = newTable[day]
+                .filter(lecture => lecture.activity !== "break")
+                .map(lecture => ({
+                    subject: lecture.subject,
+                    activity: lecture.activity,
+                    time: lecture.time,
+                    place: lecture.place,
+                    section: lecture.section
+                }));
+        }
+
+        // Create the final format
+        const formattedData = {
+            subjects: Array.from(new Set(rows.map(row => row['اسم المقرر']).filter(Boolean))),
+            days: days,
+            schedule: cleanedSchedule
+        };
+
+        const scheduleData = JSON.stringify(formattedData);
+
+        // First, try to create a gist
+        try {
+            if (!githubToken) {
+                throw new Error('No GitHub token set');
+            }
+
+            const gistResponse = await fetch('https://api.github.com/gists', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${githubToken}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                },
+                body: JSON.stringify({
+                    public: true,
+                    files: {
+                        'iu_schedule_app.json': {
+                            content: scheduleData
+                        }
+                    },
+                    description: 'IU Table Organizer Schedule Data (Auto-deletes in 10 minutes)'
+                })
+            });
+
+            if (!gistResponse.ok) {
+                const errorData = await gistResponse.json();
+                throw new Error(`Gist creation failed: ${gistResponse.status}, ${JSON.stringify(errorData)}`);
+            }
+
+            const gist = await gistResponse.json();
+
+            // Schedule gist deletion after 10 minutes
+            setTimeout(() => deleteGist(gist.id), 10 * 60 * 1000);
+
+            // Also copy to clipboard as backup
+            copyToClipboard(scheduleData);
+            
+            // Open the website with the gist ID
+            const baseUrl = 'https://jkc66.github.io/IU_Table_Organizer/cptable.html';
+            window.open(`${baseUrl}?gist=${gist.id}`, '_blank');
+            showNotification('تم فتح منظم الجدول! ✨', 'تم نسخ البيانات ونقلها تلقائياً', 'success');
+
+        } catch (gistError) {
+            // If gist creation fails, fall back to copy method
+            fallbackCopy(scheduleData);
+        }
+
+    } catch (error) {
+        showNotification('حدث خطأ في معالجة الجدول ❌', 'جاري المحاولة بطريقة بديلة...', 'error');
+        fallbackCopy(scheduleData);
+    }
+}
+
+// New helper function for clipboard operations
+function copyToClipboard(text) {
+    // Try the modern Clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                console.log('Clipboard API: Copy successful');
+                return true;
+            })
+            .catch(err => {
+                console.error('Clipboard API failed:', err);
+                return fallbackCopyToClipboard(text);
+            });
+    } else {
+        return fallbackCopyToClipboard(text);
+    }
+}
+
+function fallbackCopyToClipboard(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        const success = document.execCommand('copy');
+        console.log('Fallback copy success:', success);
+        return success;
+    } catch (e) {
+        console.error('Fallback copy failed:', e);
+        return false;
+    } finally {
+        document.body.removeChild(textarea);
+    }
+}
+
+// Update fallback copy to use new helper
+function fallbackCopy(scheduleData) {
+    console.log('Entering fallback copy with data length:', scheduleData.length);
+    const success = copyToClipboard(scheduleData);
+    
+    if (success) {
+        showNotification('تم نسخ البيانات بنجاح! ✨', 'يرجى فتح موقع منظم الجدول ولصق البيانات هناك', 'success');
+    } else {
+        showNotification('حدث خطأ أثناء النسخ ❌', 'يرجى المحاولة مرة أخرى لاحقاً', 'error');
+    }
+    
+    // Open the website in a new tab
+    window.open('https://jkc66.github.io/IU_Table_Organizer/cptable.html', '_blank');
+}
+
+// Add function to create mobile buttons
+function createMobileButtons() {
+    const mobileButtonsContainer = document.createElement('div');
+    mobileButtonsContainer.className = 'mobile-buttons-container';
+    mobileButtonsContainer.style.cssText = `
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+        background: #f5f5f5;
+        border-radius: 12px;
+        margin: 10px 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    `;
+
+    // Create View Table button
+    const viewTableButton = document.createElement('button');
+    viewTableButton.className = 'mobile-action-button';
+    viewTableButton.innerHTML = '📱 فتح منظم الجدول';
+    viewTableButton.onclick = copyScheduleJSON;  // This will now handle both copying and redirecting
+
+    mobileButtonsContainer.appendChild(viewTableButton);
+
+    return mobileButtonsContainer;
 }
 }})();
