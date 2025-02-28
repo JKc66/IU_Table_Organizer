@@ -1041,11 +1041,47 @@ function createSummary(days) {
         // If periods are different, keep both but make it more compact
         return `${startTimeComponent}${startPeriod} - ${endTimeComponent}${endPeriod}`;}
 
+        // Function to load schedule from URL
+        function loadScheduleFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const storageKey = urlParams.get('key');
+            
+            if (storageKey) {
+                try {
+                    // Try to get data from localStorage
+                    const scheduleData = localStorage.getItem(storageKey);
+                    if (scheduleData) {
+                        const userInput = document.getElementById('userInput');
+                        if (userInput) {
+                            userInput.value = scheduleData;
+                            generateTable(scheduleData);
+                            showNotification('تم تحميل الجدول من الرابط بنجاح', 'success', ramadanMode);
+                            return true;
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error loading from localStorage:', e);
+                    showNotification('حدث خطأ أثناء تحميل الجدول من الرابط', 'error', ramadanMode);
+                }
+            }
+            return false;
+        }
+
         // Event Listeners and Initialization
         document.addEventListener('DOMContentLoaded', () => {
         const generateTableBtn = document.getElementById('generateTableBtn');
         const userInput = document.getElementById('userInput');
         const clearBtn = document.getElementById('clearBtn');
+
+        // Try to load schedule from URL first
+        const scheduleLoaded = loadScheduleFromURL();
+
+        // Only show the paste interface if no schedule was loaded from URL
+        if (!scheduleLoaded) {
+            userInput.style.display = 'block';
+            generateTableBtn.style.display = 'inline-block';
+            clearBtn.style.display = 'inline-block';
+        }
 
         generateTableBtn.addEventListener('click', () => {
             if (!userInput.value.trim()) {

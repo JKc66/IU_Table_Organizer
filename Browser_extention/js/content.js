@@ -1214,76 +1214,102 @@ function showNotification(title, subtitle, type = 'success', duration = 3000) {
     }, duration);
 }
 
-// Update copyScheduleJSON function
 function copyScheduleJSON() {
-    if (rows.length === 0) {
-        getTableInfo();
-        getNewTable();
-    }
+    try {
+        if (rows.length === 0) {
+            getTableInfo();
+            getNewTable();
+        }
 
-    // Create a cleaned version of the schedule without breaks and time values
-    const cleanedSchedule = {};
-    for (const day in newTable) {
-        cleanedSchedule[day] = newTable[day]
-            .filter(lecture => lecture.activity !== "break")
-            .map(lecture => ({
-                subject: lecture.subject,
-                activity: lecture.activity,
-                time: lecture.time,
-                place: lecture.place,
-                section: lecture.section
-            }));
-    }
+        // Create a cleaned version of the schedule without breaks and time values
+        const cleanedSchedule = {};
+        for (const day in newTable) {
+            cleanedSchedule[day] = newTable[day]
+                .filter(lecture => lecture.activity !== "break")
+                .map(lecture => ({
+                    subject: lecture.subject,
+                    activity: lecture.activity,
+                    time: lecture.time,
+                    place: lecture.place,
+                    section: lecture.section
+                }));
+        }
 
-    // Create the final format
-    const formattedData = {
-        subjects: Array.from(new Set(rows.map(row => row['اسم المقرر']).filter(Boolean))),
-        days: days,
-        schedule: cleanedSchedule
-    };
+        // Create the final format
+        const formattedData = {
+            subjects: Array.from(new Set(rows.map(row => row['اسم المقرر']).filter(Boolean))),
+            days: days,
+            schedule: cleanedSchedule
+        };
 
-    const scheduleData = JSON.stringify(formattedData);
+        const scheduleData = JSON.stringify(formattedData);
+        
+        // Store in localStorage with timestamp
+        const storageKey = 'iu_schedule_' + Date.now();
+        localStorage.setItem(storageKey, scheduleData);
+        
+        // Open the website with the storage key
+        const baseUrl = 'https://jkc66.github.io/IU_Table_Organizer/cptable.html';
+        window.open(`${baseUrl}?key=${storageKey}`, '_blank');
+        showNotification('تم فتح منظم الجدول! ✨', 'تم نقل بيانات جدولك تلقائياً', 'success');
 
-    // Try using the modern Clipboard API first
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(scheduleData)
-            .then(() => {
-                showNotification('تم نسخ البيانات بنجاح! ✨', 'يمكنك الآن لصق البيانات في موقع منظم الجدول', 'success');
-            })
-            .catch(err => {
-                console.error('Clipboard API failed:', err);
-                // Fallback to execCommand
-                const textarea = document.createElement('textarea');
-                textarea.value = scheduleData;
-                document.body.appendChild(textarea);
-                textarea.select();
-                try {
-                    document.execCommand('copy');
-                    showNotification('تم نسخ البيانات بنجاح! ✨', 'يمكنك الآن لصق البيانات في موقع منظم الجدول', 'success');
-                } catch (e) {
-                    console.error('Fallback failed:', e);
-                    showNotification('حدث خطأ أثناء النسخ ❌', 'يرجى المحاولة مرة أخرى', 'error');
-                } finally {
-                    document.body.removeChild(textarea);
-                }
-            });
-    } else {
-        // Fallback for non-secure contexts
-        const textarea = document.createElement('textarea');
-        textarea.value = scheduleData;
-        document.body.appendChild(textarea);
-        textarea.select();
+    } catch (error) {
+        console.error('Error processing schedule:', error);
+        // If there's any error, fall back to the copy method
         try {
-            document.execCommand('copy');
-            showNotification('تم نسخ البيانات بنجاح! ✨', 'يمكنك الآن لصق البيانات في موقع منظم الجدول', 'success');
+            const scheduleData = JSON.stringify({
+                subjects: Array.from(new Set(rows.map(row => row['اسم المقرر']).filter(Boolean))),
+                days: days,
+                schedule: cleanedSchedule
+            });
+            fallbackCopy(scheduleData);
         } catch (e) {
-            console.error('Copy failed:', e);
-            showNotification('حدث خطأ أثناء النسخ ❌', 'يرجى المحاولة مرة أخرى', 'error');
-        } finally {
-            document.body.removeChild(textarea);
+            console.error('Fallback error:', e);
+            showNotification('حدث خطأ في معالجة الجدول ❌', 'يرجى المحاولة مرة أخرى', 'error');
         }
     }
 }
+
+function fallbackCopy(scheduleData) {
+    const textarea = document.createElement('textarea');
+    textarea.value = scheduleData;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        document.execCommand('copy');
+        showNotification('تم نسخ البيانات بنجاح! ✨', 'يرجى فتح موقع منظم الجدول ولصق البيانات هناك', 'success');
+        // Open the website in a new tab
+        window.open('https://jkc66.github.io/IU_Table_Organizer/cptable.html', '_blank');
+    } catch (e) {
+        console.error('Copy failed:', e);
+        showNotification('حدث خطأ أثناء النسخ ❌', 'يرجى المحاولة مرة أخرى لاحقاً', 'error');
+    } finally {
+        document.body.removeChild(textarea);
+    }
+}
+
+// Add cleanup function for old localStorage items
+function cleanupOldSchedules() {
+    try {
+        const keys = Object.keys(localStorage);
+        const now = Date.now();
+        const oneHour = 60 * 60 * 1000; // milliseconds in an hour
+        
+        keys.forEach(key => {
+            if (key.startsWith('iu_schedule_')) {
+                const timestamp = parseInt(key.split('_')[2]);
+                if (now - timestamp > oneHour) {
+                    localStorage.removeItem(key);
+                }
+            }
+        });
+    } catch (e) {
+        console.error('Error cleaning up old schedules:', e);
+    }
+}
+
+// Call cleanup periodically
+setInterval(cleanupOldSchedules, 15 * 60 * 1000); // every 15 minutes
 
 // Add function to create mobile buttons
 function createMobileButtons() {
@@ -1301,21 +1327,12 @@ function createMobileButtons() {
     `;
 
     // Create View Table button
-    const viewTableButton = document.createElement('a');
-    viewTableButton.href = 'https://jkc66.github.io/IU_Table_Organizer/cptable.html';
+    const viewTableButton = document.createElement('button');
     viewTableButton.className = 'mobile-action-button';
-    viewTableButton.innerHTML = 'موقع منظم الجدول 📱';
-    viewTableButton.target = '_blank';
-    viewTableButton.onclick = copyScheduleJSON;
-
-    // Create Copy Data button
-    const copyDataButton = document.createElement('button');
-    copyDataButton.className = 'mobile-action-button';
-    copyDataButton.innerHTML = '📋 نسخ بيانات الجدول';
-    copyDataButton.onclick = copyScheduleJSON;
+    viewTableButton.innerHTML = '📱 فتح منظم الجدول';
+    viewTableButton.onclick = copyScheduleJSON;  // This will now handle both copying and redirecting
 
     mobileButtonsContainer.appendChild(viewTableButton);
-    mobileButtonsContainer.appendChild(copyDataButton);
 
     return mobileButtonsContainer;
 }
