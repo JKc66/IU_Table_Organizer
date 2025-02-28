@@ -107,24 +107,43 @@ function waitForElement(selector, callback, maxTries = 100) {
 
 // Remove the DOMContentLoaded listener and replace with this:
 function init() {
-    waitForElement('scheduleFrm:studScheduleTable', (element) => {
+    waitForElement('scheduleFrm:studScheduleTable', async (element) => {
         try {
-            initializeTableOrganizer();
+            await initializeTableOrganizer();
         } catch (error) {
             console.error('Error initializing table organizer:', error);
+            showNotification('حدث خطأ في تهيئة المنظم', 'يرجى تحديث الصفحة والمحاولة مرة أخرى', 'error');
         }
     });
 }
 
 // Add error handling to the table check
-function initializeTableOrganizer() {
+async function initializeTableOrganizer() {
     const originalTableNode = document.getElementById('scheduleFrm:studScheduleTable');
     if (!originalTableNode) {
         console.log('Schedule table not found');
         return;
     }
 
-    // Create control button
+    // Check if mobile device
+    if (isMobileDevice()) {
+        // For mobile: Add mobile buttons to main content
+        const mainContent = document.querySelector('.main_content.col-md-12');
+        if (mainContent) {
+            try {
+                const mobileButtons = await createMobileButtons();
+                if (mobileButtons) {
+                    mainContent.insertBefore(mobileButtons, mainContent.firstChild);
+                }
+            } catch (error) {
+                console.error('Error creating mobile buttons:', error);
+                showNotification('حدث خطأ في تهيئة الأزرار', 'يرجى تحديث الصفحة والمحاولة مرة أخرى', 'error');
+            }
+        }
+        return; // Don't add the regular organize button for mobile
+    }
+
+    // Desktop version continues with existing code
     let button = document.createElement('span');
     let cell = document.createElement('td');
     button.classList.add("schedule-organizer-btn");
@@ -1098,5 +1117,258 @@ function formatTimeDisplay(timeStr) {
     
     // If periods are different, keep both but make it more compact
     return `${startTimeComponent}${startPeriod} - ${endTimeComponent}${endPeriod}`;
+}
+
+// Add mobile detection function
+function isMobileDevice() {
+    return (window.innerWidth <= 768);
+}
+
+// Add notification function
+function showNotification(title, subtitle, type = 'success', duration = 3000) {
+    const notification = document.createElement('div');
+    notification.className = 'loading-notification';
+    
+    // Set icon based on type
+    const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️';
+    
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon">${icon}</div>
+            <div class="notification-text">
+                <div class="notification-title">${title}</div>
+                ${subtitle ? `<div class="notification-subtitle">${subtitle}</div>` : ''}
+            </div>
+        </div>
+    `;
+    
+    // Add styles for the notification
+    const style = document.createElement('style');
+    style.textContent = `
+        .loading-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${currentTheme === 'dark' ? '#1a1a1a' : '#ffffff'};
+            border: 1px solid ${currentTheme === 'dark' ? '#333' : '#e0e0e0'};
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            max-width: 300px;
+            animation: slideIn 0.3s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notification-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .notification-text {
+            flex: 1;
+        }
+
+        .notification-title {
+            color: ${currentTheme === 'dark' ? '#ffffff' : '#000000'};
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-subtitle {
+            color: ${currentTheme === 'dark' ? '#888' : '#666'};
+            font-size: 0.9em;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
+    `;
+    
+    document.head.appendChild(style);
+    document.body.appendChild(notification);
+    
+    // Remove notification after duration
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => {
+            notification.remove();
+            style.remove();
+        }, 300);
+    }, duration);
+}
+
+// Function to send schedule data via POST request
+async function sendScheduleData(scheduleData) {
+    try {
+        const response = await fetch('https://jkc66.github.io/IU_Table_Organizer/api/schedule', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: scheduleData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        return result.url; // The server should return a URL to view the schedule
+    } catch (error) {
+        console.error('Error sending schedule data:', error);
+        // Fallback to URL parameter method if POST fails
+        const encodedData = encodeURIComponent(scheduleData);
+        return `https://jkc66.github.io/IU_Table_Organizer/cptable.html?data=${encodedData}`;
+    }
+}
+
+function getScheduleData() {
+    if (rows.length === 0) {
+        getTableInfo();
+        getNewTable();
+    }
+
+    // Create a cleaned version of the schedule without breaks and time values
+    const cleanedSchedule = {};
+    for (const day in newTable) {
+        cleanedSchedule[day] = newTable[day]
+            .filter(lecture => lecture.activity !== "break")
+            .map(lecture => ({
+                subject: lecture.subject,
+                activity: lecture.activity,
+                time: lecture.time,
+                place: lecture.place,
+                section: lecture.section
+            }));
+    }
+
+    // Create the final format
+    const formattedData = {
+        subjects: Array.from(new Set(rows.map(row => row['اسم المقرر']).filter(Boolean))),
+        days: days,
+        schedule: cleanedSchedule
+    };
+
+    const scheduleData = JSON.stringify(formattedData);
+    
+    return { 
+        scheduleData,
+        getUrl: async () => {
+            // Try POST first, fallback to URL parameters
+            return await sendScheduleData(scheduleData);
+        }
+    };
+}
+
+// Update copyScheduleJSON to still support copying if needed
+function copyScheduleJSON() {
+    const { scheduleData } = getScheduleData();
+
+    // Try using the modern Clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(scheduleData)
+            .then(() => {
+                showNotification('تم نسخ البيانات بنجاح! ✨', 'يمكنك الآن لصق البيانات في موقع منظم الجدول', 'success');
+            })
+            .catch(err => {
+                console.error('Clipboard API failed:', err);
+                // Fallback to execCommand
+                const textarea = document.createElement('textarea');
+                textarea.value = scheduleData;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    showNotification('تم نسخ البيانات بنجاح! ✨', 'يمكنك الآن لصق البيانات في موقع منظم الجدول', 'success');
+                } catch (e) {
+                    console.error('Fallback failed:', e);
+                    showNotification('حدث خطأ أثناء النسخ ❌', 'يرجى المحاولة مرة أخرى', 'error');
+                } finally {
+                    document.body.removeChild(textarea);
+                }
+            });
+    } else {
+        // Fallback for non-secure contexts
+        const textarea = document.createElement('textarea');
+        textarea.value = scheduleData;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            showNotification('تم نسخ البيانات بنجاح! ✨', 'يمكنك الآن لصق البيانات في موقع منظم الجدول', 'success');
+        } catch (e) {
+            console.error('Copy failed:', e);
+            showNotification('حدث خطأ أثناء النسخ ❌', 'يرجى المحاولة مرة أخرى', 'error');
+        } finally {
+            document.body.removeChild(textarea);
+        }
+    }
+}
+
+// Update createMobileButtons to use the async URL method
+async function createMobileButtons() {
+    const mobileButtonsContainer = document.createElement('div');
+    mobileButtonsContainer.className = 'mobile-buttons-container';
+    mobileButtonsContainer.style.cssText = `
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+        background: #f5f5f5;
+        border-radius: 12px;
+        margin: 10px 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    `;
+
+    // Create View Table button that uses POST request with URL parameter fallback
+    const viewTableButton = document.createElement('a');
+    viewTableButton.className = 'mobile-action-button';
+    viewTableButton.innerHTML = '📱 عرض الجدول المنظم';
+    viewTableButton.target = '_blank';
+    
+    // Show loading state
+    viewTableButton.innerHTML = '⏳ جاري التحميل...';
+    viewTableButton.style.opacity = '0.7';
+    viewTableButton.style.pointerEvents = 'none';
+    
+    // Get the schedule data and URL
+    const { getUrl } = getScheduleData();
+    try {
+        const url = await getUrl();
+        viewTableButton.href = url;
+        viewTableButton.innerHTML = '📱 عرض الجدول المنظم';
+        viewTableButton.style.opacity = '1';
+        viewTableButton.style.pointerEvents = 'auto';
+    } catch (error) {
+        console.error('Error getting URL:', error);
+        viewTableButton.innerHTML = '❌ حدث خطأ';
+        showNotification('حدث خطأ في تحميل الجدول', 'يرجى المحاولة مرة أخرى', 'error');
+    }
+
+    mobileButtonsContainer.appendChild(viewTableButton);
+    return mobileButtonsContainer;
 }
 

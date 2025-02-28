@@ -705,3 +705,47 @@
     flex-wrap: wrap;
 }
 
+/* Mobile-specific styles */
+.mobile-buttons-container {
+    width: 100%;
+    box-sizing: border-box;
+    direction: rtl;
+}
+
+.mobile-action-button {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-family: "Segoe UI", "Traditional Arabic", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mobile-action-button:hover {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-action-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Hide organize button on mobile */
+@media (max-width: 768px) {
+    .schedule-organizer-btn {
+        display: none !important;
+    }
+}
+

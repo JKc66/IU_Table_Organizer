@@ -7,7 +7,167 @@ let includeSummaryInDownload = false;
 let colors = ["Blue", "Black", "Crimson", "Green", "Grey", "OrangeRed", "Purple", "Red", "SpringGreen", "MediumTurquoise", "Navy", "GoldenRod"];
 let subject_colors = {};
 let color_index = 0;
+let days = [];
 
+// Function to get and parse schedule data from URL
+function getScheduleFromURL() {
+    try {
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const encodedData = urlParams.get('data');
+        
+        if (!encodedData) {
+            showNotification('لم يتم العثور على بيانات الجدول', 'يرجى التأكد من صحة الرابط', 'error');
+            return null;
+        }
+
+        // Decode the data
+        const decodedData = decodeURIComponent(encodedData);
+        const scheduleData = JSON.parse(decodedData);
+
+        // Validate the required fields
+        if (!scheduleData.subjects || !scheduleData.days || !scheduleData.schedule) {
+            showNotification('بيانات الجدول غير صالحة', 'يرجى التأكد من صحة البيانات', 'error');
+            return null;
+        }
+
+        return scheduleData;
+    } catch (error) {
+        console.error('Error parsing schedule data:', error);
+        showNotification('حدث خطأ في قراءة بيانات الجدول', 'يرجى المحاولة مرة أخرى', 'error');
+        return null;
+    }
+}
+
+// Function to initialize the table from URL data
+function initializeTableFromURL() {
+    const scheduleData = getScheduleFromURL();
+    if (!scheduleData) return;
+
+    try {
+        // Initialize the table with the schedule data
+        days = scheduleData.days;
+        
+        // Reset the table data
+        newTable = {};
+        subject_colors = {};
+        color_index = 0;
+
+        // Initialize the table structure
+        for (const day in scheduleData.schedule) {
+            newTable[day] = scheduleData.schedule[day].map(lecture => ({
+                ...lecture,
+                value: getLectureValue(lecture.time),
+                startTime: getLectureStartTime(lecture.time),
+                endTime: getLectureEndTime(lecture.time)
+            }));
+
+            // Assign colors to subjects
+            newTable[day].forEach(lecture => {
+                if (!(lecture.subject in subject_colors)) {
+                    subject_colors[lecture.subject] = colors[color_index];
+                    color_index = (color_index + 1) % colors.length;
+                }
+            });
+        }
+
+        // Sort lectures by time
+        for (const day in newTable) {
+            newTable[day].sort((a, b) => a.startTime - b.startTime);
+        }
+
+        // Create and display the table
+        appendTable(days);
+        
+        // Show success message
+        showNotification('تم تحميل الجدول بنجاح! ✨', 'يمكنك الآن تنظيم جدولك', 'success');
+    } catch (error) {
+        console.error('Error initializing table:', error);
+        showNotification('حدث خطأ في تهيئة الجدول', 'يرجى المحاولة مرة أخرى', 'error');
+    }
+}
+
+// Helper functions for time calculations
+function getLectureValue(timeStr) {
+    const startTime = getLectureStartTime(timeStr);
+    return startTime; // Use start time as the value for sorting
+}
+
+function getLectureStartTime(timeStr) {
+    const parts = timeStr.split(' - ');
+    return convertTimeToMinutes(parts[0]);
+}
+
+function getLectureEndTime(timeStr) {
+    const parts = timeStr.split(' - ');
+    return convertTimeToMinutes(parts[1]);
+}
+
+function convertTimeToMinutes(time) {
+    const [timeComponent, period] = time.split(' ');
+    const [hours, minutes] = timeComponent.split(':').map(Number);
+    
+    let totalMinutes = hours * 60 + minutes;
+    
+    // Adjust for PM times
+    if (period && period.includes('م') && hours !== 12) {
+        totalMinutes += 12 * 60;
+    }
+    // Adjust for AM 12
+    if (period && period.includes('ص') && hours === 12) {
+        totalMinutes -= 12 * 60;
+    }
+    
+    return totalMinutes;
+}
+
+// Function to show notifications
+function showNotification(title, message, type = 'info') {
+    const container = document.getElementById('notificationContainer');
+    const notification = document.createElement('div');
+    
+    // Generate unique ID for the notification
+    const notificationId = 'notification-' + Date.now();
+    notification.id = notificationId;
+    
+    // Set notification classes
+    notification.className = `notification notification-${type} notification-slide-in`;
+    
+    // Create notification content
+    notification.innerHTML = `
+        <div class="notification-icon">
+            ${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}
+        </div>
+        <div class="notification-content">
+            <h4>${title}</h4>
+            <p>${message}</p>
+        </div>
+        <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+    `;
+    
+    // Add to container
+    container.appendChild(notification);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        const notificationElement = document.getElementById(notificationId);
+        if (notificationElement) {
+            notificationElement.classList.add('notification-slide-out');
+            setTimeout(() => {
+                if (notificationElement.parentElement) {
+                    notificationElement.remove();
+                }
+            }, 300); // Match this with CSS animation duration
+        }
+    }, 5000);
+}
+
+// Initialize the table when the page loads
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeTableFromURL);
+} else {
+    initializeTableFromURL();
+}
 
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
