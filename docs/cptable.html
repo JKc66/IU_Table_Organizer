@@ -1,16 +1,66 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جدول البيانات</title>
-    <link rel="stylesheet" href="css/cptable.css"> <!-- Optional: Link to a CSS file for styling -->
+    <meta name="description" content="منظم جدول البيانات للجامعة الإسلامية">
+    <title>منظم جدول البيانات | الجامعة الإسلامية</title>
+    <link rel="stylesheet" href="css/cptable.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>إنشاء جدول البيانات</h1>
-    <input type="text" id="userInput" placeholder="أدخل البيانات هنا">
-    <button id="generateTableBtn">إنشاء الجدول</button>
-    <div id="tableContainer"></div>
+    <div class="container">
+        <header class="page-header">
+            <h1>منظم جدول البيانات <span class="subtitle">الجامعة الإسلامية</span></h1>
+        </header>
+        
+        <main class="main-content">
+            <div class="input-section">
+                <div class="input-wrapper">
+                    <label for="userInput">أدخل بيانات الجدول (JSON):</label>
+                    <textarea id="userInput" placeholder="قم بنسخ بيانات الجدول بتنسيق JSON هنا..."></textarea>
+                </div>
+                
+                <div class="actions">
+                    <button id="generateTableBtn" class="primary-button">
+                        <i class="fas fa-table"></i> إنشاء الجدول
+                    </button>
+                    <button id="clearBtn" class="secondary-button">
+                        <i class="fas fa-eraser"></i> مسح
+                    </button>
+                </div>
+            </div>
+            
+            <!-- The summary section will be inserted here by JavaScript -->
+            <div id="summaryContainer" class="summary-container"></div>
+            
+            <div id="tableContainer" class="table-container"></div>
+            
+            <div class="download-options">
+                <div class="download-group">
+                    <label class="custom-checkbox-container">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="includeSummaryCheckbox">
+                            <span class="checkmark"></span>
+                        </div>
+                        تضمين الملخص في التحميل
+                    </label>
+                    <button id="downloadButton" class="control-button">
+                        <i class="fas fa-download"></i> تحميل كصورة
+                    </button>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="page-footer">
+            <p>© 2023 منظم جدول البيانات - الجامعة الإسلامية</p>
+            <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> العودة للصفحة الرئيسية</a>
+        </footer>
+    </div>
+    
     <script src="js/cptable.js"></script>
 </body>
-</html> 
+</html>

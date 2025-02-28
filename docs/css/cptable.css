@@ -673,8 +673,373 @@
     flex-wrap: wrap;
 }
 
+/* Page structure styles */
+body {
+    font-family: "Noto Kufi Arabic", "Segoe UI", Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+    direction: rtl;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.page-header h1 {
+    font-size: 2.2rem;
+    color: #1a237e;
+    margin: 0;
+    font-weight: 700;
+}
+
+.subtitle {
+    display: block;
+    font-size: 1.2rem;
+    color: #666;
+    font-weight: 400;
+    margin-top: 5px;
+}
+
+.main-content {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.input-section {
+    margin-bottom: 25px;
+}
+
+.input-wrapper {
+    margin-bottom: 20px;
+}
+
+.input-wrapper label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+#userInput {
+    width: 100%;
+    height: 150px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    direction: rtl;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+#userInput:focus {
+    outline: none;
+    border-color: #3f51b5;
+    box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+.actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.primary-button, .secondary-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.primary-button {
+    background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+    color: white;
+    box-shadow: 0 4px 8px rgba(26, 35, 126, 0.3);
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(26, 35, 126, 0.4);
+}
+
+.secondary-button {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.secondary-button:hover {
+    background-color: #e0e0e0;
+}
+
+.theme-toggle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+}
+
+.table-container {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+.download-options {
+    margin: 20px 0;
+}
+
+.page-footer {
+    text-align: center;
+    padding: 20px 0;
+    color: #666;
+    font-size: 0.9rem;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 30px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #3f51b5;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #1a237e;
+    text-decoration: underline;
+}
+
+.back-link i {
+    margin-left: 5px;
+}
+
+/* Custom checkbox styles */
+.custom-checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    user-select: none;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.checkbox-wrapper {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.custom-checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.custom-checkbox-container:hover input ~ .checkmark {
+    border-color: #3f51b5;
+}
+
+.custom-checkbox-container input:checked ~ .checkmark {
+    background-color: #3f51b5;
+    border-color: #3f51b5;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.custom-checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.custom-checkbox-container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Dark theme for custom checkbox */
+body.theme-dark .custom-checkbox-container {
+    color: #e0e0e0;
+}
+
+body.theme-dark .checkmark {
+    background-color: #2d2d2d;
+    border-color: #555;
+}
+
+body.theme-dark .custom-checkbox-container:hover input ~ .checkmark {
+    border-color: #90caf9;
+}
+
+body.theme-dark .custom-checkbox-container input:checked ~ .checkmark {
+    background-color: #3f51b5;
+    border-color: #3f51b5;
+}
+
+/* Download group styles */
+.download-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+@media (min-width: 768px) {
+    .download-group {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+/* Dark theme for page structure */
+body.theme-dark {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.theme-dark .container {
+    background-color: #121212;
+}
+
+body.theme-dark .page-header {
+    border-bottom-color: #333;
+}
+
+body.theme-dark .page-header h1 {
+    color: #90caf9;
+}
+
+body.theme-dark .subtitle {
+    color: #aaa;
+}
+
+body.theme-dark .main-content {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-dark .input-wrapper label {
+    color: #e0e0e0;
+}
+
+body.theme-dark #userInput {
+    background-color: #2d2d2d;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+body.theme-dark #userInput:focus {
+    border-color: #90caf9;
+    box-shadow: 0 0 0 2px rgba(144, 202, 249, 0.2);
+}
+
+body.theme-dark .secondary-button {
+    background-color: #333;
+    color: #e0e0e0;
+    border-color: #555;
+}
+
+body.theme-dark .secondary-button:hover {
+    background-color: #444;
+}
+
+body.theme-dark .page-footer {
+    border-top-color: #333;
+    color: #aaa;
+}
+
+body.theme-dark .back-link {
+    color: #90caf9;
+}
+
+body.theme-dark .back-link:hover {
+    color: #bbdefb;
+}
+
 /* Mobile-specific styles */
 @media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .page-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .main-content {
+        padding: 15px;
+        border-radius: 8px;
+    }
+    
+    .actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .primary-button, .secondary-button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .theme-toggle {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
     .schedule-summary {
         padding: 15px;
         margin: 10px auto;

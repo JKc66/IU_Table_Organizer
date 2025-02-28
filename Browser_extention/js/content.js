@@ -112,10 +112,57 @@ function init() {
             // Check if user is on mobile
             isMobile = detectMobile();
             initializeTableOrganizer();
+            
+            // Find the main_content col-md-12 container and add buttons there
+            const mainContentContainer = document.querySelector('.main_content.col-md-12');
+            if (mainContentContainer) {
+                addButtonsToMainContent(mainContentContainer);
+            }
         } catch (error) {
             console.error('Error initializing table organizer:', error);
         }
     });
+}
+
+// Function to add buttons to the main_content col-md-12 container
+function addButtonsToMainContent(container) {
+    // Create a container for the buttons
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'control-buttons';
+    buttonsContainer.style.cssText = 'margin: 15px 0; display: flex; justify-content: center;';
+    
+    // Create copy button
+    const copyButton = document.createElement('button');
+    copyButton.className = 'control-button';
+    copyButton.id = 'mainCopyDataBtn';
+    copyButton.innerHTML = '📋 نسخ بيانات الجدول';
+    copyButton.addEventListener('click', copyTableData);
+    
+    // Create redirect button that also copies data
+    const redirectButton = document.createElement('a');
+    redirectButton.className = 'control-button';
+    redirectButton.id = 'mainRedirectBtn';
+    redirectButton.innerHTML = '🌐 عرض الجدول المنظم';
+    redirectButton.href = 'http://jawadk.me/IU_Table_Organizer/cptable.html';
+    redirectButton.target = '_blank'; // Open in new tab
+    redirectButton.style.textDecoration = 'none';
+    redirectButton.style.display = 'inline-flex';
+    redirectButton.style.alignItems = 'center';
+    redirectButton.style.justifyContent = 'center';
+    
+    // Make the redirect button also copy data before redirecting
+    redirectButton.addEventListener('click', function(e) {
+        // Copy data first
+        copyTableData();
+        // Don't prevent default - let the link open in a new tab
+    });
+    
+    // Add buttons to container
+    buttonsContainer.appendChild(copyButton);
+    buttonsContainer.appendChild(redirectButton);
+    
+    // Add container to the main content
+    container.insertAdjacentElement('afterbegin', buttonsContainer);
 }
 
 // Add error handling to the table check
@@ -905,7 +952,7 @@ function createSummary() {
                         <button class="control-button" id="copyDataBtn" style="flex: 1; max-width: 45%;">
                             📋 نسخ البيانات
                         </button>
-                        <a href="https://jawadk.me/IU_tabel" class="control-button" id="redirectBtn" style="flex: 1; max-width: 45%; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+                        <a href="http://jawadk.me/IU_Table_Organizer/cptable.html" class="control-button" id="redirectBtn" style="flex: 1; max-width: 45%; text-decoration: none; display: flex; align-items: center; justify-content: center;" target="_blank">
                             🌐 عرض الجدول
                         </a>
                     </div>
@@ -915,9 +962,18 @@ function createSummary() {
         
         setTimeout(() => {
             const copyDataBtn = summary.querySelector('#copyDataBtn');
+            const redirectBtn = summary.querySelector('#redirectBtn');
             
             if (copyDataBtn) {
                 copyDataBtn.addEventListener('click', copyTableData);
+            }
+            
+            if (redirectBtn) {
+                redirectBtn.addEventListener('click', function(e) {
+                    // Copy data first
+                    copyTableData();
+                    // Don't prevent default - let the link open in a new tab
+                });
             }
         }, 0);
     } else {

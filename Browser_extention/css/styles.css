@@ -700,5 +700,18 @@
         transform: translateY(2px);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
+    
+    /* Hide the schedule organizer button on mobile */
+    .schedule-organizer-btn {
+        display: none !important;
+    }
+}
+
+/* Desktop-specific styles */
+@media (min-width: 769px) {
+    /* Hide the main copy and redirect buttons on desktop */
+    #mainCopyDataBtn, #mainRedirectBtn {
+        display: none !important;
+    }
 }
 
