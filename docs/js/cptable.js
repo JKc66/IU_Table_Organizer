@@ -1054,7 +1054,7 @@ function createSummary(days) {
                     }
                     
                     const gist = await response.json();
-                    const scheduleData = gist.files['schedule.json'].content;
+                    const scheduleData = gist.files['iu_schedule_app.json'].content;
                     
                     const userInput = document.getElementById('userInput');
                     if (userInput) {
