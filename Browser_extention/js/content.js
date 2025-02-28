@@ -1224,27 +1224,9 @@ function showNotification(title, subtitle, type = 'success', duration = 3000) {
 
 // Function to send schedule data via POST request
 async function sendScheduleData(scheduleData) {
-    try {
-        const response = await fetch('https://jkc66.github.io/IU_Table_Organizer/api/schedule', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: scheduleData
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        return result.url; // The server should return a URL to view the schedule
-    } catch (error) {
-        console.error('Error sending schedule data:', error);
-        // Fallback to URL parameter method if POST fails
-        const encodedData = encodeURIComponent(scheduleData);
-        return `https://jkc66.github.io/IU_Table_Organizer/cptable.html?data=${encodedData}`;
-    }
+    // Skip POST attempt and directly use URL parameters
+    const encodedData = encodeURIComponent(scheduleData);
+    return `https://jkc66.github.io/IU_Table_Organizer/cptable.html?data=${encodedData}`;
 }
 
 function getScheduleData() {

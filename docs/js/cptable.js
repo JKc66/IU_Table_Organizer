@@ -39,54 +39,6 @@ function getScheduleFromURL() {
     }
 }
 
-// Function to initialize the table from URL data
-function initializeTableFromURL() {
-    const scheduleData = getScheduleFromURL();
-    if (!scheduleData) return;
-
-    try {
-        // Initialize the table with the schedule data
-        days = scheduleData.days;
-        
-        // Reset the table data
-        newTable = {};
-        subject_colors = {};
-        color_index = 0;
-
-        // Initialize the table structure
-        for (const day in scheduleData.schedule) {
-            newTable[day] = scheduleData.schedule[day].map(lecture => ({
-                ...lecture,
-                value: getLectureValue(lecture.time),
-                startTime: getLectureStartTime(lecture.time),
-                endTime: getLectureEndTime(lecture.time)
-            }));
-
-            // Assign colors to subjects
-            newTable[day].forEach(lecture => {
-                if (!(lecture.subject in subject_colors)) {
-                    subject_colors[lecture.subject] = colors[color_index];
-                    color_index = (color_index + 1) % colors.length;
-                }
-            });
-        }
-
-        // Sort lectures by time
-        for (const day in newTable) {
-            newTable[day].sort((a, b) => a.startTime - b.startTime);
-        }
-
-        // Create and display the table
-        appendTable(days);
-        
-        // Show success message
-        showNotification('تم تحميل الجدول بنجاح! ✨', 'يمكنك الآن تنظيم جدولك', 'success');
-    } catch (error) {
-        console.error('Error initializing table:', error);
-        showNotification('حدث خطأ في تهيئة الجدول', 'يرجى المحاولة مرة أخرى', 'error');
-    }
-}
-
 // Helper functions for time calculations
 function getLectureValue(timeStr) {
     const startTime = getLectureStartTime(timeStr);
@@ -160,13 +112,6 @@ function showNotification(title, message, type = 'info') {
             }, 300); // Match this with CSS animation duration
         }
     }, 5000);
-}
-
-// Initialize the table when the page loads
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeTableFromURL);
-} else {
-    initializeTableFromURL();
 }
 
 // Time conversion functions
@@ -1029,7 +974,78 @@ function createSummary(days) {
         document.addEventListener('DOMContentLoaded', () => {
         const generateTableBtn = document.getElementById('generateTableBtn');
         const userInput = document.getElementById('userInput');
+        const clearBtn = document.getElementById('clearBtn');
+        
+        // Initialize from URL if present
+        const scheduleData = getScheduleFromURL();
+        if (scheduleData) {
+            try {
+                // Convert the schedule data back to JSON string for the textarea
+                const jsonString = JSON.stringify(scheduleData, null, 2);
+                userInput.value = jsonString;
+                
+                // Initialize the table with the schedule data
+                days = scheduleData.days;
+                
+                // Reset the table data
+                newTable = {};
+                subject_colors = {};
+                color_index = 0;
+
+                // Initialize the table structure
+                for (const day in scheduleData.schedule) {
+                    newTable[day] = scheduleData.schedule[day].map(lecture => ({
+                        ...lecture,
+                        value: getLectureValue(lecture.time),
+                        startTime: getLectureStartTime(lecture.time),
+                        endTime: getLectureEndTime(lecture.time)
+                    }));
+
+                    // Assign colors to subjects
+                    newTable[day].forEach(lecture => {
+                        if (!(lecture.subject in subject_colors)) {
+                            subject_colors[lecture.subject] = colors[color_index];
+                            color_index = (color_index + 1) % colors.length;
+                        }
+                    });
+                }
+
+                // Sort lectures by time
+                for (const day in newTable) {
+                    newTable[day].sort((a, b) => a.startTime - b.startTime);
+                }
+
+                // Create and display the table
+                appendTable(days);
+                
+                // Show success message
+                showNotification('تم تحميل الجدول بنجاح! ✨', 'يمكنك الآن تنظيم جدولك', 'success');
+            } catch (error) {
+                console.error('Error initializing table from URL:', error);
+                showNotification('حدث خطأ في تهيئة الجدول', 'يرجى المحاولة مرة أخرى', 'error');
+            }
+        }
+
+        // Add event listeners for buttons
         generateTableBtn.addEventListener('click', () => {
-            generateTable(userInput.value);
-        });});
+            if (userInput.value.trim()) {
+                generateTable(userInput.value);
+            } else {
+                showNotification('لا توجد بيانات', 'يرجى إدخال بيانات الجدول أولاً', 'error');
+            }
+        });
+
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                userInput.value = '';
+                // Clear the table and summary if they exist
+                const tableContainer = document.getElementById('tableContainer');
+                const summaryContainer = document.getElementById('summaryContainer');
+                if (tableContainer) tableContainer.innerHTML = '';
+                if (summaryContainer) summaryContainer.innerHTML = '';
+                // Show notification
+                showNotification('تم مسح البيانات', 'يمكنك الآن إدخال بيانات جديدة', 'info');
+            });
+        }
+    });
 
