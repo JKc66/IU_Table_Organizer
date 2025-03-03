@@ -166,7 +166,7 @@
 }
 
 .lecture-cell .lecture-hall {
-    display: block;
+    display: inline-block;
     background: #e8f5e9;
     padding: 4px 8px;
     border-radius: 6px;
@@ -176,6 +176,28 @@
     font-weight: 500;
     border: 1px solid #c8e6c9;
     text-align: center;
+    white-space: nowrap;
+    width: auto;
+    min-width: fit-content;
+}
+
+/* Add a specific style for the section number to prevent wrapping */
+.section-number {
+    background: #e8eaf6; 
+    border-radius: 6px; 
+    padding: 3px 4px; 
+    color: #283593; 
+    display: inline-block; 
+    margin-top: 3px;
+    white-space: nowrap;
+    width: auto;
+    min-width: fit-content;
+}
+
+/* Dark theme version of the section number */
+.theme-dark .section-number {
+    background: #1a2f3a; 
+    color: #8ebbff;
 }
 
 /* Update grid layout margins and gaps */

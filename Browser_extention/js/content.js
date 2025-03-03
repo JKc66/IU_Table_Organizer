@@ -10,7 +10,7 @@ let subject_colors = {};
 let color_index = 0;
 let currentTheme = 'light';
 let includeSummaryInDownload = false;
-let githubToken = '';
+let hastebinApiKey = 'c03fb6598a7bfcde22f4eed0931e691e2c4ed173f14f1cc598016d48cca00bb3287b230ddb5a300c931220ff2bf38ba8fccf946d6a7b4ada4ac8706d2eb3dc59';
 
 // Time conversion functions
 function convertToRamadanTime(timeStr) {
@@ -1246,51 +1246,45 @@ async function copyScheduleJSON() {
 
         const scheduleData = JSON.stringify(formattedData);
 
-        // First, try to create a gist
+        // Try to create a Hastebin paste
         try {
-            if (!githubToken) {
-                throw new Error('No GitHub token set');
+            // Prepare headers with authentication if API key is available
+            const headers = {
+                'Content-Type': 'text/plain'
+            };
+            
+            // Add authorization header if API key is available
+            if (hastebinApiKey) {
+                headers['Authorization'] = `Bearer ${hastebinApiKey}`;
             }
-
-            const gistResponse = await fetch('https://api.github.com/gists', {
+            
+            // Using Hastebin API (hastebin.com)
+            const hastebinResponse = await fetch('https://hastebin.com/documents', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${githubToken}`,
-                    'Accept': 'application/vnd.github.v3+json'
-                },
-                body: JSON.stringify({
-                    public: true,
-                    files: {
-                        'iu_schedule_app.json': {
-                            content: scheduleData
-                        }
-                    },
-                    description: 'IU Table Organizer Schedule Data'
-                })
+                headers: headers,
+                body: scheduleData
             });
 
-            if (!gistResponse.ok) {
-                const errorData = await gistResponse.json();
-                throw new Error(`Gist creation failed: ${gistResponse.status}, ${JSON.stringify(errorData)}`);
+            if (!hastebinResponse.ok) {
+                throw new Error(`Hastebin creation failed: ${hastebinResponse.status}`);
             }
 
-            const gist = await gistResponse.json();
+            const hasteData = await hastebinResponse.json();
+            const hasteKey = hasteData.key;
 
-            // Also copy to clipboard as backup
-            copyToClipboard(scheduleData);
-            
-            // Open the website with the gist ID
+            // Open the website with the hastebin key
             const baseUrl = 'https://jkc66.github.io/IU_Table_Organizer/cptable.html';
-            window.open(`${baseUrl}?gist=${gist.id}`, '_blank');
-            showNotification('تم فتح منظم الجدول! ✨', 'تم نسخ البيانات ونقلها تلقائياً', 'success');
+            window.open(`${baseUrl}?haste=${hasteKey}`, '_blank');
+            showNotification('تم فتح منظم الجدول! ✨', 'تم نقل البيانات تلقائياً', 'success');
 
-        } catch (gistError) {
-            // If gist creation fails, fall back to copy method
+        } catch (hasteError) {
+            console.error('Hastebin error:', hasteError);
+            // If hastebin creation fails, fall back to copy method
             fallbackCopy(scheduleData);
         }
 
     } catch (error) {
+        console.error('Processing error:', error);
         showNotification('حدث خطأ في معالجة الجدول ❌', 'جاري المحاولة بطريقة بديلة...', 'error');
         fallbackCopy(scheduleData);
     }

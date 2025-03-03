@@ -7,6 +7,8 @@ let includeSummaryInDownload = false;
 let colors = ["Blue", "Black", "Crimson", "Green", "Grey", "OrangeRed", "Purple", "Red", "SpringGreen", "MediumTurquoise", "Navy", "GoldenRod"];
 let subject_colors = {};
 let color_index = 0;
+// Hastebin API token for authentication
+let hastebinApiKey = 'c03fb6598a7bfcde22f4eed0931e691e2c4ed173f14f1cc598016d48cca00bb3287b230ddb5a300c931220ff2bf38ba8fccf946d6a7b4ada4ac8706d2eb3dc59';
 
 // Notification function
 function showNotification(message, type = 'success', isRamadan = false) {
@@ -970,7 +972,7 @@ function createSummary(days) {
                                 <div style="${activityStyle}">
                                     ${getActivityIcon(lecture.activity)} ${lecture.activity}
                                 </div>
-                                <div style="background: ${currentTheme === 'dark' ? '#1a2f3a' : '#e8eaf6'}; border-radius: 6px; padding: 3px 4px; color: ${currentTheme === 'dark' ? '#8ebbff' : '#283593'}; display: inline-block; margin-top: 3px;">
+                                <div class="section-number">
                                     🔢 الشعبة: ${lecture.section}
                                 </div>
                             </div>
@@ -1041,20 +1043,31 @@ function createSummary(days) {
         // If periods are different, keep both but make it more compact
         return `${startTimeComponent}${startPeriod} - ${endTimeComponent}${endPeriod}`;}
 
-        // Function to load schedule from URL using GitHub Gist
+        // Function to load schedule from URL using Hastebin
         async function loadScheduleFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
-            const gistId = urlParams.get('gist');
+            const hasteKey = urlParams.get('haste');
             
-            if (gistId) {
+            // Try loading from Hastebin
+            if (hasteKey) {
                 try {
-                    const response = await fetch(`https://api.github.com/gists/${gistId}`);
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch gist');
+                    // Prepare headers with authentication if API key is available
+                    const headers = {};
+                    
+                    // Add authorization header if API key is available
+                    if (hastebinApiKey) {
+                        headers['Authorization'] = `Bearer ${hastebinApiKey}`;
                     }
                     
-                    const gist = await response.json();
-                    const scheduleData = gist.files['iu_schedule_app.json'].content;
+                    const response = await fetch(`https://hastebin.com/raw/${hasteKey}`, {
+                        headers: headers
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch from Hastebin');
+                    }
+                    
+                    const scheduleData = await response.text();
                     
                     const userInput = document.getElementById('userInput');
                     if (userInput) {
@@ -1064,8 +1077,8 @@ function createSummary(days) {
                         return true;
                     }
                 } catch (e) {
-                    console.error('Error loading from gist:', e);
-                    showNotification('حدث خطأ أثناء تحميل الجدول من GitHub Gist', 'error', ramadanMode);
+                    console.error('Error loading from Hastebin:', e);
+                    showNotification('حدث خطأ أثناء تحميل الجدول من Hastebin', 'error', ramadanMode);
                 }
             }
             return false;
