@@ -105,14 +105,6 @@
     -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
 }
 
-#newTable th .day-name-en {
-    font-size: 0.75em;
-    opacity: 0.8;
-    font-weight: normal;
-    display: block;
-    letter-spacing: 1px;
-}
-
 #newTable td {
     padding: 1px;
     text-align: center;
@@ -545,22 +537,6 @@
 }
 
 /* Dark theme loading overlay */
-.theme-dark .loading-overlay {
-    background: linear-gradient(135deg, rgba(18, 18, 18, 0.98), rgba(30, 30, 46, 0.98));
-}
-
-.theme-dark .loading-content {
-    background: #1e1e2e;
-    color: #e4e4e7;
-}
-
-.theme-dark .loading-text {
-    color: #e4e4e7;
-}
-
-.theme-dark .loading-subtext {
-    color: #a0a0a7;
-}
 
 #newTable.theme-dark {
     background: #151b30;
