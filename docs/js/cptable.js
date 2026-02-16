@@ -193,31 +193,36 @@ function convertToRamadanTime(timeStr) {
     const duration = ((end.hour - start.hour) * 60 + (end.minute - start.minute));
     const isPractical = Math.abs(duration - 80) <= 5;  // Allow 5-minute flexibility
 
-    // Theoretical lecture time mappings
+    // Theoretical lecture time mappings (50 minutes)
     const theoreticalMap = {
-        '08:00 ص': { start: '09:30 ص', end: '10:05 ص' },
-        '09:00 ص': { start: '10:10 ص', end: '10:45 ص' },
-        '10:00 ص': { start: '10:50 ص', end: '11:25 ص' },
-        '11:00 ص': { start: '11:30 ص', end: '12:05 م' },
-        '12:00 م': { start: '12:10 م', end: '12:45 م' },
-        '01:00 م': { start: '01:05 م', end: '01:40 م' },
-        '02:00 م': { start: '01:45 م', end: '02:20 م' },
-        '03:00 م': { start: '02:25 م', end: '03:00 م' },
-        '04:00 م': { start: '03:05 م', end: '03:40 م' },
-        '05:00 م': { start: '03:45 م', end: '04:20 م' },
+        '08:00 ص': { start: '10:00 ص', end: '10:35 ص' },
+        '09:00 ص': { start: '10:40 ص', end: '11:15 ص' },
+        '10:00 ص': { start: '11:20 ص', end: '11:55 ص' },
+        '11:00 ص': { start: '12:00 م', end: '12:35 م' },
+        '12:00 م': { start: '12:55 م', end: '01:30 م' },
+        '01:00 م': { start: '01:35 م', end: '02:10 م' },
+        '02:00 م': { start: '02:10 م', end: '02:45 م' },
+        '03:00 م': { start: '02:45 م', end: '03:20 م' },
+        '04:00 م': { start: '03:20 م', end: '03:55 م' },
+        '05:00 م': { start: '04:10 م', end: '04:45 م' },
         '06:00 م': 'غير مستخدم',
-        '07:00 م': { start: '04:40 م', end: '05:15 م' }
+        '07:00 م': { start: '04:45 م', end: '05:20 م' },
+        '08:00 م': { start: '10:30 م', end: '11:05 م' },
+        '09:00 م': { start: '11:05 م', end: '11:40 م' },
+        '10:00 م': { start: '11:40 م', end: '12:15 ص' }
     };
 
-    // Practical session time mappings
+    // Practical session time mappings (80 minutes)
     const practicalMap = {
-        '08:00 ص': { start: '09:30 ص', end: '10:20 ص' },
-        '09:30 ص': { start: '10:25 ص', end: '11:15 ص' },
-        '11:00 ص': { start: '11:20 ص', end: '12:10 م' },
-        '12:30 م': { start: '12:15 م', end: '01:05 م' },
-        '02:00 م': { start: '01:30 م', end: '02:20 م' },
-        '03:30 م': { start: '02:25 م', end: '03:15 م' },
-        '05:00 م': { start: '03:20 م', end: '04:10 م' }
+        '08:00 ص': { start: '10:00 ص', end: '10:55 ص' },
+        '09:30 ص': { start: '11:00 ص', end: '11:55 ص' },
+        '11:00 ص': { start: '12:00 م', end: '12:55 م' },
+        '12:30 م': { start: '01:15 م', end: '02:10 م' },
+        '01:00 م': { start: '01:30 م', end: '02:25 م' },
+        '02:00 م': { start: '02:10 م', end: '03:05 م' },
+        '02:30 م': { start: '02:25 م', end: '03:20 م' },
+        '03:30 م': { start: '03:05 م', end: '04:00 م' },
+        '05:00 م': { start: '04:15 م', end: '05:10 م' }
     };
 
     // Get the mapped time based on session type
