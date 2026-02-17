@@ -29,9 +29,9 @@ Before Ramadan      | During Ramadan
 11:00 AM - 12:20 PM | 12:00 PM - 12:55 PM
 (Dhuhr Prayer)      | (صلاة الظهر)
 12:30 PM - 01:50 PM | 01:15 PM - 02:10 PM
-01:00 PM - 02:20 PM | 01:30 PM - 02:25 PM (Overlapping slot)
+01:00 PM - 02:20 PM | 01:30 PM - 02:25 PM
 02:00 PM - 03:20 PM | 02:10 PM - 03:05 PM
-02:30 PM - 03:50 PM | 02:25 PM - 03:20 PM (Overlapping slot)
+02:30 PM - 03:50 PM | 02:25 PM - 03:20 PM
 03:30 PM - 04:50 PM | 03:05 PM - 04:00 PM
 (Asr Prayer)        | (صلاة العصر)
 05:00 PM - 06:20 PM | 04:15 PM - 05:10 PM

@@ -9,7 +9,7 @@
 // @include https://eduportal.iu.edu.sa/iu/ui/student/*/*/*
 // @include http://eduportal.iu.edu.sa/iu/ui/student/*
 // @include https://eduportal.iu.edu.sa/iu/ui/student/student_schedule/index/studentScheduleIndex.faces
-// @version 4.3
+// @version 4.4
 // @icon https://www.google.com/s2/favicons?domain=sso.iu.edu.sa
 // @namespace https://greasyfork.org/users/814159
 // @icon https://icons.iconarchive.com/icons/fatcow/farm-fresh/32/table-icon.png
@@ -857,7 +857,7 @@ function convertToRamadanTime(timeStr) {
         '03:00 م': { start: '02:45 م', end: '03:20 م' },
         '04:00 م': { start: '03:20 م', end: '03:55 م' },
         '05:00 م': { start: '04:10 م', end: '04:45 م' },
-        '06:00 م': 'غير مستخدم',
+        '06:00 م': 'غير مستخدم', // Not in use
         '07:00 م': { start: '04:45 م', end: '05:20 م' },
         '08:00 م': { start: '10:30 م', end: '11:05 م' },
         '09:00 م': { start: '11:05 م', end: '11:40 م' },
@@ -869,12 +869,12 @@ function convertToRamadanTime(timeStr) {
         '08:00 ص': { start: '10:00 ص', end: '10:55 ص' },
         '09:30 ص': { start: '11:00 ص', end: '11:55 ص' },
         '11:00 ص': { start: '12:00 م', end: '12:55 م' },
-        '12:30 م': { start: '01:15 م', end: '02:10 م' },
+        '12:30 م': { start: '01:15 م', end: '02:10 م' }, 
         '01:00 م': { start: '01:30 م', end: '02:25 م' },
         '02:00 م': { start: '02:10 م', end: '03:05 م' },
         '02:30 م': { start: '02:25 م', end: '03:20 م' },
         '03:30 م': { start: '03:05 م', end: '04:00 م' },
-        '05:00 م': { start: '04:15 م', end: '05:10 م' }
+        '05:00 م': { start: '04:15 م22', end: '05:10 م' }
     };
 
     // Get the mapped time based on session type

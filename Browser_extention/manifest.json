@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "IU Table Organizer",
-  "version": "4.3",
-  "version_name": "4.3",
+  "version": "4.4",
+  "version_name": "4.4 - 1447 ramadan",
   "description": "A tool to organize the Islamic University schedule table",
   "icons": {
     "16": "icons/icon16.png",
