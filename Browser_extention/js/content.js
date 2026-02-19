@@ -66,7 +66,7 @@ function convertToRamadanTime(timeStr) {
         '02:00 م': { start: '02:10 م', end: '03:05 م' },
         '02:30 م': { start: '02:25 م', end: '03:20 م' },
         '03:30 م': { start: '03:05 م', end: '04:00 م' },
-        '05:00 م': { start: '04:15 م22', end: '05:10 م' }
+        '05:00 م': { start: '04:15 م', end: '05:10 م' }
     };
 
     // Get the mapped time based on session type
