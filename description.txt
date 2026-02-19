@@ -24,7 +24,7 @@ Just visit your IU schedule page, click "نظم الجدول" to organize, and "
 
 This extension is licensed under MPL 2.0 and is dedicated to improving the academic experience of Islamic University students. 
 
-**V_4.4 -  1447 ramadan**
+**V_4.5 -  1447 ramadan**
 **V_4.3 -  improved design**
 **V_4.2 - MOBILE support**
 **V_4.1 - Schedule with Ramadan Time for 1446**

@@ -9,7 +9,7 @@
 // @include https://eduportal.iu.edu.sa/iu/ui/student/*/*/*
 // @include http://eduportal.iu.edu.sa/iu/ui/student/*
 // @include https://eduportal.iu.edu.sa/iu/ui/student/student_schedule/index/studentScheduleIndex.faces
-// @version 4.4
+// @version 4.5
 // @icon https://www.google.com/s2/favicons?domain=sso.iu.edu.sa
 // @namespace https://greasyfork.org/users/814159
 // @icon https://icons.iconarchive.com/icons/fatcow/farm-fresh/32/table-icon.png
