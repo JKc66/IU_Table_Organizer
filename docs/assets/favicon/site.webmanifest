@@ -1,6 +1,7 @@
 {
-  "name": "IU table org",
-  "short_name": "IU",
+  "name": "IU table",
+  "short_name": "IU table",
+  "description": "A Chrome extension/userscript to enhance and organize the Islamic University of Madinah schedule table view. Transform your class schedule into a more readable format with one click.",
   "icons": [
     {
       "src": "/assets/favicon/web-app-manifest-192x192.png",
