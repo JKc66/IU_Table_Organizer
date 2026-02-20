@@ -58,12 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 methods.style.flexDirection = 'column';
             }
         } else {
-            // For desktop: use row for LTR, row-reverse for RTL
-            if (document.dir === 'rtl') {
-                methods.style.flexDirection = 'row-reverse';
-            } else {
-                methods.style.flexDirection = 'row';
-            }
+            // For desktop: use row for LTR, row for RTL (to keep Chrome Store on the left)
+            methods.style.flexDirection = 'row';
         }
         
         // Make sure all methods are visible
