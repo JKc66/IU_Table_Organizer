@@ -168,78 +168,42 @@ function showNotification(message, type = 'success', isRamadan = false) {
     }, 3000);
 }
 
-// Time conversion functions
+// Ramadan time conversion — fetched dynamically from content.js (single source of truth)
+const CONTENT_JS_URL = 'https://cdn.jsdelivr.net/gh/JKc66/IU_Table_Organizer@main/Browser_extention/js/content.js';
+let _convertToRamadanTime = null;
+
+async function loadRamadanConverter() {
+    if (_convertToRamadanTime) return _convertToRamadanTime;
+    try {
+        const response = await fetch(CONTENT_JS_URL);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const text = await response.text();
+
+        // Extract the convertToRamadanTime function using brace-counting
+        const funcStart = text.indexOf('function convertToRamadanTime');
+        if (funcStart === -1) throw new Error('convertToRamadanTime not found in content.js');
+
+        let braceCount = 0, started = false, funcEnd = funcStart;
+        for (let i = funcStart; i < text.length; i++) {
+            if (text[i] === '{') { braceCount++; started = true; }
+            if (text[i] === '}') { braceCount--; }
+            if (started && braceCount === 0) { funcEnd = i + 1; break; }
+        }
+
+        const funcCode = text.substring(funcStart, funcEnd);
+        // Create a factory that defines the function and returns it
+        const factory = new Function(`${funcCode}\nreturn convertToRamadanTime;`);
+        _convertToRamadanTime = factory();
+        return _convertToRamadanTime;
+    } catch (error) {
+        console.error('Failed to load Ramadan converter from content.js:', error);
+        return null;
+    }
+}
+
 function convertToRamadanTime(timeStr) {
-    // Split the time range
-    const [startTime, endTime] = timeStr.split(' - ');
-
-    // Helper function to parse time
-    function parseTime(time) {
-        const [timeComponent, period] = time.trim().split(' ');
-        const [hourStr, minuteStr] = timeComponent.split(':');
-        let hour = parseInt(hourStr);
-        const minute = parseInt(minuteStr);
-        const isPM = period === 'م';
-        if (isPM && hour !== 12) hour += 12;
-        if (!isPM && hour === 12) hour = 0;
-        return { hour, minute, period };
-    }
-
-    // Parse start and end times to detect practical sessions
-    const start = parseTime(startTime);
-    const end = parseTime(endTime);
-
-    // Determine if it's a practical session based on duration (80 minutes)
-    const duration = ((end.hour - start.hour) * 60 + (end.minute - start.minute));
-    const isPractical = Math.abs(duration - 80) <= 5;  // Allow 5-minute flexibility
-
-    // Theoretical lecture time mappings (50 minutes)
-    const theoreticalMap = {
-        '08:00 ص': { start: '10:00 ص', end: '10:35 ص' },
-        '09:00 ص': { start: '10:40 ص', end: '11:15 ص' },
-        '10:00 ص': { start: '11:20 ص', end: '11:55 ص' },
-        '11:00 ص': { start: '12:00 م', end: '12:35 م' },
-        '12:00 م': { start: '12:55 م', end: '01:30 م' },
-        '01:00 م': { start: '01:35 م', end: '02:10 م' },
-        '02:00 م': { start: '02:10 م', end: '02:45 م' },
-        '03:00 م': { start: '02:45 م', end: '03:20 م' },
-        '04:00 م': { start: '03:20 م', end: '03:55 م' },
-        '05:00 م': { start: '04:10 م', end: '04:45 م' },
-        '06:00 م': 'غير مستخدم',
-        '07:00 م': { start: '04:45 م', end: '05:20 م' },
-        '08:00 م': { start: '10:30 م', end: '11:05 م' },
-        '09:00 م': { start: '11:05 م', end: '11:40 م' },
-        '10:00 م': { start: '11:40 م', end: '12:15 ص' }
-    };
-
-    // Practical session time mappings (80 minutes)
-    const practicalMap = {
-        '08:00 ص': { start: '10:00 ص', end: '10:55 ص' },
-        '09:30 ص': { start: '11:00 ص', end: '11:55 ص' },
-        '11:00 ص': { start: '12:00 م', end: '12:55 م' },
-        '12:30 م': { start: '01:15 م', end: '02:10 م' },
-        '01:00 م': { start: '01:30 م', end: '02:25 م' },
-        '02:00 م': { start: '02:10 م', end: '03:05 م' },
-        '02:30 م': { start: '02:25 م', end: '03:20 م' },
-        '03:30 م': { start: '03:05 م', end: '04:00 م' },
-        '05:00 م': { start: '04:15 م', end: '05:10 م' }
-    };
-
-    // Get the mapped time based on session type
-    const timeMap = isPractical ? practicalMap : theoreticalMap;
-    const mappedTime = timeMap[startTime];
-
-    // Handle "not in use" case
-    if (mappedTime === 'غير مستخدم') {
-        return 'غير مستخدم';
-    }
-
-    // If no mapping found, return original time
-    if (!mappedTime) {
-        return timeStr;
-    }
-
-    return `${mappedTime.start} - ${mappedTime.end}`;
+    if (!_convertToRamadanTime) return timeStr;
+    return _convertToRamadanTime(timeStr);
 }
 
 // Main function to generate the table
@@ -862,7 +826,15 @@ function createSummary(days) {
         }
 
         if (ramadanBtn) {
-            ramadanBtn.addEventListener('click', () => {
+            ramadanBtn.addEventListener('click', async () => {
+                if (!ramadanMode) {
+                    // Fetch the converter from content.js before enabling
+                    const converter = await loadRamadanConverter();
+                    if (!converter) {
+                        showNotification('فشل تحميل بيانات توقيت رمضان', 'error');
+                        return;
+                    }
+                }
                 ramadanMode = !ramadanMode;
                 ramadanBtn.classList.toggle('active');
                 if (ramadanMode) {
