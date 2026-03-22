@@ -15,7 +15,6 @@ const translations = {
             intro: "Choose one of the following installation methods:",
             or: "OR",
             recommended: "Recommended",
-            preferredNote: "This is the preferred installation method for the best experience",
             chromeExtension: {
                 title: "Chrome Extension",
                 download: "Install from Chrome Web Store",
@@ -98,7 +97,6 @@ const translations = {
             intro: "اختر إحدى طرق التثبيت التالية:",
             or: "أو",
             recommended: "موصى به",
-            preferredNote: "هذه هي طريقة التثبيت المفضلة للحصول على أفضل تجربة",
             chromeExtension: {
                 title: "إضافة المتصفح",
                 download: "تثبيت من متجر كروم",
