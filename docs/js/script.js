@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update the title's data-value attribute based on language
         const title = document.querySelector("h1");
         if (title) {
-            const titleText = newLang === 'ar' ? 'منظم جدول الجامعة الإسلامية' : 'IU Table Organizer';
+            const titleText = newLang === 'ar' ? 'منظم جدول الجامعة الإسلامية بالمدينة المنورة' : 'IUM Table Organizer';
             title.dataset.value = titleText;
             title.innerText = titleText;
         }
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set initial title based on stored language
         const title = document.querySelector("h1");
         if (title) {
-            const titleText = storedLang === 'ar' ? 'منظم جدول الجامعة الإسلامية' : 'IU Table Organizer';
+            const titleText = storedLang === 'ar' ? 'منظم جدول الجامعة الإسلامية بالمدينة المنورة' : 'IUM Table Organizer';
             title.dataset.value = titleText;
             title.innerText = titleText;
         }
@@ -394,3 +394,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 }); 
+

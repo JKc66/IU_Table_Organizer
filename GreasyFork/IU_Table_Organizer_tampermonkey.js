@@ -1,15 +1,15 @@
 // ==UserScript==
-// @name IU Table Organizer
+// @name IUM Table Organizer
 // @description A script to order the lectures table according to weekdays on the Islamic University website
-// @name:en IU Table Organizer
+// @name:en IUM Table Organizer
 // @description:en A script to order the lectures table according to weekdays on the Islamic University website
-// @name:ar منظم جدول الجامعة الاسلامية
-// @description:ar اضافة لتعديل مظهر الجدول بالجامعة الاسلامية الى جدول مرتب تبعا لايام الاسبوع بضغطة زر
+// @name:ar منظم جدول الجامعة الاسلامية بالمدينة المنورة
+// @description:ar اضافة لتعديل مظهر الجدول بالجامعة الاسلامية بالمدينة المنورة الى جدول مرتب تبعا لايام الاسبوع بضغطة زر
 // @include https://eduportal.iu.edu.sa/iu/ui/student/homeIndex.faces
 // @include https://eduportal.iu.edu.sa/iu/ui/student/*/*/*
 // @include http://eduportal.iu.edu.sa/iu/ui/student/*
 // @include https://eduportal.iu.edu.sa/iu/ui/student/student_schedule/index/studentScheduleIndex.faces
-// @version 4.5
+// @version 5.0
 // @icon https://www.google.com/s2/favicons?domain=sso.iu.edu.sa
 // @namespace https://greasyfork.org/users/814159
 // @icon https://icons.iconarchive.com/icons/fatcow/farm-fresh/32/table-icon.png
@@ -2179,3 +2179,5 @@ function createMobileButtons() {
     return mobileButtonsContainer;
 }
 }})();
+
+

@@ -1,4 +1,4 @@
-# IU Table Organizer
+# IUM Table Organizer
 
 [![Version](https://img.shields.io/chrome-web-store/v/oopkbojbjpdehknlnajbgedjjgafjbec)](https://chromewebstore.google.com/detail/iu-table-organizer/oopkbojbjpdehknlnajbgedjjgafjbec)
 [![Version](https://img.shields.io/greasyfork/v/432219?color=red)](https://greasyfork.org/en/scripts/432219-iu-table-organizer)
@@ -6,7 +6,7 @@
 
 A userscript to enhance and organize the Islamic University schedule table view. Transform your class schedule into a more readable format with one click.
 
-📌 **Official Website:** [IU Table Organizer](https://JKc66.github.io/IU_Table_Organizer/)
+📌 **Official Website:** [IUM Table Organizer](https://JKc66.github.io/IU_Table_Organizer/)
 
 >## 📸 Before & After
 

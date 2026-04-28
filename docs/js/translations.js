@@ -1,6 +1,6 @@
 const translations = {
     en: {
-        title: "IU Table Organizer",
+        title: "IUM Table Organizer",
         subtitle: "Transform your Islamic University schedule into a more readable format with one click.",
         versionMismatch: "Chrome Web Store version is slightly behind. This is normal as Chrome takes up to 24 hours to review updates. The latest features will be available soon!",
         demo: {
@@ -44,7 +44,7 @@ const translations = {
                 },
                 step2: {
                     title: "Install Script",
-                    description: "Add the IU Table Organizer script from Greasyfork to enhance your schedule",
+                    description: "Add the IUM Table Organizer script from Greasyfork to enhance your schedule",
                     features: {
                         formatting: "Automatic table formatting",
                         darkMode: "Dark mode support",
@@ -76,14 +76,14 @@ const translations = {
         },
         contribute: {
             title: "Contribute",
-            description: "Want to improve IU Table Organizer? We welcome your contributions!",
+            description: "Want to improve IUM Table Organizer? We welcome your contributions!",
             button: "Contribute on GitHub",
             text: "Create a pull request or open an issue to help make this project even better."
         }
     },
     ar: {
-        title: "منظم جدول الجامعة الإسلامية",
-        subtitle: "حول جدول الجامعة الإسلامية إلى تنسيق أكثر وضوحاً بنقرة واحدة",
+        title: "منظم جدول الجامعة الإسلامية بالمدينة المنورة",
+        subtitle: "حول جدول الجامعة الإسلامية بالمدينة المنورة إلى تنسيق أكثر وضوحاً بنقرة واحدة",
         versionMismatch: "إصدار متجر كروم متأخر قليلاً. هذا طبيعي حيث يستغرق كروم ما يصل إلى 24 ساعة لمراجعة التحديثات. ستتوفر أحدث الميزات قريبًا!",
         demo: {
             title: "قبل وبعد",
@@ -126,7 +126,7 @@ const translations = {
                 },
                 step2: {
                     title: "تثبيت السكربت",
-                    description: "أضف سكربت منظم جدول الجامعة الإسلامية من Greasyfork  لتحسين جدولك",
+                    description: "أضف سكربت منظم جدول الجامعة الإسلامية بالمدينة المنورة من Greasyfork  لتحسين جدولك",
                     features: {
                         formatting: "تنسيق تلقائي للجدول",
                         darkMode: "دعم الوضع الداكن",
@@ -158,9 +158,10 @@ const translations = {
         },
         contribute: {
             title: "المساهمة",
-            description: "هل ترغب في تحسين منظم جدول الجامعة الإسلامية؟ نرحب بمساهماتك!",
+            description: "هل ترغب في تحسين منظم جدول الجامعة الإسلامية بالمدينة المنورة؟ نرحب بمساهماتك!",
             button: "ساهم على GitHub",
             text: "قم بإنشاء طلب سحب أو فتح مشكلة للمساعدة في جعل هذا المشروع أفضل."
         }
     }
 }; 
+

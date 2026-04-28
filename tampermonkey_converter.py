@@ -38,12 +38,12 @@ def create_tampermonkey_script(input_js_file, manifest_file, css_file, output_js
         
         # Define the Tampermonkey metadata block
         metadata = f"""// ==UserScript==
-// @name IU Table Organizer
+// @name IUM Table Organizer
 // @description A script to order the lectures table according to weekdays on the Islamic University website
-// @name:en IU Table Organizer
+// @name:en IUM Table Organizer
 // @description:en A script to order the lectures table according to weekdays on the Islamic University website
-// @name:ar منظم جدول الجامعة الاسلامية
-// @description:ar اضافة لتعديل مظهر الجدول بالجامعة الاسلامية الى جدول مرتب تبعا لايام الاسبوع بضغطة زر
+// @name:ar منظم جدول الجامعة الاسلامية بالمدينة المنورة
+// @description:ar اضافة لتعديل مظهر الجدول بالجامعة الاسلامية بالمدينة المنورة الى جدول مرتب تبعا لايام الاسبوع بضغطة زر
 // @include https://eduportal.iu.edu.sa/iu/ui/student/homeIndex.faces
 // @include https://eduportal.iu.edu.sa/iu/ui/student/*/*/*
 // @include http://eduportal.iu.edu.sa/iu/ui/student/*
@@ -122,3 +122,4 @@ if __name__ == "__main__":
         script_dir / 'Browser_extention/css/styles.css',
         script_dir / 'GreasyFork/IU_Table_Organizer_tampermonkey.js'
     ) 
+
