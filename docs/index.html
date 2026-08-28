@@ -51,7 +51,7 @@
     <meta name="theme-color" content="#0a0e17">
     
     <title data-translate="title">IUM Table Organizer</title>
-    <link rel="stylesheet" href="css/page_styles.css?v=3">
+    <link rel="stylesheet" href="css/page_styles.css?v=4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,14 +112,6 @@
 <body>
     <header>
         <div class="container">
-            <div class="header-controls">
-                <button class="language-toggle-nav" onclick="toggleLanguage()" aria-label="Toggle language">
-                    <i class="fas fa-globe"></i>
-                    <span class="lang-label-en">عربي</span>
-                    <span class="lang-label-ar">English</span>
-                </button>
-            </div>
-            
             <h1 data-translate="title" data-value="IUM Table Organizer">IUM Table Organizer</h1>
             <p class="subtitle" data-translate="subtitle">Transform your Islamic University schedule into a more readable format with one click.</p>
             
@@ -370,12 +362,18 @@
         </div>
     </div>
 
-    <!-- Floating Back to Top -->
+    <!-- Floating Action Controls (Side) -->
+    <button id="languageToggle" class="language-toggle" onclick="toggleLanguage()" aria-label="Toggle language">
+        <i class="fas fa-globe"></i>
+        <span class="lang-label-en">عربي</span>
+        <span class="lang-label-ar">English</span>
+    </button>
+
     <button id="backToTop" class="back-to-top" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
     
     <!-- Scripts -->
-    <script src="js/script.js?v=3"></script>
+    <script src="js/script.js?v=4"></script>
 </body>
 </html>

@@ -35,7 +35,7 @@
     <meta name="theme-color" content="#0a0e17">
     
     <title>Privacy Policy - IUM Table Organizer | سياسة الخصوصية</title>
-    <link rel="stylesheet" href="css/page_styles.css?v=3">
+    <link rel="stylesheet" href="css/page_styles.css?v=4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,13 +44,6 @@
 <body>
     <header>
         <div class="container">
-            <div class="header-controls">
-                <a href="index.html" class="nav-back-link">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>Back to Home</span>
-                </a>
-            </div>
-            
             <h1>Privacy Policy</h1>
             <p class="subtitle">IUM Table Organizer Privacy & Data Handling Information</p>
             
@@ -175,6 +168,16 @@
         </div>
     </footer>
 
+    <!-- Floating Action Controls (Side) -->
+    <a href="index.html" class="floating-back-btn" aria-label="Back to Home">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back to Home</span>
+    </a>
+
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
         // Update badge versions
         async function updateVersions() {
@@ -199,10 +202,6 @@
         document.addEventListener('DOMContentLoaded', updateVersions);
     </script>
 
-    <button id="backToTop" class="back-to-top" aria-label="Back to top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <script src="js/script.js?v=3"></script>
+    <script src="js/script.js?v=4"></script>
 </body>
 </html>
