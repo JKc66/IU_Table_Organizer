@@ -32,18 +32,28 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="IUM" />
     <link rel="manifest" href="assets/favicon/site.webmanifest" />
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#0a0e17">
     
     <title>Privacy Policy - IUM Table Organizer | سياسة الخصوصية</title>
-    <link rel="stylesheet" href="css/page_styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Tajawal:wght@400;500;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/page_styles.css?v=3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <div class="container">
+            <div class="header-controls">
+                <a href="index.html" class="nav-back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+            
             <h1>Privacy Policy</h1>
-            <p class="subtitle">IUM Table Organizer Privacy Information</p>
+            <p class="subtitle">IUM Table Organizer Privacy & Data Handling Information</p>
+            
             <div class="badges">
                 <a href="https://chromewebstore.google.com/detail/iu-table-organizer/oopkbojbjpdehknlnajbgedjjgafjbec" class="badge-link" target="_blank" rel="noopener noreferrer">
                     <div class="badge badge-chrome">
@@ -73,7 +83,7 @@
     <main class="container">
         <section class="privacy-section">
             <h2>Overview</h2>
-            <p>IUM Table Organizer is committed to protecting your privacy. This privacy policy explains how our extension handles information.</p>
+            <p style="color: var(--text-secondary); line-height: var(--leading-normal);">IUM Table Organizer is committed to protecting your privacy. This privacy policy explains how our extension handles information.</p>
         </section>
 
         <section class="privacy-section">
@@ -136,20 +146,18 @@
 
         <section class="privacy-section">
             <h2>Changes to This Policy</h2>
-            <p>We may update this privacy policy from time to time. Any changes will be posted on this page.</p>
+            <p style="color: var(--text-secondary); line-height: var(--leading-normal);">We may update this privacy policy from time to time. Any changes will be posted on this page.</p>
         </section>
 
         <section class="privacy-section">
             <h2>Contact</h2>
-            <div class="contact-content">
-                <div class="contact-card">
-                    <a href="https://github.com/JKc66/IU_Table_Organizer" target="_blank" rel="noopener noreferrer" class="github-link">
-                        <i class="fab fa-github"></i>
-                        <span>Visit our GitHub Repository</span>
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                    <p class="contact-description">For questions, feedback, or issues regarding this privacy policy or the extension.</p>
-                </div>
+            <div class="contact-card">
+                <a href="https://github.com/JKc66/IU_Table_Organizer" target="_blank" rel="noopener noreferrer" class="github-contribute-link">
+                    <i class="fab fa-github"></i>
+                    <span>Visit our GitHub Repository</span>
+                    <i class="fas fa-external-link-alt" style="font-size: var(--text-xs); opacity: 0.7;"></i>
+                </a>
+                <p style="margin-top: var(--space-3); color: var(--text-secondary); font-size: var(--text-sm);">For questions, feedback, or issues regarding this privacy policy or the extension.</p>
             </div>
         </section>
     </main>
@@ -167,131 +175,10 @@
         </div>
     </footer>
 
-    <style>
-        .privacy-section {
-            margin: 3rem 0;
-        }
-        
-        .privacy-card {
-            background: var(--card-background);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            margin: 1.5rem 0;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .privacy-card:hover {
-            box-shadow: var(--hover-shadow);
-        }
-        
-        .privacy-item {
-            padding: 0.5rem;
-        }
-        
-        .privacy-item h3 {
-            color: var(--text-color);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-        
-        .privacy-item h3 i {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-        }
-        
-        .privacy-item ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .privacy-item li {
-            margin: 0.8rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-        
-        .privacy-item li:before {
-            content: "•";
-            color: var(--accent-color);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-        
-        .contact-content {
-            display: flex;
-            justify-content: center;
-            padding: 2rem 0;
-        }
-        
-        .contact-card {
-            background: var(--card-background);
-            border-radius: var(--border-radius);
-            padding: 2.5rem;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            max-width: 500px;
-            width: 100%;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-            box-shadow: var(--card-shadow);
-        }
-        
-        .contact-card:hover {
-            transform: var(--card-hover-transform);
-            box-shadow: var(--hover-shadow);
-        }
-        
-        .github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .github-link:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(var(--primary-color-rgb), 0.3);
-        }
-        
-        .contact-description {
-            margin-top: 1.5rem;
-            color: var(--text-color-secondary);
-            line-height: 1.6;
-        }
-        
-        @media (max-width: 768px) {
-            .privacy-card {
-                grid-template-columns: 1fr;
-            }
-            
-            .contact-card {
-                padding: 1.5rem;
-            }
-        }
-    </style>
-
     <script>
         // Update badge versions
         async function updateVersions() {
             try {
-                // Try to fetch new versions
                 const chromeRes = await fetch('https://img.shields.io/chrome-web-store/v/oopkbojbjpdehknlnajbgedjjgafjbec.json');
                 const chromeData = await chromeRes.json();
                 const chromeVersion = chromeData.value;
@@ -300,35 +187,15 @@
                 const greasyforkData = await greasyforkRes.json();
                 const greasyforkVersion = greasyforkData.value;
                 
-                // Store versions with timestamp
-                const versionData = {
-                    chrome: chromeVersion,
-                    greasy: greasyforkVersion,
-                    timestamp: Date.now()
-                };
-                localStorage.setItem('version_cache', JSON.stringify(versionData));
-                
-                // Update badge values
-                document.querySelector('.badge-chrome .badge-value').textContent = chromeVersion;
-                document.querySelector('.badge-greasy .badge-value').textContent = greasyforkVersion;
+                const chromeBadge = document.querySelector('.badge-chrome .badge-value');
+                const greasyBadge = document.querySelector('.badge-greasy .badge-value');
+                if (chromeBadge) chromeBadge.textContent = chromeVersion;
+                if (greasyBadge) greasyBadge.textContent = greasyforkVersion;
             } catch (error) {
                 console.error('Error updating versions:', error);
-                
-                // Try to use cached versions
-                const cachedData = localStorage.getItem('version_cache');
-                if (cachedData) {
-                    const versionData = JSON.parse(cachedData);
-                    document.querySelector('.badge-chrome .badge-value').textContent = versionData.chrome;
-                    document.querySelector('.badge-greasy .badge-value').textContent = versionData.greasy;
-                } else {
-                    // No cache available, show loading state
-                    document.querySelector('.badge-chrome .badge-value').textContent = '...';
-                    document.querySelector('.badge-greasy .badge-value').textContent = '...';
-                }
             }
         }
 
-        // Update versions when page loads
         document.addEventListener('DOMContentLoaded', updateVersions);
     </script>
 
@@ -336,7 +203,6 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=3"></script>
 </body>
 </html>
-
